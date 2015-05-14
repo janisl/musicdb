@@ -21,6 +21,16 @@
   		<groupId>mysql</groupId>
   		<artifactId>mysql-connector-java</artifactId>
   	</dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <version>4.3.1.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>unknown.binary</groupId>
+      <artifactId>mysql-connector-java-5.1.23-bin</artifactId>
+      <version>SNAPSHOT</version>
+    </dependency>
   </dependencies>
   <parent>
   	<groupId>org.springframework.boot</groupId>
@@ -40,6 +50,11 @@
             <id>spring-releases</id>
             <url>https://repo.spring.io/libs-release</url>
         </repository>
+      <repository>
+        <id>unknown-jars-temp-repo</id>
+        <name>A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository.</name>
+        <url>file:${project.basedir}/lib</url>
+      </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>

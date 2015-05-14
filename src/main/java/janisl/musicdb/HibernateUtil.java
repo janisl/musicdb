@@ -19,9 +19,10 @@ public class HibernateUtil {
             // Create the SessionFactory from standard (hibernate.cfg.xml) 
             // config file.
             Configuration configuration = new Configuration();
+            configuration.addAnnotatedClass(janisl.musicdb.models.Label.class);
             configuration.configure();
             serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
-                configuration.getProperties()).build();
+                    configuration.getProperties()).build();
             sessionFactory = configuration.buildSessionFactory(serviceRegistry);
         } catch (Throwable ex) {
             // Log the exception. 

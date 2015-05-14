@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="musicdb">
+  <head>
+    <title>Music DB</title>
+    <link rel="stylesheet" type="text/css" href="styles/styles.css" />
+  </head>
+  <body>
+    <script type="text/javascript" src="scripts/lib/angular.min.js"></script>
+    <script type="text/javascript" src="scripts/app.js"></script>
+
+    <div ng-controller="LabelsController as labels">
+        <table border="1">
+            <tr ng-repeat="label in labels.labels">
+                <td>{{ label.name }}</td>
+                <td>{{ label.beatportId }}</td>
+                <td>{{ label.beatportUrl }}</td>
+                <td>{{ label.discogsId }}</td>
+            </tr>
+        </table>
+    </div>
+  </body>
+</html>

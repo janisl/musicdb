@@ -7,7 +7,7 @@
         <td>{{ label.discogsId}}</td>
         <td><a href="#/labels/{{ label.id }}">Edit</a></td>
         <td><a href="#/labels/" ng-click="labels.delete(label.id)" >Delete</a></td>
-        <td><span ng-show="label.beatportId !== null"><a href="https://pro.beatport.com/{{ label.beatportUrl }}"target="_blank">Beatport</a></span></td>
+        <td><span ng-show="label.beatportId !== null"><a href="https://pro.beatport.com{{ label.beatportUrl }}"target="_blank">Beatport</a></span></td>
         <td><span ng-show="label.discogsId !== null"><a href="http://www.discogs.com/label/{{ label.discogsId }}"target="_blank">Discogs</a></span></td>
     </tr>
 </table>

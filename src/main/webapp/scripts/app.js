@@ -38,15 +38,15 @@
         this.labels = [];
 
         this.getList = function() {
-            $http.get('/label/list').success(function (data) {
+            $http.get('/label/').success(function (data) {
                 ctrl.labels = data;
             });
         };
         
         this.delete = function(labelId) {
             if (confirm("Are you sure you want to delete this label?") === true) {
-                var url = '/label/delete/' + labelId;
-                $http.get(url).success(function (data) {
+                var url = '/label/' + labelId;
+                $http.delete(url).success(function (data) {
                     ctrl.getList();
                 }).error(function (data, status, headers, config) {
                     alert('Error ' + status);
@@ -62,14 +62,7 @@
         this.label = {};
 
         this.submit = function () {
-            var url = '/label/add?name=' + encodeURIComponent(ctrl.label.name);
-            if (typeof ctrl.label.beatportId !== 'undefined' && ctrl.label.beatportId !== null)
-                url += '&beatportId=' + encodeURIComponent(ctrl.label.beatportId);
-            if (typeof ctrl.label.beatportUrl !== 'undefined' && ctrl.label.beatportUrl !== null)
-                url += '&beatportUrl=' + encodeURIComponent(ctrl.label.beatportUrl);
-            if (typeof ctrl.label.discogsId !== 'undefined' && ctrl.label.discogsId !== null)
-                url += '&discogsId=' + encodeURIComponent(ctrl.label.discogsId);
-            $http.get(url).success(function (data) {
+            $http.post('/label/', ctrl.label).success(function (data) {
                 $location.path('/labels/');
             }).error(function (data, status, headers, config) {
                 alert('Error ' + status);
@@ -87,14 +80,7 @@
         });
 
         this.submit = function () {
-            var url = '/label/update/' + ctrl.id + '?name=' + encodeURIComponent(ctrl.label.name);
-            if (typeof ctrl.label.beatportId !== 'undefined' && ctrl.label.beatportId !== null)
-                url += '&beatportId=' + encodeURIComponent(ctrl.label.beatportId);
-            if (typeof ctrl.label.beatportUrl !== 'undefined' && ctrl.label.beatportUrl !== null)
-                url += '&beatportUrl=' + encodeURIComponent(ctrl.label.beatportUrl);
-            if (typeof ctrl.label.discogsId !== 'undefined' && ctrl.label.discogsId !== null)
-                url += '&discogsId=' + encodeURIComponent(ctrl.label.discogsId);
-            $http.get(url).success(function (data) {
+            $http.put('/label/' + ctrl.id, ctrl.label).success(function (data) {
                 $location.path('/labels/');
             }).error(function (data, status, headers, config) {
                 alert('Error ' + status);

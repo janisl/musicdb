@@ -19,6 +19,11 @@
                 controller: 'LabelAddController',
                 controllerAs: 'labelCtrl'
             })
+            .when('/labels/:id/', {
+                templateUrl: 'views/labels/add_edit.html',
+                controller: 'LabelEditController',
+                controllerAs: 'labelCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });
@@ -31,16 +36,30 @@
         var ctrl = this;
         this.labels = [];
 
-        $http.get('/label/list').success(function (data) {
-            ctrl.labels = data;
-        });
+        this.getList = function() {
+            $http.get('/label/list').success(function (data) {
+                ctrl.labels = data;
+            });
+        };
+        
+        this.delete = function(labelId) {
+            var url = '/label/delete/' + labelId;
+            $http.get(url).success(function (data) {
+                alert('Deleted');
+                ctrl.getList();
+            }).error(function (data, status, headers, config) {
+                alert('Error ' + status);
+            });
+        };
+        
+        this.getList();
     }]);
 
-    app.controller('LabelAddController', ['$http', function ($http) {
+    app.controller('LabelAddController', ['$http', '$location', function ($http, $location) {
         var ctrl = this;
         this.label = {};
 
-        this.add = function () {
+        this.submit = function () {
             var url = '/label/add?name=' + encodeURIComponent(ctrl.label.name);
             if (typeof ctrl.label.beatportId !== 'undefined' && ctrl.label.beatportId !== null)
                 url += '&beatportId=' + encodeURIComponent(ctrl.label.beatportId);
@@ -50,6 +69,33 @@
                 url += '&discogsId=' + encodeURIComponent(ctrl.label.discogsId);
             $http.get(url).success(function (data) {
                 alert('Added');
+                $location.path('/labels/');
+            }).error(function (data, status, headers, config) {
+                alert('Error ' + status);
+            });
+        };
+    }]);
+
+    app.controller('LabelEditController', ['$http', '$routeParams', function ($http, $routeParams) {
+        var ctrl = this;
+        this.id = $routeParams.id;
+        this.label = {};
+
+        $http.get('/label/' + $routeParams.id).success(function (data) {
+            ctrl.label = data;
+        });
+
+        this.submit = function () {
+            var url = '/label/update/' + ctrl.id + '?name=' + encodeURIComponent(ctrl.label.name);
+            if (typeof ctrl.label.beatportId !== 'undefined' && ctrl.label.beatportId !== null)
+                url += '&beatportId=' + encodeURIComponent(ctrl.label.beatportId);
+            if (typeof ctrl.label.beatportUrl !== 'undefined' && ctrl.label.beatportUrl !== null)
+                url += '&beatportUrl=' + encodeURIComponent(ctrl.label.beatportUrl);
+            if (typeof ctrl.label.discogsId !== 'undefined' && ctrl.label.discogsId !== null)
+                url += '&discogsId=' + encodeURIComponent(ctrl.label.discogsId);
+            $http.get(url).success(function (data) {
+                alert('Updated');
+                $location.path('/labels/');
             }).error(function (data, status, headers, config) {
                 alert('Error ' + status);
             });

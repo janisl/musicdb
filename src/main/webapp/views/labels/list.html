@@ -4,5 +4,7 @@
         <td>{{ label.beatportId}}</td>
         <td>{{ label.beatportUrl}}</td>
         <td>{{ label.discogsId}}</td>
+        <td><a href="#/labels/{{ label.id }}">Edit</a></td>
+        <td><a href="#/labels/" ng-click="labels.delete(label.id)" >Delete</a></td>
     </tr>
 </table>

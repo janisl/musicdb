@@ -1,6 +1,31 @@
 (function () {
 
-    var app = angular.module('musicdb', []);
+    var app = angular.module('musicdb', ['ngRoute']);
+
+    app.config(['$routeProvider', function($routeProvider) {
+        $routeProvider
+            .when('/', {
+                templateUrl: 'views/home.html',
+                controller: 'HomeController',
+                controllerAs: 'home'
+            })
+            .when('/labels/', {
+                templateUrl: 'views/labels/list.html',
+                controller: 'LabelsController',
+                controllerAs: 'labels'
+            })
+            .when('/labels/add/', {
+                templateUrl: 'views/labels/add_edit.html',
+                controller: 'LabelAddController',
+                controllerAs: 'labelCtrl'
+            })
+            .otherwise({
+                redirectTo: '/'
+            });
+    }]);
+
+    app.controller('HomeController', [function () {
+    }]);
 
     app.controller('LabelsController', ['$http', function ($http) {
         var ctrl = this;

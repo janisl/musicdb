@@ -43,13 +43,14 @@
         };
         
         this.delete = function(labelId) {
-            var url = '/label/delete/' + labelId;
-            $http.get(url).success(function (data) {
-                alert('Deleted');
-                ctrl.getList();
-            }).error(function (data, status, headers, config) {
-                alert('Error ' + status);
-            });
+            if (confirm("Are you sure you want to delete this label?") === true) {
+                var url = '/label/delete/' + labelId;
+                $http.get(url).success(function (data) {
+                    ctrl.getList();
+                }).error(function (data, status, headers, config) {
+                    alert('Error ' + status);
+                });
+            }
         };
         
         this.getList();
@@ -68,7 +69,6 @@
             if (typeof ctrl.label.discogsId !== 'undefined' && ctrl.label.discogsId !== null)
                 url += '&discogsId=' + encodeURIComponent(ctrl.label.discogsId);
             $http.get(url).success(function (data) {
-                alert('Added');
                 $location.path('/labels/');
             }).error(function (data, status, headers, config) {
                 alert('Error ' + status);
@@ -76,7 +76,7 @@
         };
     }]);
 
-    app.controller('LabelEditController', ['$http', '$routeParams', function ($http, $routeParams) {
+    app.controller('LabelEditController', ['$http', '$routeParams', '$location', function ($http, $routeParams, $location) {
         var ctrl = this;
         this.id = $routeParams.id;
         this.label = {};
@@ -94,7 +94,6 @@
             if (typeof ctrl.label.discogsId !== 'undefined' && ctrl.label.discogsId !== null)
                 url += '&discogsId=' + encodeURIComponent(ctrl.label.discogsId);
             $http.get(url).success(function (data) {
-                alert('Updated');
                 $location.path('/labels/');
             }).error(function (data, status, headers, config) {
                 alert('Error ' + status);

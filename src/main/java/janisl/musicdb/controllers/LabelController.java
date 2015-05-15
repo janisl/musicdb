@@ -19,10 +19,10 @@ public class LabelController {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
-        List<Label> artists = (List<Label>) (session.createCriteria(Label.class).list());
+        List<Label> labels = (List<Label>) (session.createCriteria(Label.class).list());
 
         session.close();
-        return artists;
+        return labels;
 
     }
 
@@ -31,30 +31,31 @@ public class LabelController {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
-        Label artist = (Label) session.get(Label.class, id);
+        Label label = (Label) session.get(Label.class, id);
 
         session.close();
-        return artist;
+        return label;
     }
 
     @RequestMapping(value = "/add")
-    public void add(
+    public Label add(
             @RequestParam(value = "name") String name,
-            @RequestParam(value = "beatportId") Integer beatportId,
-            @RequestParam(value = "beatportUrl") String beatportUrl,
-            @RequestParam(value = "discogsId") Integer discogsId) {
+            @RequestParam(value = "beatportId", required = false) Integer beatportId,
+            @RequestParam(value = "beatportUrl", required = false) String beatportUrl,
+            @RequestParam(value = "discogsId", required = false) Integer discogsId) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
-        Label artist = new Label();
-        artist.setName(name);
-        artist.setBeatportId(beatportId);
-        artist.setBeatportUrl(beatportUrl);
-        artist.setDiscogsId(discogsId);
+        Label label = new Label();
+        label.setName(name);
+        label.setBeatportId(beatportId);
+        label.setBeatportUrl(beatportUrl);
+        label.setDiscogsId(discogsId);
 
-        session.save(artist);
+        session.save(label);
         session.getTransaction().commit();
         session.close();
+        return label;
     }
 
     @RequestMapping(value = "/update/{id}")
@@ -67,13 +68,13 @@ public class LabelController {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
-        Label artist = (Label) session.get(Label.class, id);
-        artist.setName(name);
-        artist.setBeatportId(beatportId);
-        artist.setBeatportUrl(beatportUrl);
-        artist.setDiscogsId(discogsId);
+        Label label = (Label) session.get(Label.class, id);
+        label.setName(name);
+        label.setBeatportId(beatportId);
+        label.setBeatportUrl(beatportUrl);
+        label.setDiscogsId(discogsId);
 
-        session.save(artist);
+        session.save(label);
         session.getTransaction().commit();
         session.close();
     }
@@ -83,9 +84,9 @@ public class LabelController {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
-        Label artist = (Label) session.get(Label.class, id);
+        Label label = (Label) session.get(Label.class, id);
 
-        session.delete(artist);
+        session.delete(label);
         session.getTransaction().commit();
         session.close();
     }

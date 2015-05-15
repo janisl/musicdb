@@ -34,6 +34,7 @@
 
     app.controller('LabelsController', ['$http', function ($http) {
         var ctrl = this;
+        this.filterText = '';
         this.labels = [];
 
         this.getList = function() {

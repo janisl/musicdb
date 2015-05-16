@@ -1,11 +1,10 @@
 package janisl.musicdb.controllers;
 
-import janisl.musicdb.HibernateUtil;
 import janisl.musicdb.models.Label;
+import janisl.musicdb.repositories.UnitOfWork;
+import janisl.musicdb.repositories.UnitOfWorkFactory;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
-import org.hibernate.Session;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,76 +17,61 @@ import org.springframework.web.bind.annotation.RestController;
 public class LabelController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public List<Label> getList() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-
-        List<Label> labels = (List<Label>) (session.createCriteria(Label.class).list());
-
-        session.close();
-        return labels;
+    public List<Label> getList() throws Exception {
+        try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
+            List<Label> labels = (List<Label>) (unitOfWork.getSession().createCriteria(Label.class).list());
+            return labels;
+        }
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Label getById(@PathVariable("id") int id) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-
-        Label label = (Label) session.get(Label.class, id);
-
-        session.close();
-        return label;
+    public Label getById(@PathVariable("id") int id) throws Exception {
+        try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
+            Label label = (Label) unitOfWork.getSession().get(Label.class, id);
+            return label;
+        }
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ResponseEntity add(@RequestBody Label label) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-
-        session.save(label);
-        session.getTransaction().commit();
-        session.close();
-        URI locationUri;
-        try {
-            locationUri = new URI("/label/" + label.getId().toString());
-        } catch (URISyntaxException e) {
-            return ResponseEntity.badRequest().build();
+    public ResponseEntity add(@RequestBody Label label) throws Exception {
+        try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
+            unitOfWork.getSession().save(label);
+            unitOfWork.commit();
+            URI locationUri = new URI("/label/" + label.getId().toString());
+            return ResponseEntity.ok().location(locationUri).build();
         }
-        return ResponseEntity.ok().location(locationUri).build();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity update(@PathVariable("id") int id, @RequestBody Label newLabel) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
+    public ResponseEntity update(@PathVariable("id") int id, @RequestBody Label newLabel) throws Exception {
+        try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
+            Label label = (Label) unitOfWork.getSession().get(Label.class, id);
+            if (label == null) {
+                return ResponseEntity.notFound().build();
+            }
+            label.setName(newLabel.getName());
+            label.setBeatportId(newLabel.getBeatportId());
+            label.setBeatportUrl(newLabel.getBeatportUrl());
+            label.setDiscogsId(newLabel.getDiscogsId());
 
-        Label label = (Label) session.get(Label.class, id);
-        if (label == null)
-            return ResponseEntity.notFound().build();
-        label.setName(newLabel.getName());
-        label.setBeatportId(newLabel.getBeatportId());
-        label.setBeatportUrl(newLabel.getBeatportUrl());
-        label.setDiscogsId(newLabel.getDiscogsId());
-
-        session.save(label);
-        session.getTransaction().commit();
-        session.close();
-        return ResponseEntity.ok().build();
+            unitOfWork.getSession().save(label);
+            unitOfWork.commit();
+            return ResponseEntity.ok().build();
+        }
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity delete(@PathVariable("id") int id) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
+    public ResponseEntity delete(@PathVariable("id") int id) throws Exception {
+        try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
+            Label label = (Label) unitOfWork.getSession().get(Label.class, id);
+            if (label == null) {
+                return ResponseEntity.notFound().build();
+            }
 
-        Label label = (Label) session.get(Label.class, id);
-        if (label == null)
-            return ResponseEntity.notFound().build();
-
-        session.delete(label);
-        session.getTransaction().commit();
-        session.close();
-        return ResponseEntity.ok().build();
+            unitOfWork.getSession().delete(label);
+            unitOfWork.commit();
+            return ResponseEntity.ok().build();
+        }
     }
 
 }

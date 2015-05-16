@@ -1,16 +1,39 @@
 package janisl.musicdb.repositories;
 
-import janisl.musicdb.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 public class UnitOfWorkImpl implements UnitOfWork {
 
+    private static final SessionFactory sessionFactory;
+    private static final ServiceRegistry serviceRegistry;
+
+    static {
+        try {
+            // Create the SessionFactory from standard (hibernate.cfg.xml)
+            // config file.
+            Configuration configuration = new Configuration();
+            configuration.addAnnotatedClass(janisl.musicdb.models.Label.class);
+            configuration.configure();
+            serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
+                    configuration.getProperties()).build();
+            sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+        } catch (Throwable ex) {
+            // Log the exception.
+            System.err.println("Initial SessionFactory creation failed." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
+
     private Session session;
     private Boolean transactionStarted = false;
-    
+
     public Session getSession() {
         if (session == null) {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
         }
         if (!transactionStarted) {
             session.beginTransaction();
@@ -26,7 +49,7 @@ public class UnitOfWorkImpl implements UnitOfWork {
             transactionStarted = false;
         }
     }
-    
+
     @Override
     public void close() throws Exception {
         if (session != null) {
@@ -38,5 +61,5 @@ public class UnitOfWorkImpl implements UnitOfWork {
     public LabelRepository getLabelRepository() {
         return new LabelRepositoryImpl(this);
     }
-    
+
 }

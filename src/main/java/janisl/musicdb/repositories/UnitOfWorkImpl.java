@@ -16,7 +16,10 @@ public class UnitOfWorkImpl implements UnitOfWork {
             // Create the SessionFactory from standard (hibernate.cfg.xml)
             // config file.
             Configuration configuration = new Configuration();
+            
+            // Add all annotated classes for the main DB.
             configuration.addAnnotatedClass(janisl.musicdb.models.Label.class);
+            
             configuration.configure();
             serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
                     configuration.getProperties()).build();

@@ -8,7 +8,6 @@ public class UnitOfWorkImpl implements UnitOfWork {
     private Session session;
     private Boolean transactionStarted = false;
     
-    @Override
     public Session getSession() {
         if (session == null) {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -33,6 +32,11 @@ public class UnitOfWorkImpl implements UnitOfWork {
         if (session != null) {
             session.close();
         }
+    }
+
+    @Override
+    public LabelRepository getLabelRepository() {
+        return new LabelRepositoryImpl(this);
     }
     
 }

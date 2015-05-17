@@ -1,0 +1,41 @@
+<a href="#/releases/">Back</a><br />
+<form ng-submit="releaseCtrl.submit()">
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" ng-model="releaseCtrl.release.name" size="64" ></td>
+        </tr>
+        <tr>
+            <td>Artist ID:</td>
+            <td><input type="text" ng-model="releaseCtrl.release.artistId" ></td>
+        </tr>
+        <tr>
+            <td>Label ID:</td>
+            <td><input type="text" ng-model="releaseCtrl.release.labelId" ></td>
+        </tr>
+        <tr>
+            <td>Catalog number:</td>
+            <td><input type="text" ng-model="releaseCtrl.release.catalogNumber" ></td>
+        </tr>
+        <tr>
+            <td>Release date:</td>
+            <td><input type="text" ng-model="releaseCtrl.release.releaseDate" ></td>
+        </tr>
+        <tr>
+            <td>Beatport ID:</td>
+            <td><input type="text" ng-model="releaseCtrl.release.beatportId" ></td>
+        </tr>
+        <tr>
+            <td>Beatport URL:</td>
+            <td><input type="text" ng-model="releaseCtrl.release.beatportUrl" size="64" ></td>
+        </tr>
+        <tr>
+            <td>Discogs ID:</td>
+            <td><input type="text" ng-model="releaseCtrl.release.discogsId" ></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="OK" ></td>
+        </tr>
+    </table>
+</form>

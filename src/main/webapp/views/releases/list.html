@@ -1,0 +1,18 @@
+<input type="text" ng-model="releases.filterText" >
+<a href="#/releases/add/">Add release</a>
+<table border="1">
+    <tr ng-repeat="release in releases.releases | filter:releases.filterText | orderBy: 'name'">
+        <td>{{ release.name}}</td>
+        <td>{{ release.artistId}}</td>
+        <td>{{ release.labelId}}</td>
+        <td>{{ release.catalogNumber}}</td>
+        <td>{{ release.releaseDate }}</td>
+        <td>{{ release.beatportId}}</td>
+        <td>{{ release.beatportUrl}}</td>
+        <td>{{ release.discogsId}}</td>
+        <td><a href="#/releases/{{ release.id }}">Edit</a></td>
+        <td><a href="#/releases/" ng-click="releases.delete(release.id)" >Delete</a></td>
+        <td><span ng-show="release.beatportId !== null"><a href="https://pro.beatport.com{{ release.beatportUrl }}"target="_blank">Beatport</a></span></td>
+        <td><span ng-show="release.discogsId !== null"><a href="http://www.discogs.com/release/{{ release.discogsId }}"target="_blank">Discogs</a></span></td>
+    </tr>
+</table>

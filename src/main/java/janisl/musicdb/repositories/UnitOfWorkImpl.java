@@ -20,6 +20,7 @@ public class UnitOfWorkImpl implements UnitOfWork {
             // Add all annotated classes for the main DB.
             configuration.addAnnotatedClass(janisl.musicdb.models.Artist.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.Label.class);
+            configuration.addAnnotatedClass(janisl.musicdb.models.Release.class);
             
             configuration.configure();
             serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
@@ -69,6 +70,11 @@ public class UnitOfWorkImpl implements UnitOfWork {
     @Override
     public ArtistRepository getArtistRepository() {
         return new ArtistRepositoryImpl(this);
+    }
+
+    @Override
+    public ReleaseRepository getReleaseRepository() {
+        return new ReleaseRepositoryImpl(this);
     }
 
 }

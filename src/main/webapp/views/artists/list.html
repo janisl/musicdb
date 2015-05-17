@@ -1,0 +1,14 @@
+<input type="text" ng-model="artists.filterText" >
+<a href="#/artists/add/">Add artist</a>
+<table border="1">
+    <tr ng-repeat="artist in artists.artists | filter:artists.filterText | orderBy: 'name'">
+        <td>{{ artist.name}}</td>
+        <td>{{ artist.beatportId}}</td>
+        <td>{{ artist.beatportUrl}}</td>
+        <td>{{ artist.discogsId}}</td>
+        <td><a href="#/artists/{{ artist.id }}">Edit</a></td>
+        <td><a href="#/artists/" ng-click="artists.delete(artist.id)" >Delete</a></td>
+        <td><span ng-show="artist.beatportId !== null"><a href="https://pro.beatport.com{{ artist.beatportUrl }}"target="_blank">Beatport</a></span></td>
+        <td><span ng-show="artist.discogsId !== null"><a href="http://www.discogs.com/artist/{{ artist.discogsId }}"target="_blank">Discogs</a></span></td>
+    </tr>
+</table>

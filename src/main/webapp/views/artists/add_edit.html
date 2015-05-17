@@ -1,0 +1,25 @@
+<a href="#/artists/">Back</a><br />
+<form ng-submit="artistCtrl.submit()">
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" ng-model="artistCtrl.artist.name" size="64" ></td>
+        </tr>
+        <tr>
+            <td>Beatport ID:</td>
+            <td><input type="text" ng-model="artistCtrl.artist.beatportId" ></td>
+        </tr>
+        <tr>
+            <td>Beatport URL:</td>
+            <td><input type="text" ng-model="artistCtrl.artist.beatportUrl" size="64" ></td>
+        </tr>
+        <tr>
+            <td>Discogs ID:</td>
+            <td><input type="text" ng-model="artistCtrl.artist.discogsId" ></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="OK" ></td>
+        </tr>
+    </table>
+</form>

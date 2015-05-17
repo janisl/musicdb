@@ -6,4 +6,6 @@ public interface UnitOfWork extends AutoCloseable {
     
     public LabelRepository getLabelRepository();
     
+    public ArtistRepository getArtistRepository();
+    
 }

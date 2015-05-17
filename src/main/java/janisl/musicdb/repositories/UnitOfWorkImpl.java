@@ -18,6 +18,7 @@ public class UnitOfWorkImpl implements UnitOfWork {
             Configuration configuration = new Configuration();
             
             // Add all annotated classes for the main DB.
+            configuration.addAnnotatedClass(janisl.musicdb.models.Artist.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.Label.class);
             
             configuration.configure();
@@ -63,6 +64,11 @@ public class UnitOfWorkImpl implements UnitOfWork {
     @Override
     public LabelRepository getLabelRepository() {
         return new LabelRepositoryImpl(this);
+    }
+
+    @Override
+    public ArtistRepository getArtistRepository() {
+        return new ArtistRepositoryImpl(this);
     }
 
 }

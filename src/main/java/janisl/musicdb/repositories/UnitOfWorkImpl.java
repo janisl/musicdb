@@ -22,6 +22,7 @@ public class UnitOfWorkImpl implements UnitOfWork {
             configuration.addAnnotatedClass(janisl.musicdb.models.Genre.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.Label.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.Release.class);
+            configuration.addAnnotatedClass(janisl.musicdb.models.Track.class);
             
             configuration.configure();
             serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
@@ -40,6 +41,7 @@ public class UnitOfWorkImpl implements UnitOfWork {
     private GenreRepositoryImpl genreRepository;
     private LabelRepositoryImpl labelRepository;
     private ReleaseRepositoryImpl releaseRepository;
+    private TrackRepositoryImpl trackRepository;
 
     public Session getSession() {
         if (session == null) {
@@ -97,6 +99,14 @@ public class UnitOfWorkImpl implements UnitOfWork {
             releaseRepository = new ReleaseRepositoryImpl(this);
         }
         return releaseRepository;
+    }
+
+    @Override
+    public TrackRepository getTrackRepository() {
+        if (trackRepository == null) {
+            trackRepository = new TrackRepositoryImpl(this);
+        }
+        return trackRepository;
     }
 
 }

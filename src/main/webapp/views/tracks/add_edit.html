@@ -1,0 +1,49 @@
+<a href="#/tracks/">Back</a><br />
+<form ng-submit="trackCtrl.submit()">
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" ng-model="trackCtrl.track.name" size="64" ></td>
+        </tr>
+        <tr>
+            <td>Beatport ID:</td>
+            <td><input type="text" ng-model="trackCtrl.track.beatportId" ></td>
+        </tr>
+        <tr>
+            <td>Beatport URL:</td>
+            <td><input type="text" ng-model="trackCtrl.track.beatportUrl" size="64" ></td>
+        </tr>
+        <tr>
+            <td>Version:</td>
+            <td><input type="text" ng-model="trackCtrl.track.version" ></td>
+        </tr>
+        <tr>
+            <td>BPM:</td>
+            <td><input type="text" ng-model="trackCtrl.track.bpm" ></td>
+        </tr>
+        <tr>
+            <td>Artist ID:</td>
+            <td><input type="text" ng-model="trackCtrl.track.artistId" ></td>
+        </tr>
+        <tr>
+            <td>Release ID:</td>
+            <td><input type="text" ng-model="trackCtrl.track.releaseId" ></td>
+        </tr>
+        <tr>
+            <td>Key ID:</td>
+            <td><input type="text" ng-model="trackCtrl.track.keyId" ></td>
+        </tr>
+        <tr>
+            <td>Duration:</td>
+            <td><input type="text" ng-model="trackCtrl.track.duration" ></td>
+        </tr>
+        <tr>
+            <td>Genre ID:</td>
+            <td><input type="text" ng-model="trackCtrl.track.genreId" ></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="OK" ></td>
+        </tr>
+    </table>
+</form>

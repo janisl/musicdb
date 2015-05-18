@@ -1,0 +1,9 @@
+<input type="text" ng-model="genres.filterText" >
+<a href="#/genres/add/">Add genre</a>
+<table border="1">
+    <tr ng-repeat="genre in genres.genres | filter:genres.filterText | orderBy: 'name'">
+        <td>{{ genre.name}}</td>
+        <td><a href="#/genres/{{ genre.id }}">Edit</a></td>
+        <td><a href="#/genres/" ng-click="genres.delete(genre.id)" >Delete</a></td>
+    </tr>
+</table>

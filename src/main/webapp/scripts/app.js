@@ -1,6 +1,6 @@
 (function () {
 
-    var app = angular.module('musicdb', ['ngRoute', 'labels', 'artists', 'releases']);
+    var app = angular.module('musicdb', ['ngRoute', 'artists', 'genres', 'labels', 'releases']);
 
     app.config(['$routeProvider', function($routeProvider) {
         $routeProvider
@@ -8,21 +8,6 @@
                 templateUrl: 'views/home.html',
                 controller: 'HomeController',
                 controllerAs: 'home'
-            })
-            .when('/labels/', {
-                templateUrl: 'views/labels/list.html',
-                controller: 'LabelsController',
-                controllerAs: 'labels'
-            })
-            .when('/labels/add/', {
-                templateUrl: 'views/labels/add_edit.html',
-                controller: 'LabelAddController',
-                controllerAs: 'labelCtrl'
-            })
-            .when('/labels/:id/', {
-                templateUrl: 'views/labels/add_edit.html',
-                controller: 'LabelEditController',
-                controllerAs: 'labelCtrl'
             })
             .when('/artists/', {
                 templateUrl: 'views/artists/list.html',
@@ -38,6 +23,36 @@
                 templateUrl: 'views/artists/add_edit.html',
                 controller: 'ArtistEditController',
                 controllerAs: 'artistCtrl'
+            })
+            .when('/genres/', {
+                templateUrl: 'views/genres/list.html',
+                controller: 'GenresController',
+                controllerAs: 'genres'
+            })
+            .when('/genres/add/', {
+                templateUrl: 'views/genres/add_edit.html',
+                controller: 'GenreAddController',
+                controllerAs: 'genreCtrl'
+            })
+            .when('/genres/:id/', {
+                templateUrl: 'views/genres/add_edit.html',
+                controller: 'GenreEditController',
+                controllerAs: 'genreCtrl'
+            })
+            .when('/labels/', {
+                templateUrl: 'views/labels/list.html',
+                controller: 'LabelsController',
+                controllerAs: 'labels'
+            })
+            .when('/labels/add/', {
+                templateUrl: 'views/labels/add_edit.html',
+                controller: 'LabelAddController',
+                controllerAs: 'labelCtrl'
+            })
+            .when('/labels/:id/', {
+                templateUrl: 'views/labels/add_edit.html',
+                controller: 'LabelEditController',
+                controllerAs: 'labelCtrl'
             })
             .when('/releases/', {
                 templateUrl: 'views/releases/list.html',

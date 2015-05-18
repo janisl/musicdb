@@ -19,6 +19,7 @@ public class UnitOfWorkImpl implements UnitOfWork {
             
             // Add all annotated classes for the main DB.
             configuration.addAnnotatedClass(janisl.musicdb.models.Artist.class);
+            configuration.addAnnotatedClass(janisl.musicdb.models.Genre.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.Label.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.Release.class);
             
@@ -35,6 +36,10 @@ public class UnitOfWorkImpl implements UnitOfWork {
 
     private Session session;
     private Boolean transactionStarted = false;
+    private ArtistRepositoryImpl artistRepository;
+    private GenreRepositoryImpl genreRepository;
+    private LabelRepositoryImpl labelRepository;
+    private ReleaseRepositoryImpl releaseRepository;
 
     public Session getSession() {
         if (session == null) {
@@ -63,18 +68,35 @@ public class UnitOfWorkImpl implements UnitOfWork {
     }
 
     @Override
-    public LabelRepository getLabelRepository() {
-        return new LabelRepositoryImpl(this);
+    public ArtistRepository getArtistRepository() {
+        if (artistRepository == null) {
+            artistRepository = new ArtistRepositoryImpl(this);
+        }
+        return artistRepository;
     }
 
     @Override
-    public ArtistRepository getArtistRepository() {
-        return new ArtistRepositoryImpl(this);
+    public GenreRepository getGenreRepository() {
+        if (genreRepository == null) {
+            genreRepository = new GenreRepositoryImpl(this);
+        }
+        return genreRepository;
+    }
+
+    @Override
+    public LabelRepository getLabelRepository() {
+        if (labelRepository == null) {
+            labelRepository = new LabelRepositoryImpl(this);
+        }
+        return labelRepository;
     }
 
     @Override
     public ReleaseRepository getReleaseRepository() {
-        return new ReleaseRepositoryImpl(this);
+        if (releaseRepository == null) {
+            releaseRepository = new ReleaseRepositoryImpl(this);
+        }
+        return releaseRepository;
     }
 
 }

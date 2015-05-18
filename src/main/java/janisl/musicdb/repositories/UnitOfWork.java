@@ -4,9 +4,11 @@ public interface UnitOfWork extends AutoCloseable {
 
     public void commit();
     
-    public LabelRepository getLabelRepository();
-    
     public ArtistRepository getArtistRepository();
+    
+    public GenreRepository getGenreRepository();
+    
+    public LabelRepository getLabelRepository();
     
     public ReleaseRepository getReleaseRepository();
     

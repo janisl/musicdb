@@ -7,14 +7,14 @@ import javax.persistence.Id;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class BeatportArtist implements Serializable, BeatportEntity {
+public class BeatportLabel implements Serializable, BeatportEntity {
 
     private Integer id;
     private String slug;
     private String name;
     private String imageUrl;
 
-    public BeatportArtist() {
+    public BeatportLabel() {
     }
 
     @Id

@@ -17,6 +17,8 @@ public class ReleaseParser {
     private final UnitOfWork unitOfWork;
     private BeatportRelease release;
     private Boolean isExisting = false;
+    private Element mainElement;
+    private Document doc;
 
     public ReleaseParser(UnitOfWork unitOfWork) {
         this.unitOfWork = unitOfWork;
@@ -57,12 +59,19 @@ public class ReleaseParser {
     }
 
     private void downloadAndParseBeatportPage() throws IOException {
-        Document doc = Jsoup.connect("https://pro.beatport.com/release/" + release.getSlug() + "/" + release.getId())
+        downloadPage();
+        parseMainInfo();
+    }
+
+    private void downloadPage() throws IOException {
+        doc = Jsoup.connect("https://pro.beatport.com/release/" + release.getSlug() + "/" + release.getId())
                 .userAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36")
                 .timeout(15000)
                 .get();
-        Element mainElement = doc.select("main").first();
+        mainElement = doc.select("main").first();
+    }
 
+    private void parseMainInfo() throws IOException {
         release.setTitle(mainElement.select("h1").first().text());
         release.setImageUrl(mainElement.select("img.interior-release-chart-artwork").first().attr("src"));
         release.setIsExclusive(!mainElement.select("span.exclusive-marker").isEmpty());

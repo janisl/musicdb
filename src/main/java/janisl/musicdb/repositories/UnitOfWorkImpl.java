@@ -24,6 +24,7 @@ public class UnitOfWorkImpl implements UnitOfWork {
             configuration.addAnnotatedClass(janisl.musicdb.models.Release.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.Track.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.BeatportArtist.class);
+            configuration.addAnnotatedClass(janisl.musicdb.models.BeatportGenre.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.BeatportLabel.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.BeatportRelease.class);
             
@@ -46,6 +47,7 @@ public class UnitOfWorkImpl implements UnitOfWork {
     private ReleaseRepositoryImpl releaseRepository;
     private TrackRepositoryImpl trackRepository;
     private BeatportArtistRepositoryImpl beatportArtistRepository;
+    private BeatportGenreRepositoryImpl beatportGenreRepository;
     private BeatportLabelRepositoryImpl beatportLabelRepository;
     private BeatportReleaseRepositoryImpl beatportReleaseRepository;
 
@@ -121,6 +123,14 @@ public class UnitOfWorkImpl implements UnitOfWork {
             beatportArtistRepository = new BeatportArtistRepositoryImpl(this);
         }
         return beatportArtistRepository;
+    }
+
+    @Override
+    public BeatportGenreRepository getBeatportGenreRepository() {
+        if (beatportGenreRepository == null) {
+            beatportGenreRepository = new BeatportGenreRepositoryImpl(this);
+        }
+        return beatportGenreRepository;
     }
 
     @Override

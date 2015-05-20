@@ -1,0 +1,23 @@
+<input type="text" ng-model="releases.filterText" ><br />
+<a href="#/releases/">Back</a><br />
+<form ng-submit="releases.import()">
+    <input type="text" ng-model="releases.importUrl" >
+    <input type="submit" value="Import" >
+</form>
+<table border="1">
+    <tr ng-repeat="release in releases.releases | filter:releases.filterText | orderBy: 'name'">
+        <td>{{ release.title }}</td>
+        <td>{{ release.id }}</td>
+        <td>{{ release.slug }}</td>
+        <td>{{ release.releaseDate }}</td>
+        <td>{{ release.labelId }}</td>
+        <td>{{ release.catalogNumber }}</td>
+        <td>{{ release.description }}</td>
+        <td>{{ release.isExclusive }}</td>
+        <td>{{ release.imageUrl }}</td>
+        <td><a ng-click="releases.reimport(release.id)" >Reimport</a></td>
+        <td><a ng-click="releases.delete(release.id)" >Delete</a></td>
+        <td><a href="https://pro.beatport.com/release/{{ release.slug }}/{{ release.id }}"target="_blank">Beatport</a></td>
+        <td><span ng-show="release.imageUrl !== null"><a href="{{ release.imageUrl }}"target="_blank">Image</a></span></td>
+    </tr>
+</table>

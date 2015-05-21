@@ -1,10 +1,15 @@
 package janisl.musicdb.beatport;
 
+import janisl.musicdb.models.BeatportArtist;
 import janisl.musicdb.models.BeatportLabel;
 import janisl.musicdb.models.BeatportRelease;
+import janisl.musicdb.models.BeatportTrack;
 import janisl.musicdb.repositories.UnitOfWork;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.Time;
+import java.util.HashSet;
+import java.util.Set;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -61,6 +66,7 @@ public class ReleaseParser {
     private void downloadAndParseBeatportPage() throws IOException {
         downloadPage();
         parseMainInfo();
+        parseTracks();
     }
 
     private void downloadPage() throws IOException {
@@ -113,6 +119,84 @@ public class ReleaseParser {
                     }
                     release.setDescription(description);
                     break;
+            }
+        }
+    }
+    
+    private void parseTracks() throws IOException {
+        Elements trackElements = mainElement.select("li.track");
+        for (Element trackElement : trackElements) {
+            Element titleElement = trackElement.select("p.buk-track-title").first();
+            Element trackLink = titleElement.select("a").first();
+
+            BeatportTrack track = new BeatportTrack();
+            if (!"track".equals(BeatportUtils.ParseBeatportUrl(trackLink.attr("href"), track))) {
+                throw new BeatportInvalidPathException();
+            }
+            
+            BeatportTrack existingTrack = unitOfWork.getBeatportTrackRepository().get(track.getId());
+            if (existingTrack != null) {
+                existingTrack.setSlug(track.getSlug());
+                track = existingTrack;
+            }
+            
+            track.setReleaseId(release.getId());
+            
+            Element orderNumberElement = trackElement.select("div.buk-track-num").first();
+            track.setOrderNumber(Integer.parseInt(orderNumberElement.text()));
+            
+            Element titleSpan = trackLink.select("span.buk-track-primary-title").first();
+            track.setTitle(titleSpan.text());
+            Element remixedSpan = trackLink.select("span.buk-track-remixed").first();
+            track.setRemix(remixedSpan.text());
+            
+            Elements artistElements = trackElement.select("p.buk-track-artists").first().select("a");
+            Set<BeatportArtist> artists = new HashSet<>(0);
+            for (Element artistElement : artistElements) {
+                artists.add(new ArtistParser(unitOfWork).parseUrl(artistElement.attr("href")));
+            }
+            track.setArtists(artists);
+            
+            Elements remixerElements = trackElement.select("p.buk-track-remixers").first().select("a");
+            Set<BeatportArtist> remixers = new HashSet<>(0);
+            for (Element remixerElement : remixerElements) {
+                remixers.add(new ArtistParser(unitOfWork).parseUrl(remixerElement.attr("href")));
+            }
+            track.setRemixers(remixers);
+
+            Element genreElement = trackElement.select("p.buk-track-genre").select("a").first();
+            track.setGenre(BeatportUtils.resolveGenre(unitOfWork, genreElement.attr("href"), genreElement.text()));
+
+            Element bpmElement = trackElement.select("p.buk-track-bpm").first();
+            if (!"".equals(bpmElement.text())) {
+                track.setBpm(Integer.parseInt(bpmElement.text()));
+            }
+            
+            Element keyElement = trackElement.select("p.buk-track-key").first();
+            if (!"".equals(keyElement.text())) {
+                track.setKeytone(keyElement.text());
+            }
+            
+            Element durationElement = trackElement.select("p.buk-track-length").first();
+            if (!"".equals(durationElement.text())) {
+                String[] parts = durationElement.text().split(":");
+                int hour, min, sec;
+                if (parts.length == 3) {
+                    hour = Integer.parseInt(parts[0]);
+                    min = Integer.parseInt(parts[1]);
+                    sec = Integer.parseInt(parts[2]);
+                } else {
+                    hour = 0;
+                    min = Integer.parseInt(parts[0]);
+                    sec = Integer.parseInt(parts[1]);
+                }
+                track.setDuration(new Time(hour, min, sec));
+            }
+            
+            if (existingTrack != null) {
+                unitOfWork.getBeatportTrackRepository().update(track);
+            } else {
+                unitOfWork.getBeatportTrackRepository().add(track);
             }
         }
     }

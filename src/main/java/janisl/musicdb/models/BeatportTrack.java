@@ -1,5 +1,6 @@
 package janisl.musicdb.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.sql.Time;
@@ -17,10 +18,10 @@ import javax.persistence.ManyToOne;
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class BeatportTrack implements Serializable, BeatportEntity {
-    
+
     private Integer id;
     private String slug;
-    private Integer releaseId;
+    private BeatportRelease release;
     private Integer orderNumber;
     private String title;
     private String remix;
@@ -55,14 +56,17 @@ public class BeatportTrack implements Serializable, BeatportEntity {
         this.slug = slug;
     }
 
-    public Integer getReleaseId() {
-        return releaseId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "releaseId")
+    @JsonIgnore
+    public BeatportRelease getRelease() {
+        return release;
     }
 
-    public void setReleaseId(Integer releaseId) {
-        this.releaseId = releaseId;
+    public void setRelease(BeatportRelease release) {
+        this.release = release;
     }
-    
+
     public Integer getOrderNumber() {
         return orderNumber;
     }
@@ -120,29 +124,33 @@ public class BeatportTrack implements Serializable, BeatportEntity {
     public void setDuration(Time duration) {
         this.duration = duration;
     }
- 
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "BeatportTrackArtist",
-            joinColumns = { @JoinColumn(name = "trackId", nullable = false, updatable = false) }, 
-            inverseJoinColumns = { @JoinColumn(name = "artistId", nullable = false, updatable = false) })
+            joinColumns = {
+                @JoinColumn(name = "trackId", nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                @JoinColumn(name = "artistId", nullable = false, updatable = false)})
     public Set<BeatportArtist> getArtists() {
-            return artists;
+        return artists;
     }
 
     public void setArtists(Set<BeatportArtist> artists) {
-            this.artists = artists;
+        this.artists = artists;
     }
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "BeatportTrackRemixer",
-            joinColumns = { @JoinColumn(name = "trackId", nullable = false, updatable = false) }, 
-            inverseJoinColumns = { @JoinColumn(name = "artistId", nullable = false, updatable = false) })
+            joinColumns = {
+                @JoinColumn(name = "trackId", nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                @JoinColumn(name = "artistId", nullable = false, updatable = false)})
     public Set<BeatportArtist> getRemixers() {
-            return remixers;
+        return remixers;
     }
 
     public void setRemixers(Set<BeatportArtist> remixers) {
-            this.remixers = remixers;
+        this.remixers = remixers;
     }
 
 }

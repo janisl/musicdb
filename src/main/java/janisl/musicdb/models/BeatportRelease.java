@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -15,7 +18,7 @@ public class BeatportRelease implements Serializable, BeatportEntity {
     private String title;
     private String imageUrl;
     private Date releaseDate;
-    private Integer labelId;
+    private BeatportLabel label;
     private String catalogNumber;
     private String description;
     private Boolean isExclusive;
@@ -68,12 +71,14 @@ public class BeatportRelease implements Serializable, BeatportEntity {
         this.releaseDate = releaseDate;
     }
 
-    public Integer getLabelId() {
-        return labelId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "labelId")
+    public BeatportLabel getLabel() {
+        return label;
     }
 
-    public void setLabelId(Integer labelId) {
-        this.labelId = labelId;
+    public void setLabel(BeatportLabel label) {
+        this.label = label;
     }
 
     public String getCatalogNumber() {
@@ -99,4 +104,5 @@ public class BeatportRelease implements Serializable, BeatportEntity {
     public void setIsExclusive(Boolean isExclusive) {
         this.isExclusive = isExclusive;
     }
+
 }

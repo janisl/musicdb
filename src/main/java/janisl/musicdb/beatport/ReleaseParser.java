@@ -98,7 +98,7 @@ public class ReleaseParser {
                 case "Labels":
                     Element link = valueSpan.select("a").first();
                     BeatportLabel label = new LabelParser(unitOfWork).parseUrl(link.attr("href"));
-                    release.setLabelId(label.getId());
+                    release.setLabel(label);
                     break;
                 case "Catalog":
                     release.setCatalogNumber(valueSpan.text());
@@ -140,7 +140,7 @@ public class ReleaseParser {
                 track = existingTrack;
             }
             
-            track.setReleaseId(release.getId());
+            track.setRelease(release);
             
             Element orderNumberElement = trackElement.select("div.buk-track-num").first();
             track.setOrderNumber(Integer.parseInt(orderNumberElement.text()));

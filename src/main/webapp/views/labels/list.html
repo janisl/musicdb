@@ -2,12 +2,12 @@
 <a href="#/labels/add/">Add label</a>
 <table border="1">
     <tr ng-repeat="label in labels.labels | filter:labels.filterText | orderBy: 'name'">
-        <td>{{ label.name}}</td>
-        <td>{{ label.beatportId}}</td>
-        <td>{{ label.beatportUrl}}</td>
-        <td>{{ label.discogsId}}</td>
+        <td>{{ label.name }}</td>
+        <td>{{ label.beatportId }}</td>
+        <td>{{ label.beatportUrl }}</td>
+        <td>{{ label.discogsId }}</td>
         <td><a href="#/labels/{{ label.id }}">Edit</a></td>
-        <td><a href="#/labels/" ng-click="labels.delete(label.id)" >Delete</a></td>
+        <td><a href="#/labels/" ng-click="labels.delete(label)" >Delete</a></td>
         <td><span ng-show="label.beatportId !== null"><a href="https://pro.beatport.com{{ label.beatportUrl }}"target="_blank">Beatport</a></span></td>
         <td><span ng-show="label.discogsId !== null"><a href="http://www.discogs.com/label/{{ label.discogsId }}"target="_blank">Discogs</a></span></td>
     </tr>

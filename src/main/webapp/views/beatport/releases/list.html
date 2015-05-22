@@ -14,8 +14,8 @@
         <td>{{ release.description }}</td>
         <td>{{ release.isExclusive }}</td>
         <td>{{ release.imageUrl }}</td>
-        <td><a ng-click="releases.reimport(release.id)" >Reimport</a></td>
-        <td><a ng-click="releases.delete(release.id)" >Delete</a></td>
+        <td><a ng-click="releases.reimport(release)" >Reimport</a></td>
+        <td><a ng-click="releases.delete(release)" >Delete</a></td>
         <td><a href="https://pro.beatport.com/release/{{ release.slug }}/{{ release.id }}"target="_blank">Beatport</a></td>
         <td><span ng-show="release.imageUrl !== null"><a href="{{ release.imageUrl }}"target="_blank">Image</a></span></td>
     </tr>

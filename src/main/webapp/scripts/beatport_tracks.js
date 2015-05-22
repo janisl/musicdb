@@ -1,26 +1,23 @@
-(function () {
+(function() {
 
-    var app = angular.module('beatportTracks', []);
+    var app = angular.module( 'beatportTracks', [] );
 
-    app.controller('BeatportTracksController', ['$http', function ($http) {
+    app.controller( 'BeatportTracksController', [ 'BeatportTrack', function( BeatportTrack ) {
         var ctrl = this;
         this.filterText = '';
         this.tracks = [];
         this.importUrl = '';
 
         this.getList = function() {
-            $http.get('/beatport/track/').success(function (data) {
-                ctrl.tracks = data;
-            });
+            ctrl.tracks = BeatportTrack.query();
         };
-
-        this.delete = function(trackId) {
-            if (confirm("Are you sure you want to delete this track?") === true) {
-                var url = '/beatport/track/' + trackId;
-                $http.delete(url).success(function (data) {
+        
+        this.delete = function( track ) {
+            if ( confirm( "Are you sure you want to delete this track?" ) === true ) {
+                track.$delete( {}, function() {
                     ctrl.getList();
-                }).error(function (data, status, headers, config) {
-                    alert('Error ' + status);
+                }).error( function( httpResponse ) {
+                    alert( 'Error ' + httpResponse );
                 });
             }
         };

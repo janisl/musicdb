@@ -5,12 +5,12 @@
 </form>
 <table border="1">
     <tr ng-repeat="label in labels.labels | filter:labels.filterText | orderBy: 'name'">
-        <td>{{ label.name}}</td>
-        <td>{{ label.id}}</td>
-        <td>{{ label.slug}}</td>
-        <td>{{ label.imageUrl}}</td>
-        <td><a ng-click="labels.reimport(label.id)" >Reimport</a></td>
-        <td><a ng-click="labels.delete(label.id)" >Delete</a></td>
+        <td>{{ label.name }}</td>
+        <td>{{ label.id }}</td>
+        <td>{{ label.slug }}</td>
+        <td>{{ label.imageUrl }}</td>
+        <td><a ng-click="labels.reimport(label)" >Reimport</a></td>
+        <td><a ng-click="labels.delete(label)" >Delete</a></td>
         <td><a href="https://pro.beatport.com/label/{{ label.slug }}/{{ label.id }}"target="_blank">Beatport</a></td>
         <td><span ng-show="label.imageUrl !== null"><a href="{{ label.imageUrl }}"target="_blank">Image</a></span></td>
     </tr>

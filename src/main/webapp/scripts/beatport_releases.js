@@ -1,45 +1,41 @@
-(function () {
+(function() {
 
-    var app = angular.module('beatportReleases', []);
+    var app = angular.module( 'beatportReleases', [] );
 
-    app.controller('BeatportReleasesController', ['$http', function ($http) {
+    app.controller( 'BeatportReleasesController', [ 'BeatportRelease', function( BeatportRelease ) {
         var ctrl = this;
         this.filterText = '';
         this.releases = [];
         this.importUrl = '';
 
         this.getList = function() {
-            $http.get('/beatport/release/').success(function (data) {
-                ctrl.releases = data;
-            });
+            ctrl.releases = BeatportRelease.query();
         };
 
-        this.import = function () {
-            $http.get('/beatport/release/get?url=' + encodeURIComponent(ctrl.importUrl)).success(function (data) {
+        this.import = function() {
+            BeatportRelease.import( { url: ctrl.importUrl }, function() {
                 ctrl.importUrl = '';
                 ctrl.getList();
-            }).error(function (data, status, headers, config) {
-                alert('Error ' + status + data);
+            }, function( httpResponse ) {
+                alert( 'Error ' + httpResponse );
             });
         };
         
-        this.reimport = function(releaseId) {
-            var url = '/beatport/release/' + releaseId + '/reimport';
-            $http.get(url).success(function (data) {
-                alert('Reimported');
+        this.reimport = function( release ) {
+            release.$reimport( {}, function() {
+                alert( 'Reimported' );
                 ctrl.getList();
-            }).error(function (data, status, headers, config) {
-                alert('Error ' + status);
+            }, function( httpResponse  ) {
+                alert( 'Error ' + httpResponse  );
             });
         };
         
-        this.delete = function(releaseId) {
-            if (confirm("Are you sure you want to delete this release?") === true) {
-                var url = '/beatport/release/' + releaseId;
-                $http.delete(url).success(function (data) {
+        this.delete = function( release ) {
+            if ( confirm( "Are you sure you want to delete this release?" ) === true ) {
+                release.$delete( {}, function() {
                     ctrl.getList();
-                }).error(function (data, status, headers, config) {
-                    alert('Error ' + status);
+                }).error( function( httpResponse ) {
+                    alert( 'Error ' + httpResponse );
                 });
             }
         };

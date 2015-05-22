@@ -1,45 +1,41 @@
-(function () {
+(function() {
 
-    var app = angular.module('beatportArtists', []);
+    var app = angular.module( 'beatportArtists', [] );
 
-    app.controller('BeatportArtistsController', ['$http', function ($http) {
+    app.controller( 'BeatportArtistsController', [ 'BeatportArtist', function( BeatportArtist ) {
         var ctrl = this;
         this.filterText = '';
         this.artists = [];
         this.importUrl = '';
 
         this.getList = function() {
-            $http.get('/beatport/artist/').success(function (data) {
-                ctrl.artists = data;
-            });
+            ctrl.artists = BeatportArtist.query();
         };
 
-        this.import = function () {
-            $http.get('/beatport/artist/get?url=' + encodeURIComponent(ctrl.importUrl)).success(function (data) {
+        this.import = function() {
+            BeatportArtist.import( { url: ctrl.importUrl }, function() {
                 ctrl.importUrl = '';
                 ctrl.getList();
-            }).error(function (data, status, headers, config) {
-                alert('Error ' + status + data);
+            }, function( httpResponse ) {
+                alert( 'Error ' + httpResponse );
             });
         };
         
-        this.reimport = function(artistId) {
-            var url = '/beatport/artist/' + artistId + '/reimport';
-            $http.get(url).success(function (data) {
-                alert('Reimported');
+        this.reimport = function( artist ) {
+            artist.$reimport( {}, function() {
+                alert( 'Reimported' );
                 ctrl.getList();
-            }).error(function (data, status, headers, config) {
-                alert('Error ' + status);
+            }, function( httpResponse  ) {
+                alert( 'Error ' + httpResponse  );
             });
         };
         
-        this.delete = function(artistId) {
-            if (confirm("Are you sure you want to delete this artist?") === true) {
-                var url = '/beatport/artist/' + artistId;
-                $http.delete(url).success(function (data) {
+        this.delete = function( artist ) {
+            if ( confirm( "Are you sure you want to delete this artist?" ) === true ) {
+                artist.$delete( {}, function() {
                     ctrl.getList();
-                }).error(function (data, status, headers, config) {
-                    alert('Error ' + status);
+                }).error( function( httpResponse ) {
+                    alert( 'Error ' + httpResponse );
                 });
             }
         };

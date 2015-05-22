@@ -1,6 +1,6 @@
 (function () {
 
-    var app = angular.module('musicdb', ['ngRoute',
+    var app = angular.module('musicdb', ['ngRoute', 'resources',
         'artists', 'genres', 'labels', 'releases', 'tracks',
         'beatportArtists', 'beatportGenres', 'beatportLabels', 'beatportReleases', 'beatportTracks']);
 

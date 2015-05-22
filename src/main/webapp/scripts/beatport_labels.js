@@ -1,45 +1,41 @@
-(function () {
+(function() {
 
-    var app = angular.module('beatportLabels', []);
+    var app = angular.module( 'beatportLabels', [] );
 
-    app.controller('BeatportLabelsController', ['$http', function ($http) {
+    app.controller( 'BeatportLabelsController', [ 'BeatportLabel', function( BeatportLabel ) {
         var ctrl = this;
         this.filterText = '';
         this.labels = [];
         this.importUrl = '';
 
         this.getList = function() {
-            $http.get('/beatport/label/').success(function (data) {
-                ctrl.labels = data;
-            });
+            ctrl.labels = BeatportLabel.query();
         };
 
-        this.import = function () {
-            $http.get('/beatport/label/get?url=' + encodeURIComponent(ctrl.importUrl)).success(function (data) {
+        this.import = function() {
+            BeatportLabel.import( { url: ctrl.importUrl }, function() {
                 ctrl.importUrl = '';
                 ctrl.getList();
-            }).error(function (data, status, headers, config) {
-                alert('Error ' + status + data);
+            }, function( httpResponse ) {
+                alert( 'Error ' + httpResponse );
             });
         };
         
-        this.reimport = function(labelId) {
-            var url = '/beatport/label/' + labelId + '/reimport';
-            $http.get(url).success(function (data) {
-                alert('Reimported');
+        this.reimport = function( label ) {
+            label.$reimport( {}, function() {
+                alert( 'Reimported' );
                 ctrl.getList();
-            }).error(function (data, status, headers, config) {
-                alert('Error ' + status);
+            }, function( httpResponse  ) {
+                alert( 'Error ' + httpResponse  );
             });
         };
         
-        this.delete = function(labelId) {
-            if (confirm("Are you sure you want to delete this label?") === true) {
-                var url = '/beatport/label/' + labelId;
-                $http.delete(url).success(function (data) {
+        this.delete = function( label ) {
+            if ( confirm( "Are you sure you want to delete this label?" ) === true ) {
+                label.$delete( {}, function() {
                     ctrl.getList();
-                }).error(function (data, status, headers, config) {
-                    alert('Error ' + status);
+                }).error( function( httpResponse ) {
+                    alert( 'Error ' + httpResponse );
                 });
             }
         };

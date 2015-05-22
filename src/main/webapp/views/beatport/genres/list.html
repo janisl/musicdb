@@ -1,10 +1,10 @@
 <input type="text" ng-model="genres.filterText" ><br />
 <table border="1">
     <tr ng-repeat="genre in genres.genres | filter:genres.filterText | orderBy: 'name'">
-        <td>{{ genre.name}}</td>
-        <td>{{ genre.id}}</td>
-        <td>{{ genre.slug}}</td>
-        <td><a ng-click="genres.delete(genre.id)" >Delete</a></td>
+        <td>{{ genre.name }}</td>
+        <td>{{ genre.id }}</td>
+        <td>{{ genre.slug }}</td>
+        <td><a ng-click="genres.delete(genre)" >Delete</a></td>
         <td><a href="https://pro.beatport.com/genre/{{ genre.slug }}/{{ genre.id }}"target="_blank">Beatport</a></td>
     </tr>
 </table>

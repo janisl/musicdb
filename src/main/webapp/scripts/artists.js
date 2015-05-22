@@ -1,25 +1,22 @@
-(function () {
+(function() {
 
-    var app = angular.module('artists', []);
+    var app = angular.module( 'artists', [] );
 
-    app.controller('ArtistsController', ['$http', function ($http) {
+    app.controller( 'ArtistsController', [ 'Artist', function( Artist ) {
         var ctrl = this;
         this.filterText = '';
         this.artists = [];
 
         this.getList = function() {
-            $http.get('/artist/').success(function (data) {
-                ctrl.artists = data;
-            });
+            ctrl.artists = Artist.query();
         };
         
-        this.delete = function(artistId) {
-            if (confirm("Are you sure you want to delete this artist?") === true) {
-                var url = '/artist/' + artistId;
-                $http.delete(url).success(function (data) {
+        this.delete = function( artist ) {
+            if ( confirm( "Are you sure you want to delete this artist?" ) === true ) {
+                artist.$delete( {}, function() {
                     ctrl.getList();
-                }).error(function (data, status, headers, config) {
-                    alert('Error ' + status);
+                }, function( httpResponse ) {
+                    alert( 'Error ' + httpResponse );
                 });
             }
         };
@@ -27,33 +24,29 @@
         this.getList();
     }]);
 
-    app.controller('ArtistAddController', ['$http', '$location', function ($http, $location) {
+    app.controller('ArtistAddController', ['Artist', '$location', function (Artist, $location) {
         var ctrl = this;
-        this.artist = {};
+        this.artist = new Artist();
 
         this.submit = function () {
-            $http.post('/artist/', ctrl.artist).success(function (data) {
-                $location.path('/artists/');
-            }).error(function (data, status, headers, config) {
-                alert('Error ' + status);
+            ctrl.artist.$save( {}, function() {
+                $location.path( '/artists/' );
+            }, function( httpResponse ) {
+                alert( 'Error ' + httpResponse );
             });
         };
     }]);
 
-    app.controller('ArtistEditController', ['$http', '$routeParams', '$location', function ($http, $routeParams, $location) {
+    app.controller('ArtistEditController', ['Artist', '$routeParams', '$location', function (Artist, $routeParams, $location) {
         var ctrl = this;
         this.id = $routeParams.id;
-        this.artist = {};
-
-        $http.get('/artist/' + $routeParams.id).success(function (data) {
-            ctrl.artist = data;
-        });
+        this.artist = Artist.get( { id: $routeParams.id } );
 
         this.submit = function () {
-            $http.put('/artist/' + ctrl.id, ctrl.artist).success(function (data) {
-                $location.path('/artists/');
-            }).error(function (data, status, headers, config) {
-                alert('Error ' + status);
+            ctrl.artist.$update( {} , function() {
+                $location.path( '/artists/' );
+            }, function( httpResponse ) {
+                alert( 'Error ' + httpResponse );
             });
         };
     }]);

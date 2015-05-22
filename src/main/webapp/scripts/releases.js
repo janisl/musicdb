@@ -1,59 +1,52 @@
-(function () {
+(function() {
 
-    var app = angular.module('releases', []);
+    var app = angular.module( 'releases', [] );
 
-    app.controller('ReleasesController', ['$http', function ($http) {
+    app.controller( 'ReleasesController', [ 'Release', function( Release ) {
         var ctrl = this;
         this.filterText = '';
         this.releases = [];
 
         this.getList = function() {
-            $http.get('/release/').success(function (data) {
-                ctrl.releases = data;
-            });
+            ctrl.releases = Release.query();
         };
-        
-        this.delete = function(releaseId) {
-            if (confirm("Are you sure you want to delete this release?") === true) {
-                var url = '/release/' + releaseId;
-                $http.delete(url).success(function (data) {
+
+        this.delete = function( release ) {
+            if ( confirm( "Are you sure you want to delete this release?" ) === true ) {
+                release.$delete( {}, function() {
                     ctrl.getList();
-                }).error(function (data, status, headers, config) {
-                    alert('Error ' + status);
+                }, function( httpResponse ) {
+                    alert( 'Error ' + httpResponse );
                 });
             }
         };
-        
+
         this.getList();
     }]);
 
-    app.controller('ReleaseAddController', ['$http', '$location', function ($http, $location) {
+    app.controller( 'ReleaseAddController', [ 'Release', '$location', function( Release, $location ) {
         var ctrl = this;
-        this.release = {};
+        this.release = new Release();
 
-        this.submit = function () {
-            $http.post('/release/', ctrl.release).success(function (data) {
-                $location.path('/releases/');
-            }).error(function (data, status, headers, config) {
-                alert('Error ' + status);
+        this.submit = function() {
+            ctrl.release.$save( {}, function() {
+                $location.path( '/releases/' );
+            }, function( httpResponse ) {
+                alert( 'Error ' + httpResponse );
             });
         };
     }]);
 
-    app.controller('ReleaseEditController', ['$http', '$routeParams', '$location', function ($http, $routeParams, $location) {
+    app.controller( 'ReleaseEditController', [ 'Release', '$routeParams', '$location', function( Release, $routeParams, $location ) {
         var ctrl = this;
         this.id = $routeParams.id;
-        this.release = {};
+        this.release = Release.get( { id: $routeParams.id } );
 
-        $http.get('/release/' + $routeParams.id).success(function (data) {
-            ctrl.release = data;
-        });
-
-        this.submit = function () {
-            $http.put('/release/' + ctrl.id, ctrl.release).success(function (data) {
-                $location.path('/releases/');
-            }).error(function (data, status, headers, config) {
-                alert('Error ' + status);
+        this.submit = function() {
+            ctrl.release.$update( {}, function() {
+                $location.path( '/releases/' );
+            }, function( httpResponse ) {
+                alert( 'Error ' + httpResponse );
             });
         };
     }]);

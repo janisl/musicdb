@@ -1,6 +1,7 @@
 package janisl.musicdb.controllers;
 
 import janisl.musicdb.models.MixxxTrack;
+import janisl.musicdb.models.MixxxTrackCue;
 import janisl.musicdb.repositories.UnitOfWork;
 import janisl.musicdb.repositories.UnitOfWorkFactory;
 import java.util.List;
@@ -28,6 +29,13 @@ public class MixxxTrackController {
                 throw new MixxxTrackNotFoundException();
             }
             return track;
+        }
+    }
+    
+    @RequestMapping(value = "/{id}/cues", method = RequestMethod.GET)
+    public List<MixxxTrackCue> getCues(@PathVariable("id") Integer trackId) throws Exception {
+        try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
+            return unitOfWork.getMixxxTrackCueRepository().getByTrackId(trackId);
         }
     }
 

@@ -26,4 +26,6 @@ public interface UnitOfWork extends AutoCloseable {
     
     public MixxxTrackRepository getMixxxTrackRepository();
     
+    public MixxxTrackCueRepository getMixxxTrackCueRepository();
+    
 }

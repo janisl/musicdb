@@ -70,4 +70,8 @@
         return $resource( '/mixxx/track/:id', { id: '@id' } );
     }]);
 
+    app.factory( 'MixxxTrackCue', [ '$resource', function( $resource ) {
+        return $resource( '/mixxx/track/:trackId/cues', { trackId: '@trackId' } );
+    }]);
+
 })();

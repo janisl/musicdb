@@ -41,6 +41,7 @@ public class UnitOfWorkImpl implements UnitOfWork {
             
             // Add all annotated classes for the main DB.
             mixxxConfiguration.addAnnotatedClass(janisl.musicdb.models.MixxxTrack.class);
+            mixxxConfiguration.addAnnotatedClass(janisl.musicdb.models.MixxxTrackCue.class);
             mixxxConfiguration.addAnnotatedClass(janisl.musicdb.models.MixxxTrackLocation.class);
             
             mixxxConfiguration.configure("hibernate-mixxx.cfg.xml");
@@ -70,6 +71,7 @@ public class UnitOfWorkImpl implements UnitOfWork {
     private BeatportReleaseRepositoryImpl beatportReleaseRepository;
     private BeatportTrackRepositoryImpl beatportTrackRepository;
     private MixxxTrackRepositoryImpl mixxxTrackRepository;
+    private MixxxTrackCueRepositoryImpl mixxxTrackCueRepository;
 
     public Session getSession() {
         if (session == null) {
@@ -201,6 +203,14 @@ public class UnitOfWorkImpl implements UnitOfWork {
             mixxxTrackRepository = new MixxxTrackRepositoryImpl(this);
         }
         return mixxxTrackRepository;
+    }
+
+    @Override
+    public MixxxTrackCueRepository getMixxxTrackCueRepository() {
+        if (mixxxTrackCueRepository == null) {
+            mixxxTrackCueRepository = new MixxxTrackCueRepositoryImpl(this);
+        }
+        return mixxxTrackCueRepository;
     }
 
 }

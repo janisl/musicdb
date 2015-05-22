@@ -117,6 +117,11 @@
                 controller: 'MixxxTracksController',
                 controllerAs: 'tracks'
             })
+            .when('/mixxx/tracks/:trackId/cues/', {
+                templateUrl: 'views/mixxx/tracks/cues.html',
+                controller: 'MixxxTrackCuesController',
+                controllerAs: 'cues'
+            })
             .otherwise({
                 redirectTo: '/'
             });

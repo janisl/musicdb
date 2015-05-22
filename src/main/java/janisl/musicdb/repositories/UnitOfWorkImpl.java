@@ -10,6 +10,8 @@ public class UnitOfWorkImpl implements UnitOfWork {
 
     private static final SessionFactory sessionFactory;
     private static final ServiceRegistry serviceRegistry;
+    private static final SessionFactory mixxxSessionFactory;
+    private static final ServiceRegistry mixxxServiceRegistry;
 
     static {
         try {
@@ -33,6 +35,18 @@ public class UnitOfWorkImpl implements UnitOfWork {
             serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
                     configuration.getProperties()).build();
             sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+            
+            // Create the SessionFactory from hibernate-mixxx.cfg.xml config file.
+            Configuration mixxxConfiguration = new Configuration();
+            
+            // Add all annotated classes for the main DB.
+            mixxxConfiguration.addAnnotatedClass(janisl.musicdb.models.MixxxTrack.class);
+            mixxxConfiguration.addAnnotatedClass(janisl.musicdb.models.MixxxTrackLocation.class);
+            
+            mixxxConfiguration.configure("hibernate-mixxx.cfg.xml");
+            mixxxServiceRegistry = new StandardServiceRegistryBuilder().applySettings(
+                    mixxxConfiguration.getProperties()).build();
+            mixxxSessionFactory = mixxxConfiguration.buildSessionFactory(mixxxServiceRegistry);
         } catch (Throwable ex) {
             // Log the exception.
             System.err.println("Initial SessionFactory creation failed." + ex);
@@ -41,7 +55,10 @@ public class UnitOfWorkImpl implements UnitOfWork {
     }
 
     private Session session;
+    private Session mixxxSession;
     private Boolean transactionStarted = false;
+    private Boolean mixxxTransactionStarted = false;
+    
     private ArtistRepositoryImpl artistRepository;
     private GenreRepositoryImpl genreRepository;
     private LabelRepositoryImpl labelRepository;
@@ -52,6 +69,7 @@ public class UnitOfWorkImpl implements UnitOfWork {
     private BeatportLabelRepositoryImpl beatportLabelRepository;
     private BeatportReleaseRepositoryImpl beatportReleaseRepository;
     private BeatportTrackRepositoryImpl beatportTrackRepository;
+    private MixxxTrackRepositoryImpl mixxxTrackRepository;
 
     public Session getSession() {
         if (session == null) {
@@ -64,11 +82,26 @@ public class UnitOfWorkImpl implements UnitOfWork {
         return session;
     }
 
+    public Session getMixxxSession() {
+        if (mixxxSession == null) {
+            mixxxSession = mixxxSessionFactory.openSession();
+        }
+        if (!mixxxTransactionStarted) {
+            mixxxSession.beginTransaction();
+            mixxxTransactionStarted = true;
+        }
+        return mixxxSession;
+    }
+
     @Override
     public void commit() {
         if (session != null && transactionStarted) {
             session.getTransaction().commit();
             transactionStarted = false;
+        }
+        if (mixxxSession != null && mixxxTransactionStarted) {
+            mixxxSession.getTransaction().commit();
+            mixxxTransactionStarted = false;
         }
     }
 
@@ -76,6 +109,9 @@ public class UnitOfWorkImpl implements UnitOfWork {
     public void close() throws Exception {
         if (session != null) {
             session.close();
+        }
+        if (mixxxSession != null) {
+            mixxxSession.close();
         }
     }
 
@@ -157,6 +193,14 @@ public class UnitOfWorkImpl implements UnitOfWork {
             beatportTrackRepository = new BeatportTrackRepositoryImpl(this);
         }
         return beatportTrackRepository;
+    }
+
+    @Override
+    public MixxxTrackRepository getMixxxTrackRepository() {
+        if (mixxxTrackRepository == null) {
+            mixxxTrackRepository = new MixxxTrackRepositoryImpl(this);
+        }
+        return mixxxTrackRepository;
     }
 
 }

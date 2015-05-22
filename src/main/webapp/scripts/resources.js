@@ -66,4 +66,8 @@
         return $resource( '/beatport/track/:id', { id: '@id' } );
     }]);
 
+    app.factory( 'MixxxTrack', [ '$resource', function( $resource ) {
+        return $resource( '/mixxx/track/:id', { id: '@id' } );
+    }]);
+
 })();

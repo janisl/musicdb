@@ -1,0 +1,23 @@
+<input type="text" ng-model="tracks.filterText" ><br />
+<table border="1">
+    <tr ng-repeat="track in tracks.tracks | filter:tracks.filterText | orderBy: 'name'">
+        <td>{{ track.id }}</td>
+        <td>{{ track.artist }}</td>
+        <td>{{ track.title }}</td>
+        <td>{{ track.album }}</td>
+        <td>{{ track.year }}</td>
+        <td>{{ track.genre }}</td>
+        <td>{{ track.trackNumber }}</td>
+        <td>{{ track.comment }}</td>
+        <td>{{ track.duration }}</td>
+        <td>{{ track.bitRate }}</td>
+        <td>{{ track.bpm }}</td>
+        <td>{{ track.mixxxDeleted }}</td>
+        <td>{{ track.fileType }}</td>
+        <td>{{ track.rating }}</td>
+        <td>{{ track.key }}</td>
+        <td>{{ track.composer }}</td>
+        <td>{{ track.bpmLock }}</td>
+        <td>{{ track.location }}</td>
+    </tr>
+</table>

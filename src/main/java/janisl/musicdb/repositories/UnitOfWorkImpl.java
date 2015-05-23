@@ -40,6 +40,8 @@ public class UnitOfWorkImpl implements UnitOfWork {
             Configuration mixxxConfiguration = new Configuration();
             
             // Add all annotated classes for the main DB.
+            mixxxConfiguration.addAnnotatedClass(janisl.musicdb.models.MixxxPlaylist.class);
+            mixxxConfiguration.addAnnotatedClass(janisl.musicdb.models.MixxxPlaylistTrack.class);
             mixxxConfiguration.addAnnotatedClass(janisl.musicdb.models.MixxxTrack.class);
             mixxxConfiguration.addAnnotatedClass(janisl.musicdb.models.MixxxTrackCue.class);
             mixxxConfiguration.addAnnotatedClass(janisl.musicdb.models.MixxxTrackLocation.class);
@@ -70,6 +72,8 @@ public class UnitOfWorkImpl implements UnitOfWork {
     private BeatportLabelRepositoryImpl beatportLabelRepository;
     private BeatportReleaseRepositoryImpl beatportReleaseRepository;
     private BeatportTrackRepositoryImpl beatportTrackRepository;
+    private MixxxPlaylistRepositoryImpl mixxxPlaylistRepository;
+    private MixxxPlaylistTrackRepositoryImpl mixxxPlaylistTrackRepository;
     private MixxxTrackRepositoryImpl mixxxTrackRepository;
     private MixxxTrackCueRepositoryImpl mixxxTrackCueRepository;
 
@@ -195,6 +199,22 @@ public class UnitOfWorkImpl implements UnitOfWork {
             beatportTrackRepository = new BeatportTrackRepositoryImpl(this);
         }
         return beatportTrackRepository;
+    }
+
+    @Override
+    public MixxxPlaylistRepository getMixxxPlaylistRepository() {
+        if (mixxxPlaylistRepository == null) {
+            mixxxPlaylistRepository = new MixxxPlaylistRepositoryImpl(this);
+        }
+        return mixxxPlaylistRepository;
+    }
+
+    @Override
+    public MixxxPlaylistTrackRepository getMixxxPlaylistTrackRepository() {
+        if (mixxxPlaylistTrackRepository == null) {
+            mixxxPlaylistTrackRepository = new MixxxPlaylistTrackRepositoryImpl(this);
+        }
+        return mixxxPlaylistTrackRepository;
     }
 
     @Override

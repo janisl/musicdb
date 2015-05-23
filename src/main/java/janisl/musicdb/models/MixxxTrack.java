@@ -2,7 +2,6 @@ package janisl.musicdb.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -31,7 +30,7 @@ public class MixxxTrack implements Serializable {
     private Integer cuePoint;
     private Float bpm;
     private Integer channels;
-    //private Timestamp dateTimeAdded;
+    private String dateTimeAdded;
     private Integer mixxxDeleted;
     private String fileType;
     private Integer timesPlayed;
@@ -166,14 +165,14 @@ public class MixxxTrack implements Serializable {
         this.channels = channels;
     }
 
-    /*@Column(name = "datetime_added")
-    public Timestamp getDateTimeAdded() {
+    @Column(name = "datetime_added")
+    public String getDateTimeAdded() {
         return dateTimeAdded;
     }
 
-    public void setDateTimeAdded(Timestamp dateTimeAdded) {
+    public void setDateTimeAdded(String dateTimeAdded) {
         this.dateTimeAdded = dateTimeAdded;
-    }*/
+    }
 
     @Column(name = "mixxx_deleted")
     public Integer getMixxxDeleted() {

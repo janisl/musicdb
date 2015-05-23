@@ -1,0 +1,13 @@
+<input type="text" ng-model="playlists.filterText" ><br />
+<table border="1">
+    <tr ng-repeat="playlist in playlists.playlists | filter:playlists.filterText | orderBy: 'name'">
+        <td>{{ playlist.id }}</td>
+        <td>{{ playlist.name }}</td>
+        <td>{{ playlist.position }}</td>
+        <td>{{ playlist.hidden }}</td>
+        <td>{{ playlist.dateCreated }}</td>
+        <td>{{ playlist.dateModified }}</td>
+        <td>{{ playlist.locked }}</td>
+        <td><a href="#/mixxx/playlists/{{ playlist.id }}/">Details</a></td>
+    </tr>
+</table>

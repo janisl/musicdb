@@ -74,4 +74,12 @@
         return $resource( '/mixxx/track/:trackId/cues', { trackId: '@trackId' } );
     }]);
 
+    app.factory( 'MixxxPlaylist', [ '$resource', function( $resource ) {
+        return $resource( '/mixxx/playlist/:id', { id: '@id' } );
+    }]);
+
+    app.factory( 'MixxxPlaylistTrack', [ '$resource', function( $resource ) {
+        return $resource( '/mixxx/playlist/:playlistId/track', { playlistId: '@playlistId' } );
+    }]);
+
 })();

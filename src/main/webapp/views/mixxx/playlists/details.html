@@ -1,0 +1,9 @@
+<h1>{{ playlistCtrl.playlist.name }}</h1>
+<table border="1">
+    <tr ng-repeat="track in playlistCtrl.tracks | orderBy: 'position'">
+        <td>{{ track.position }}</td>
+        <td>{{ track.track.artist }}</td>
+        <td>{{ track.track.title }}</td>
+        <td>{{ track.track.comment }}</td>
+    </tr>
+</table>

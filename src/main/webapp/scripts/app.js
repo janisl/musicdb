@@ -3,7 +3,7 @@
     var app = angular.module('musicdb', ['ngRoute', 'resources',
         'artists', 'genres', 'labels', 'releases', 'tracks',
         'beatportArtists', 'beatportGenres', 'beatportLabels', 'beatportReleases', 'beatportTracks',
-        'mixxxPlaylists', 'mixxxTracks']);
+        'mixxxCrates', 'mixxxPlaylists', 'mixxxTracks']);
 
     app.config(['$routeProvider', function($routeProvider) {
         $routeProvider
@@ -131,6 +131,16 @@
                 templateUrl: 'views/mixxx/playlists/details.html',
                 controller: 'MixxxPlaylistDetailsController',
                 controllerAs: 'playlistCtrl'
+            })
+            .when('/mixxx/crates/', {
+                templateUrl: 'views/mixxx/crates/list.html',
+                controller: 'MixxxCratesController',
+                controllerAs: 'crates'
+            })
+            .when('/mixxx/crates/:id/', {
+                templateUrl: 'views/mixxx/crates/details.html',
+                controller: 'MixxxCrateDetailsController',
+                controllerAs: 'crateCtrl'
             })
             .otherwise({
                 redirectTo: '/'

@@ -1,0 +1,10 @@
+<h1>{{ crateCtrl.crate.name }}</h1>
+<table border="1">
+    <tr ng-repeat="track in crateCtrl.tracks | orderBy: 'artist'">
+        <td>{{ track.artist }}</td>
+        <td>{{ track.title }}</td>
+        <td>{{ track.bpm }}</td>
+        <td>{{ track.key }}</td>
+        <td>{{ track.comment }}</td>
+    </tr>
+</table>

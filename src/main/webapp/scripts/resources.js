@@ -82,4 +82,12 @@
         return $resource( '/mixxx/playlist/:playlistId/track', { playlistId: '@playlistId' } );
     }]);
 
+    app.factory( 'MixxxCrate', [ '$resource', function( $resource ) {
+        return $resource( '/mixxx/crate/:id', { id: '@id' } );
+    }]);
+
+    app.factory( 'MixxxCrateTrack', [ '$resource', function( $resource ) {
+        return $resource( '/mixxx/crate/:crateId/track', { crateId: '@crateId' } );
+    }]);
+
 })();

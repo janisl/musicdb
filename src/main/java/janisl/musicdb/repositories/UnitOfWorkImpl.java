@@ -40,6 +40,7 @@ public class UnitOfWorkImpl implements UnitOfWork {
             Configuration mixxxConfiguration = new Configuration();
             
             // Add all annotated classes for the main DB.
+            mixxxConfiguration.addAnnotatedClass(janisl.musicdb.models.MixxxCrate.class);
             mixxxConfiguration.addAnnotatedClass(janisl.musicdb.models.MixxxPlaylist.class);
             mixxxConfiguration.addAnnotatedClass(janisl.musicdb.models.MixxxPlaylistTrack.class);
             mixxxConfiguration.addAnnotatedClass(janisl.musicdb.models.MixxxTrack.class);
@@ -72,6 +73,7 @@ public class UnitOfWorkImpl implements UnitOfWork {
     private BeatportLabelRepositoryImpl beatportLabelRepository;
     private BeatportReleaseRepositoryImpl beatportReleaseRepository;
     private BeatportTrackRepositoryImpl beatportTrackRepository;
+    private MixxxCrateRepositoryImpl mixxxCrateRepository;
     private MixxxPlaylistRepositoryImpl mixxxPlaylistRepository;
     private MixxxPlaylistTrackRepositoryImpl mixxxPlaylistTrackRepository;
     private MixxxTrackRepositoryImpl mixxxTrackRepository;
@@ -199,6 +201,14 @@ public class UnitOfWorkImpl implements UnitOfWork {
             beatportTrackRepository = new BeatportTrackRepositoryImpl(this);
         }
         return beatportTrackRepository;
+    }
+
+    @Override
+    public MixxxCrateRepository getMixxxCrateRepository() {
+        if (mixxxCrateRepository == null) {
+            mixxxCrateRepository = new MixxxCrateRepositoryImpl(this);
+        }
+        return mixxxCrateRepository;
     }
 
     @Override

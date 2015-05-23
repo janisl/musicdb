@@ -7,7 +7,7 @@ public interface MixxxPlaylistRepository {
     
     public List<MixxxPlaylist> getAll();
 
-    public MixxxPlaylist get( Integer id );
+    public MixxxPlaylist get(Integer id);
 
     public void update(MixxxPlaylist playlist);
     

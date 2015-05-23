@@ -24,6 +24,8 @@ public interface UnitOfWork extends AutoCloseable {
     
     public BeatportTrackRepository getBeatportTrackRepository();
     
+    public MixxxCrateRepository getMixxxCrateRepository();
+    
     public MixxxPlaylistRepository getMixxxPlaylistRepository();
     
     public MixxxPlaylistTrackRepository getMixxxPlaylistTrackRepository();

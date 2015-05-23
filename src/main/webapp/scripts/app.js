@@ -87,6 +87,10 @@
                 controller: 'TrackEditController',
                 controllerAs: 'trackCtrl'
             })
+            .when('/pianos/', {
+                templateUrl: 'views/pianos.html'
+            })
+            
             .when('/beatport/artists/', {
                 templateUrl: 'views/beatport/artists/list.html',
                 controller: 'BeatportArtistsController',
@@ -112,6 +116,7 @@
                 controller: 'BeatportTracksController',
                 controllerAs: 'tracks'
             })
+            
             .when('/mixxx/tracks/', {
                 templateUrl: 'views/mixxx/tracks/list.html',
                 controller: 'MixxxTracksController',
@@ -142,6 +147,7 @@
                 controller: 'MixxxCrateDetailsController',
                 controllerAs: 'crateCtrl'
             })
+            
             .otherwise({
                 redirectTo: '/'
             });

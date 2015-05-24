@@ -6,10 +6,13 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -26,6 +29,7 @@ public class BeatportRelease implements Serializable, BeatportEntity {
     private String catalogNumber;
     private String description;
     private Boolean isExclusive;
+    private Set<BeatportArtist> artists = new HashSet<>(0);
     private Set<BeatportTrack> tracks = new HashSet<>(0);
 
     public BeatportRelease() {
@@ -108,6 +112,20 @@ public class BeatportRelease implements Serializable, BeatportEntity {
 
     public void setIsExclusive(Boolean isExclusive) {
         this.isExclusive = isExclusive;
+    }
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "BeatportReleaseArtist",
+            joinColumns = {
+                @JoinColumn(name = "releaseId", nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                @JoinColumn(name = "artistId", nullable = false, updatable = false)})
+    public Set<BeatportArtist> getArtists() {
+        return artists;
+    }
+
+    public void setArtists(Set<BeatportArtist> artists) {
+        this.artists = artists;
     }
 
     @OneToMany(mappedBy = "release")

@@ -6,12 +6,17 @@
         <td valign="top">
             <h1>{{ releaseCtrl.release.title }}</h1>
             <p ng-show="{{ releaseCtrl.release.isExclusive }}"><b>Exclusive</b></p>
+            <p>Artists: <b>
+                    <span ng-repeat="artist in releaseCtrl.release.artists">
+                        <a href="#/beatport/artists/{{ artist.id }}">{{ artist.name }}</a>{{ $last ? '' : ', ' }}
+                    </span>
+                </b></p>
             <p>Release date: <b>{{ releaseCtrl.release.releaseDate }}</b></p>
             <p>Label: <b><a href="#/beatport/labels/{{ releaseCtrl.release.label.id }}">{{ releaseCtrl.release.label.name }}</a></b></p>
             <p>Catalog number: <b>{{ releaseCtrl.release.catalogNumber }}</b></p>
             <p style="white-space:pre-wrap;">Description: {{ releaseCtrl.release.description }}</p>
-            <a ng-click="releaseCtrl.releases.reimport(releaseCtrl.release)" >Reimport</a><br />
-            <a ng-click="releaseCtrl.releases.delete(releaseCtrl.release)" >Delete</a><br />
+            <a ng-click="releaseCtrl.reimport(releaseCtrl.release)" >Reimport</a><br />
+            <a ng-click="releaseCtrl.delete(releaseCtrl.release)" >Delete</a><br />
             <a href="https://pro.beatport.com/release/{{ releaseCtrl.release.slug }}/{{ releaseCtrl.release.id }}"target="_blank">Beatport</a><br />
         </td>
     </tr>

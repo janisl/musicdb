@@ -44,8 +44,33 @@
     }]);
 
     app.controller( 'BeatportReleaseDetailsController', [ 'BeatportRelease', 'BeatportTrack', '$routeParams', function( BeatportRelease, BeatportTrack, $routeParams ) {
-        this.release = BeatportRelease.get( { id: $routeParams.id } );
-        this.tracks = BeatportTrack.byRelease( { releaseId: $routeParams.id } );
+        var ctrl = this;
+        
+        this.getList = function() {
+            ctrl.release = BeatportRelease.get( { id: $routeParams.id } );
+            ctrl.tracks = BeatportTrack.byRelease( { releaseId: $routeParams.id } );
+        };
+        
+        this.reimport = function( release ) {
+            release.$reimport( {}, function() {
+                alert( 'Reimported' );
+                ctrl.getList();
+            }, function( httpResponse  ) {
+                alert( 'Error ' + httpResponse  );
+            });
+        };
+        
+        this.delete = function( release ) {
+            if ( confirm( "Are you sure you want to delete this release?" ) === true ) {
+                release.$delete( {}, function() {
+                    ctrl.getList();
+                }).error( function( httpResponse ) {
+                    alert( 'Error ' + httpResponse );
+                });
+            }
+        };
+        
+        this.getList();
     }]);
     
 })();

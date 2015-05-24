@@ -14,6 +14,7 @@
     <tr>
         <td></td>
         <td>Title</td>
+        <td>Artists</td>
         <td width="100">Release date</td>
         <td width="100">Catalog nmber</td>
     </tr>
@@ -24,6 +25,11 @@
         <td>
             <b><a href="#/beatport/releases/{{ release.id }}">{{ release.title }}</a></b><br />
             <span ng-show="{{ release.isExclusive }}">Exclusive<br /></span>
+        </td>
+        <td>
+            <span ng-repeat="artist in release.artists">
+                <b><a href="#/beatport/artists/{{ artist.id }}">{{ artist.name }}</a></b>{{ $last ? '' : ', ' }}
+            </span>
         </td>
         <td>
             {{ release.releaseDate }}

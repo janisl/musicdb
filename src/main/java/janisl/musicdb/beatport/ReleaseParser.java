@@ -119,6 +119,14 @@ public class ReleaseParser {
                     }
                     release.setDescription(description);
                     break;
+                case "Artists":
+                    Set<BeatportArtist> artists = new HashSet<>(0);
+                    for (Element artistElement : valueSpan.select("a")) {
+                        BeatportArtist artist = new ArtistParser(unitOfWork).parseUrl(artistElement.attr("href"));
+                        if (!artists.contains(artist))
+                            artists.add(artist);
+                    }
+                    release.setArtists(artists);
             }
         }
     }

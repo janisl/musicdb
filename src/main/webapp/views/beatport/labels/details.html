@@ -1,15 +1,35 @@
-<div>
-    <img src="{{ labelCtrl.label.imageUrl }}" alt="Image" />
-    <h1>{{ labelCtrl.label.name }}</h1>
-</div>
+<table>
+    <tr>
+        <td>
+            <img src="{{ labelCtrl.label.imageUrl }}" alt="Image" />
+        </td>
+        <td valign="top">
+            <h1>{{ labelCtrl.label.name }}</h1>
+            <a href="https://pro.beatport.com/label/{{ labelCtrl.label.slug }}/{{ labelCtrl.label.id }}"target="_blank">Beatport</a>
+        </td>
+    </tr>
+</table>
 <input type="text" ng-model="labelCtrl.filterText" ><br />
-<table border="1">
+<table>
+    <tr>
+        <td></td>
+        <td>Title</td>
+        <td width="100">Release date</td>
+        <td width="100">Catalog nmber</td>
+    </tr>
     <tr ng-repeat="release in labelCtrl.releases | filter:labelCtrl.filterText | orderBy: 'releaseDate' : reverse">
-        <td>{{ release.title }}</td>
-        <td>{{ release.releaseDate }}</td>
-        <td>{{ release.catalogNumber }}</td>
-        <td>{{ release.isExclusive }}</td>
-        <td><a href="https://pro.beatport.com/release/{{ release.slug }}/{{ release.id }}"target="_blank">Beatport</a></td>
-        <td><span ng-show="release.imageUrl !== null"><a href="{{ release.imageUrl }}"target="_blank">Image</a></span></td>
+        <td>
+            <a href="#/beatport/releases/{{ release.id }}"><img src="{{ release.imageUrl }}" alt="Image" width="50" height="50" /></a>
+        </td>
+        <td>
+            <b><a href="#/beatport/releases/{{ release.id }}">{{ release.title }}</a></b><br />
+            <span ng-show="{{ release.isExclusive }}">Exclusive<br /></span>
+        </td>
+        <td>
+            {{ release.releaseDate }}
+        </td>
+        <td>
+            {{ release.catalogNumber }}
+        </td>
     </tr>
 </table>

@@ -1,0 +1,15 @@
+<div>
+    <img src="{{ labelCtrl.label.imageUrl }}" alt="Image" />
+    <h1>{{ labelCtrl.label.name }}</h1>
+</div>
+<input type="text" ng-model="labelCtrl.filterText" ><br />
+<table border="1">
+    <tr ng-repeat="release in labelCtrl.releases | filter:labelCtrl.filterText | orderBy: 'releaseDate' : reverse">
+        <td>{{ release.title }}</td>
+        <td>{{ release.releaseDate }}</td>
+        <td>{{ release.catalogNumber }}</td>
+        <td>{{ release.isExclusive }}</td>
+        <td><a href="https://pro.beatport.com/release/{{ release.slug }}/{{ release.id }}"target="_blank">Beatport</a></td>
+        <td><span ng-show="release.imageUrl !== null"><a href="{{ release.imageUrl }}"target="_blank">Image</a></span></td>
+    </tr>
+</table>

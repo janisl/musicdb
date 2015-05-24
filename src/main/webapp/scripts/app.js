@@ -106,6 +106,11 @@
                 controller: 'BeatportLabelsController',
                 controllerAs: 'labels'
             })
+            .when('/beatport/labels/:id/', {
+                templateUrl: 'views/beatport/labels/details.html',
+                controller: 'BeatportLabelDetailsController',
+                controllerAs: 'labelCtrl'
+            })
             .when('/beatport/releases/', {
                 templateUrl: 'views/beatport/releases/list.html',
                 controller: 'BeatportReleasesController',

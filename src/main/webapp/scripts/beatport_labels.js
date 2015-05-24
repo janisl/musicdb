@@ -43,4 +43,10 @@
         this.getList();
     }]);
 
+    app.controller('BeatportLabelDetailsController', [ 'BeatportLabel', 'BeatportRelease', '$routeParams', function( BeatportLabel, BeatportRelease, $routeParams ) {
+        this.filterText = '';
+        this.label = BeatportLabel.get( { id: $routeParams.id } );
+        this.releases = BeatportRelease.byLabel( { labelId: $routeParams.id } );
+    }]);
+
 })();

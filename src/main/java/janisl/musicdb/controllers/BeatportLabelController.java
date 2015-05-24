@@ -2,9 +2,11 @@ package janisl.musicdb.controllers;
 
 import janisl.musicdb.beatport.LabelParser;
 import janisl.musicdb.models.BeatportLabel;
+import janisl.musicdb.models.BeatportRelease;
 import janisl.musicdb.repositories.UnitOfWork;
 import janisl.musicdb.repositories.UnitOfWorkFactory;
 import java.util.List;
+import java.util.Set;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,6 +69,18 @@ public class BeatportLabelController {
             unitOfWork.getBeatportLabelRepository().delete(label);
             unitOfWork.commit();
             return ResponseEntity.ok().build();
+        }
+    }
+
+    @RequestMapping(value = "/{id}/releases", method = RequestMethod.GET)
+    public Set<BeatportRelease> releasesById(@PathVariable("id") int id) throws Exception {
+        try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
+            BeatportLabel label = unitOfWork.getBeatportLabelRepository().get(id);
+            if (label == null) {
+                throw new LabelNotFoundException();
+            }
+            System.out.println(label.getReleases().size());
+            return label.getReleases();
         }
     }
 

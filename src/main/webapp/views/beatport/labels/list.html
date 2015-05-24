@@ -5,7 +5,7 @@
 </form>
 <table border="1">
     <tr ng-repeat="label in labels.labels | filter:labels.filterText | orderBy: 'name'">
-        <td>{{ label.name }}</td>
+        <td><a href="#/beatport/labels/{{ label.id }}/">{{ label.name }}</a></td>
         <td>{{ label.id }}</td>
         <td>{{ label.slug }}</td>
         <td>{{ label.imageUrl }}</td>

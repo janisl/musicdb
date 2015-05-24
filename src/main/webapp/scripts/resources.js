@@ -51,14 +51,16 @@
     app.factory( 'BeatportLabel', [ '$resource', function( $resource ) {
         return $resource( '/beatport/label/:id', { id: '@id' }, {
             import: { method: 'GET', url: '/beatport/label/get' },
-            reimport: { method: 'GET', url: '/beatport/label/:id/reimport' }
+            reimport: { method: 'GET', url: '/beatport/label/:id/reimport' },
+            releases: { method: 'GET', url: '/beatport/label/:id/releases' }
         });
     }]);
 
     app.factory( 'BeatportRelease', [ '$resource', function( $resource ) {
         return $resource( '/beatport/release/:id', { id: '@id' }, {
             import: { method: 'GET', url: '/beatport/release/get' },
-            reimport: { method: 'GET', url: '/beatport/release/:id/reimport' }
+            reimport: { method: 'GET', url: '/beatport/release/:id/reimport' },
+            byLabel: { method: 'GET', url: '/beatport/label/:labelId/releases', isArray: true }
         });
     }]);
 

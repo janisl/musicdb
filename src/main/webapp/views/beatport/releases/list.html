@@ -5,7 +5,7 @@
 </form>
 <table border="1">
     <tr ng-repeat="release in releases.releases | filter:releases.filterText | orderBy: 'name'">
-        <td>{{ release.title }}</td>
+        <td><a href="#/beatport/releases/{{ release.id }}/">{{ release.title }}</a></td>
         <td>{{ release.id }}</td>
         <td>{{ release.slug }}</td>
         <td>{{ release.releaseDate }}</td>

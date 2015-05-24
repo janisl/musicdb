@@ -116,6 +116,11 @@
                 controller: 'BeatportReleasesController',
                 controllerAs: 'releases'
             })
+            .when('/beatport/releases/:id', {
+                templateUrl: 'views/beatport/releases/details.html',
+                controller: 'BeatportReleaseDetailsController',
+                controllerAs: 'releaseCtrl'
+            })
             .when('/beatport/tracks/', {
                 templateUrl: 'views/beatport/tracks/list.html',
                 controller: 'BeatportTracksController',
@@ -161,4 +166,14 @@
     app.controller('HomeController', [function () {
     }]);
 
+    app.filter('trackTime', function() {
+        return function( input ) {
+            input = input || '';
+            if ( input.substring( 0, 3 ) === "00:" ) {
+                return input.substring( 3 );
+            }
+            return input;
+        };
+    });
+    
 })();

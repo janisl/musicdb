@@ -65,7 +65,9 @@
     }]);
 
     app.factory( 'BeatportTrack', [ '$resource', function( $resource ) {
-        return $resource( '/beatport/track/:id', { id: '@id' } );
+        return $resource( '/beatport/track/:id', { id: '@id' }, {
+            byRelease: { method: 'GET', url: '/beatport/release/:releaseId/tracks', isArray: true }
+        } );
     }]);
 
     app.factory( 'MixxxTrack', [ '$resource', function( $resource ) {

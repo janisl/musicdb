@@ -79,7 +79,7 @@ public class BeatportLabelController {
             if (label == null) {
                 throw new LabelNotFoundException();
             }
-            System.out.println(label.getReleases().size());
+            label.getReleases().size();
             return label.getReleases();
         }
     }

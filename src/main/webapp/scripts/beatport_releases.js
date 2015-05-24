@@ -43,4 +43,9 @@
         this.getList();
     }]);
 
+    app.controller( 'BeatportReleaseDetailsController', [ 'BeatportRelease', 'BeatportTrack', '$routeParams', function( BeatportRelease, BeatportTrack, $routeParams ) {
+        this.release = BeatportRelease.get( { id: $routeParams.id } );
+        this.tracks = BeatportTrack.byRelease( { releaseId: $routeParams.id } );
+    }]);
+    
 })();

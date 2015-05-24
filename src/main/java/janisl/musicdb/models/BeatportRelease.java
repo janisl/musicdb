@@ -1,13 +1,17 @@
 package janisl.musicdb.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -22,6 +26,7 @@ public class BeatportRelease implements Serializable, BeatportEntity {
     private String catalogNumber;
     private String description;
     private Boolean isExclusive;
+    private Set<BeatportTrack> tracks = new HashSet<>(0);
 
     public BeatportRelease() {
     }
@@ -105,4 +110,13 @@ public class BeatportRelease implements Serializable, BeatportEntity {
         this.isExclusive = isExclusive;
     }
 
+    @OneToMany(mappedBy = "release")
+    @JsonIgnore
+    public Set<BeatportTrack> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(Set<BeatportTrack> tracks) {
+        this.tracks = tracks;
+    }
 }

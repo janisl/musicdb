@@ -96,6 +96,11 @@
                 controller: 'BeatportArtistsController',
                 controllerAs: 'artists'
             })
+            .when('/beatport/artists/:id/', {
+                templateUrl: 'views/beatport/artists/details.html',
+                controller: 'BeatportArtistDetailsController',
+                controllerAs: 'artistCtrl'
+            })
             .when('/beatport/genres/', {
                 templateUrl: 'views/beatport/genres/list.html',
                 controller: 'BeatportGenresController',

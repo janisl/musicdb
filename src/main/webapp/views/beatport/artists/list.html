@@ -5,7 +5,7 @@
 </form>
 <table border="1">
     <tr ng-repeat="artist in artists.artists | filter:artists.filterText | orderBy: 'name'">
-        <td>{{ artist.name }}</td>
+        <td><a href="#/beatport/artists/{{ artist.id }}">{{ artist.name }}</a></td>
         <td>{{ artist.id }}</td>
         <td>{{ artist.slug }}</td>
         <td>{{ artist.imageUrl }}</td>

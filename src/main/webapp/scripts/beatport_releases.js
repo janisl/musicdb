@@ -43,7 +43,7 @@
         this.getList();
     }]);
 
-    app.controller( 'BeatportReleaseDetailsController', [ 'BeatportRelease', 'BeatportTrack', '$routeParams', function( BeatportRelease, BeatportTrack, $routeParams ) {
+    app.controller( 'BeatportReleaseDetailsController', [ 'BeatportRelease', 'BeatportTrack', '$routeParams', '$location', function( BeatportRelease, BeatportTrack, $routeParams, $location ) {
         var ctrl = this;
         
         this.getList = function() {
@@ -63,7 +63,7 @@
         this.delete = function( release ) {
             if ( confirm( "Are you sure you want to delete this release?" ) === true ) {
                 release.$delete( {}, function() {
-                    ctrl.getList();
+                    $location.path( '/beatport/releases/' );
                 }).error( function( httpResponse ) {
                     alert( 'Error ' + httpResponse );
                 });

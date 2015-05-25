@@ -2,9 +2,11 @@ package janisl.musicdb.controllers;
 
 import janisl.musicdb.beatport.ArtistParser;
 import janisl.musicdb.models.BeatportArtist;
+import janisl.musicdb.models.BeatportRelease;
 import janisl.musicdb.repositories.UnitOfWork;
 import janisl.musicdb.repositories.UnitOfWorkFactory;
 import java.util.List;
+import java.util.Set;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,6 +69,18 @@ public class BeatportArtistController {
             unitOfWork.getBeatportArtistRepository().delete(artist);
             unitOfWork.commit();
             return ResponseEntity.ok().build();
+        }
+    }
+
+    @RequestMapping(value = "/{id}/releases", method = RequestMethod.GET)
+    public Set<BeatportRelease> getReleases(@PathVariable("id") int id) throws Exception {
+        try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
+            BeatportArtist artist = unitOfWork.getBeatportArtistRepository().get(id);
+            if (artist == null) {
+                throw new ArtistNotFoundException();
+            }
+            artist.getReleases().size();
+            return artist.getReleases();
         }
     }
 

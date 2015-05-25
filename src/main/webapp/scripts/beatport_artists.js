@@ -43,4 +43,35 @@
         this.getList();
     }]);
 
+    app.controller( 'BeatportArtistDetailsController', [ 'BeatportArtist', 'BeatportRelease', '$routeParams', '$location', function( BeatportArtist, BeatportRelease, $routeParams, $location ) {
+        var ctrl = this;
+        this.filterText = '';
+
+        this.getList = function() {
+            ctrl.artist = BeatportArtist.get( { id: $routeParams.id } );
+            ctrl.releases = BeatportRelease.byArtist( { artistId: $routeParams.id } );
+        };
+
+        this.reimport = function( artist ) {
+            artist.$reimport( {}, function() {
+                alert( 'Reimported' );
+                ctrl.getList();
+            }, function( httpResponse  ) {
+                alert( 'Error ' + httpResponse  );
+            });
+        };
+        
+        this.delete = function( artist ) {
+            if ( confirm( "Are you sure you want to delete this artist?" ) === true ) {
+                artist.$delete( {}, function() {
+                    $location.path( '/beatport/artists/' );
+                }).error( function( httpResponse ) {
+                    alert( 'Error ' + httpResponse );
+                });
+            }
+        };
+        
+        this.getList();
+    }]);
+
 })();

@@ -14,7 +14,6 @@ public class Label implements Serializable {
     private Integer id;
     private String name;
     private Integer beatportId;
-    private String beatportUrl;
     private Integer discogsId;
 
     public Label() {
@@ -48,14 +47,6 @@ public class Label implements Serializable {
 
     public void setBeatportId(Integer beatportId) {
         this.beatportId = beatportId;
-    }
-
-    public String getBeatportUrl() {
-        return beatportUrl;
-    }
-
-    public void setBeatportUrl(String beatportUrl) {
-        this.beatportUrl = beatportUrl;
     }
 
     public Integer getDiscogsId() {

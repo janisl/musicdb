@@ -2,6 +2,7 @@ package janisl.musicdb.repositories;
 
 import janisl.musicdb.models.BeatportRelease;
 import java.util.List;
+import org.hibernate.Criteria;
 
 public class BeatportReleaseRepositoryImpl implements BeatportReleaseRepository {
     
@@ -13,7 +14,7 @@ public class BeatportReleaseRepositoryImpl implements BeatportReleaseRepository 
 
     @Override
     public List<BeatportRelease> getAll() {
-        return (List<BeatportRelease>) (unitOfWork.getSession().createCriteria(BeatportRelease.class).list());
+        return (List<BeatportRelease>) (unitOfWork.getSession().createCriteria(BeatportRelease.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list());
     }
 
     @Override

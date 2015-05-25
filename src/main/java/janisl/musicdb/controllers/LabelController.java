@@ -53,7 +53,6 @@ public class LabelController {
             }
             label.setName(newLabel.getName());
             label.setBeatportId(newLabel.getBeatportId());
-            label.setBeatportUrl(newLabel.getBeatportUrl());
             label.setDiscogsId(newLabel.getDiscogsId());
 
             unitOfWork.getLabelRepository().update(label);

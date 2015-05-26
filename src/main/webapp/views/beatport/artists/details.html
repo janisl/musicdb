@@ -2,7 +2,7 @@
     <div class="col-sm-4">
         <img src="{{ artistCtrl.artist.imageUrl }}" alt="Image" />
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-8">
         <h1>{{ artistCtrl.artist.name }}</h1>
         <p><button type="button" class="btn btn-default" ng-click="artistCtrl.reimport(artistCtrl.artist)" >Reimport</button></p>
         <p><button type="button" class="btn btn-danger" ng-click="artistCtrl.delete(artistCtrl.artist)" >Delete</button></p>
@@ -22,8 +22,8 @@
             <th></th>
             <th>Title</th>
             <th>Artists</th>
-            <th width="100">Release date</th>
-            <th width="100">Catalog nmber</th>
+            <th>Release date</th>
+            <th>Catalog nmber</th>
         </tr>
     </thead>
     <tbody>

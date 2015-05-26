@@ -1,27 +1,32 @@
-<table>
-    <tr>
-        <td>
-            <img src="{{ labelCtrl.label.imageUrl }}" alt="Image" />
-        </td>
-        <td valign="top">
-            <h1>{{ labelCtrl.label.name }}</h1>
-            <a href="https://pro.beatport.com/label/{{ labelCtrl.label.slug }}/{{ labelCtrl.label.id }}"target="_blank">Beatport</a>
-        </td>
-    </tr>
-</table>
-<input type="text" ng-model="labelCtrl.filterText" ><br />
-<table class="table">
+<div class="row">
+    <div class="col-sm-4">
+        <img src="{{ labelCtrl.label.imageUrl }}" alt="Image" />
+    </div>
+    <div class="col-sm-8">
+        <h1>{{ labelCtrl.label.name }}</h1>
+        <button type="button" class="btn btn-default" ng-click="labelCtrl.importReleases()">Import all</button>
+        <a href="https://pro.beatport.com/label/{{ labelCtrl.label.slug }}/{{ labelCtrl.label.id }}"target="_blank">Beatport</a>
+    </div>
+</div>
+
+<form class="form-inline">
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Filter" ng-model="labelCtrl.filterText" >
+    </div>
+</form>
+
+<table class="table table-condensed">
     <thead>
         <tr>
             <th></th>
             <th>Title</th>
             <th>Artists</th>
-            <th width="100">Release date</th>
-            <th width="100">Catalog nmber</th>
+            <th>Release date</th>
+            <th>Catalog nmber</th>
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="release in labelCtrl.releases | filter:labelCtrl.filterText | orderBy: 'releaseDate' : reverse">
+        <tr ng-repeat="release in labelCtrl.releases | filter:labelCtrl.filterText | orderBy: 'releaseDate' : true">
             <td>
                 <a href="#/beatport/releases/{{ release.id }}"><img src="{{ release.imageUrl }}" alt="Image" width="50" height="50" /></a>
             </td>

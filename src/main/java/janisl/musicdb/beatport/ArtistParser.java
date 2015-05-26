@@ -3,7 +3,6 @@ package janisl.musicdb.beatport;
 import janisl.musicdb.models.BeatportArtist;
 import janisl.musicdb.repositories.UnitOfWork;
 import java.io.IOException;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
@@ -34,7 +33,7 @@ public class ArtistParser {
     
     private void createFromUrl(String url) throws BeatportInvalidPathException {
         artist = new BeatportArtist();
-        if (!"artist".equals(BeatportUtils.ParseBeatportUrl(url, artist))) {
+        if (!"artist".equals(BeatportUtils.parseBeatportUrl(url, artist))) {
             throw new BeatportInvalidPathException();
         }
     }
@@ -52,10 +51,7 @@ public class ArtistParser {
     }
 
     private void downloadAndParseBeatportPage() throws IOException {
-        Document doc = Jsoup.connect("https://pro.beatport.com/artist/" + artist.getSlug() + "/" + artist.getId())
-                .userAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36")
-                .timeout(15000)
-                .get();
+        Document doc = BeatportUtils.downloadPage("artist", artist);
         Element mainElement = doc.select("main").first();
         artist.setName(mainElement.select("h1").first().text());
         artist.setImageUrl(mainElement.select("img.interior-artist-artwork").first().attr("src"));

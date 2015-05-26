@@ -10,7 +10,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.HashSet;
 import java.util.Set;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
@@ -33,7 +32,6 @@ public class ReleaseParser {
         createFromUrl(url);
         if (checkForExisting()) {
             downloadAndParseBeatportPage();
-            save();
         }
         return release;
     }
@@ -41,12 +39,11 @@ public class ReleaseParser {
     public void reimport(BeatportRelease release) throws IOException {
         this.release = release;
         downloadAndParseBeatportPage();
-        save();
     }
 
     private void createFromUrl(String url) throws BeatportInvalidPathException {
         release = new BeatportRelease();
-        if (!"release".equals(BeatportUtils.ParseBeatportUrl(url, release))) {
+        if (!"release".equals(BeatportUtils.parseBeatportUrl(url, release))) {
             throw new BeatportInvalidPathException();
         }
     }
@@ -66,14 +63,12 @@ public class ReleaseParser {
     private void downloadAndParseBeatportPage() throws IOException {
         downloadPage();
         parseMainInfo();
+        save();
         parseTracks();
     }
 
     private void downloadPage() throws IOException {
-        doc = Jsoup.connect("https://pro.beatport.com/release/" + release.getSlug() + "/" + release.getId())
-                .userAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36")
-                .timeout(15000)
-                .get();
+        doc = BeatportUtils.downloadPage("release", release);
         mainElement = doc.select("main").first();
     }
 
@@ -138,7 +133,7 @@ public class ReleaseParser {
             Element trackLink = titleElement.select("a").first();
 
             BeatportTrack track = new BeatportTrack();
-            if (!"track".equals(BeatportUtils.ParseBeatportUrl(trackLink.attr("href"), track))) {
+            if (!"track".equals(BeatportUtils.parseBeatportUrl(trackLink.attr("href"), track))) {
                 throw new BeatportInvalidPathException();
             }
             

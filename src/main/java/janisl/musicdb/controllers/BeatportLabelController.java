@@ -84,4 +84,17 @@ public class BeatportLabelController {
         }
     }
 
+    @RequestMapping(value = "/{id}/importReleases", method = RequestMethod.GET)
+    public BeatportLabel importReleases(@PathVariable("id") int id) throws Exception {
+        try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
+            BeatportLabel label = unitOfWork.getBeatportLabelRepository().get(id);
+            if (label == null) {
+                throw new LabelNotFoundException();
+            }
+            new LabelParser(unitOfWork).importReleases(label);
+            unitOfWork.commit();
+            return label;
+        }
+    }
+
 }

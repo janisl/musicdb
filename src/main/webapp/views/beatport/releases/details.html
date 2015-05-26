@@ -1,55 +1,58 @@
-<table>
-    <tr>
-        <td>
-            <img src="{{ releaseCtrl.release.imageUrl }}" alt="Image" />
-        </td>
-        <td valign="top">
-            <h1>{{ releaseCtrl.release.title }}</h1>
-            <p ng-show="{{ releaseCtrl.release.isExclusive }}"><b>Exclusive</b></p>
-            <p>Artists: <b>
-                    <span ng-repeat="artist in releaseCtrl.release.artists">
-                        <a href="#/beatport/artists/{{ artist.id }}">{{ artist.name }}</a>{{ $last ? '' : ', ' }}
-                    </span>
-                </b></p>
-            <p>Release date: <b>{{ releaseCtrl.release.releaseDate }}</b></p>
-            <p>Label: <b><a href="#/beatport/labels/{{ releaseCtrl.release.label.id }}">{{ releaseCtrl.release.label.name }}</a></b></p>
-            <p>Catalog number: <b>{{ releaseCtrl.release.catalogNumber }}</b></p>
-            <p style="white-space:pre-wrap;">Description: {{ releaseCtrl.release.description }}</p>
-            <a ng-click="releaseCtrl.reimport(releaseCtrl.release)" >Reimport</a><br />
-            <a ng-click="releaseCtrl.delete(releaseCtrl.release)" >Delete</a><br />
-            <a href="https://pro.beatport.com/release/{{ releaseCtrl.release.slug }}/{{ releaseCtrl.release.id }}"target="_blank">Beatport</a><br />
-        </td>
-    </tr>
-</table>
+<div class="row">
+    <div class="col-sm-4">
+        <img src="{{ releaseCtrl.release.imageUrl }}" alt="Image" />
+    </div>
+    <div class="col-sm-8">
+        <h1>{{ releaseCtrl.release.title }}</h1>
+        <p ng-show="{{ releaseCtrl.release.isExclusive }}"><b>Exclusive</b></p>
+        <p>Artists: <b>
+                <span ng-repeat="artist in releaseCtrl.release.artists">
+                    <a href="#/beatport/artists/{{ artist.id }}">{{ artist.name }}</a>{{ $last ? '' : ', ' }}
+                </span>
+            </b></p>
+        <p>Release date: <b>{{ releaseCtrl.release.releaseDate }}</b></p>
+        <p>Label: <b><a href="#/beatport/labels/{{ releaseCtrl.release.label.id }}">{{ releaseCtrl.release.label.name }}</a></b></p>
+        <p>Catalog number: <b>{{ releaseCtrl.release.catalogNumber }}</b></p>
+        <p style="white-space:pre-wrap;">Description: {{ releaseCtrl.release.description }}</p>
+        <a ng-click="releaseCtrl.reimport(releaseCtrl.release)" >Reimport</a><br />
+        <a ng-click="releaseCtrl.delete(releaseCtrl.release)" >Delete</a><br />
+        <a href="https://pro.beatport.com/release/{{ releaseCtrl.release.slug }}/{{ releaseCtrl.release.id }}"target="_blank">Beatport</a><br />
+    </div>
+</div>
+
 <table class="table">
-    <tr>
-        <td width="30"></td>
-        <td>Title</td>
-        <td>Artists</td>
-        <td>Remixers</td>
-        <td width="100">Genre</td>
-        <td width="40">BPM</td>
-        <td width="40">Key</td>
-        <td width="60">Duration</td>
-        <td></td>
-    </tr>
-    <tr ng-repeat="track in releaseCtrl.tracks | orderBy: 'orderNumber'">
-        <td align="right">{{ track.orderNumber }}</td>
-        <td><b>{{ track.title }}</b> {{ track.remix }}</td>
-        <td>
-            <span ng-repeat="artist in track.artists">
-                <a href="#/beatport/artists/{{ artist.id }}">{{ artist.name }}</a>{{ $last ? '' : ', ' }}
-            </span>
-        </td>
-        <td>
-            <span ng-repeat="artist in track.remixers">
-                <a href="#/beatport/artists/{{ artist.id }}">{{ artist.name }}</a>{{ $last ? '' : ', ' }}
-            </span>
-        </td>
-        <td>{{ track.genre.name }}</td>
-        <td align="right">{{ track.bpm }}</td>
-        <td>{{ track.keytone }}</td>
-        <td align="right">{{ track.duration | trackTime }}</td>
-        <td><a href="https://pro.beatport.com/track/{{ track.slug }}/{{ track.id }}"target="_blank">Beatport</a></td>
-    </tr>
+    <thead>
+        <tr>
+            <th width="30"></th>
+            <th>Title</th>
+            <th>Artists</th>
+            <th>Remixers</th>
+            <th width="100">Genre</th>
+            <th width="40">BPM</th>
+            <th width="40">Key</th>
+            <th width="60">Duration</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="track in releaseCtrl.tracks | orderBy: 'orderNumber'">
+            <td align="right">{{ track.orderNumber }}</td>
+            <td><b>{{ track.title }}</b> {{ track.remix }}</td>
+            <td>
+                <span ng-repeat="artist in track.artists">
+                    <a href="#/beatport/artists/{{ artist.id }}">{{ artist.name }}</a>{{ $last ? '' : ', ' }}
+                </span>
+            </td>
+            <td>
+                <span ng-repeat="artist in track.remixers">
+                    <a href="#/beatport/artists/{{ artist.id }}">{{ artist.name }}</a>{{ $last ? '' : ', ' }}
+                </span>
+            </td>
+            <td>{{ track.genre.name }}</td>
+            <td align="right">{{ track.bpm }}</td>
+            <td>{{ track.keytone }}</td>
+            <td align="right">{{ track.duration | trackTime }}</td>
+            <td><a href="https://pro.beatport.com/track/{{ track.slug }}/{{ track.id }}"target="_blank">Beatport</a></td>
+        </tr>
+    </tbody>
 </table>

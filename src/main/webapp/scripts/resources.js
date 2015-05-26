@@ -52,7 +52,8 @@
         return $resource( '/beatport/label/:id', { id: '@id' }, {
             import: { method: 'GET', url: '/beatport/label/get' },
             reimport: { method: 'GET', url: '/beatport/label/:id/reimport' },
-            releases: { method: 'GET', url: '/beatport/label/:id/releases' }
+            releases: { method: 'GET', url: '/beatport/label/:id/releases' },
+            importReleases: { method: 'GET', url: '/beatport/label/:id/importReleases' }
         });
     }]);
 

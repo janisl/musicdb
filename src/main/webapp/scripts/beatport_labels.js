@@ -44,9 +44,24 @@
     }]);
 
     app.controller('BeatportLabelDetailsController', [ 'BeatportLabel', 'BeatportRelease', '$routeParams', function( BeatportLabel, BeatportRelease, $routeParams ) {
+        var ctrl = this;
         this.filterText = '';
-        this.label = BeatportLabel.get( { id: $routeParams.id } );
-        this.releases = BeatportRelease.byLabel( { labelId: $routeParams.id } );
+        
+        this.getList = function() {
+            ctrl.label = BeatportLabel.get( { id: $routeParams.id } );
+            ctrl.releases = BeatportRelease.byLabel( { labelId: $routeParams.id } );
+        };
+        
+        this.importReleases = function() {
+            ctrl.label.$importReleases( {}, function() {
+                alert( 'Imported' );
+                ctrl.getList();
+            }, function( httpResponse  ) {
+                alert( 'Error ' + httpResponse  );
+            });
+        };
+        
+        this.getList();
     }]);
 
 })();

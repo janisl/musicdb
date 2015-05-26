@@ -10,32 +10,36 @@
     </tr>
 </table>
 <input type="text" ng-model="labelCtrl.filterText" ><br />
-<table>
-    <tr>
-        <td></td>
-        <td>Title</td>
-        <td>Artists</td>
-        <td width="100">Release date</td>
-        <td width="100">Catalog nmber</td>
-    </tr>
-    <tr ng-repeat="release in labelCtrl.releases | filter:labelCtrl.filterText | orderBy: 'releaseDate' : reverse">
-        <td>
-            <a href="#/beatport/releases/{{ release.id }}"><img src="{{ release.imageUrl }}" alt="Image" width="50" height="50" /></a>
-        </td>
-        <td>
-            <b><a href="#/beatport/releases/{{ release.id }}">{{ release.title }}</a></b><br />
-            <span ng-show="{{ release.isExclusive }}">Exclusive<br /></span>
-        </td>
-        <td>
-            <span ng-repeat="artist in release.artists">
-                <b><a href="#/beatport/artists/{{ artist.id }}">{{ artist.name }}</a></b>{{ $last ? '' : ', ' }}
-            </span>
-        </td>
-        <td>
-            {{ release.releaseDate }}
-        </td>
-        <td>
-            {{ release.catalogNumber }}
-        </td>
-    </tr>
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Artists</th>
+            <th width="100">Release date</th>
+            <th width="100">Catalog nmber</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="release in labelCtrl.releases | filter:labelCtrl.filterText | orderBy: 'releaseDate' : reverse">
+            <td>
+                <a href="#/beatport/releases/{{ release.id }}"><img src="{{ release.imageUrl }}" alt="Image" width="50" height="50" /></a>
+            </td>
+            <td>
+                <a href="#/beatport/releases/{{ release.id }}">{{ release.title }}</a><br />
+                <span ng-show="{{ release.isExclusive }}">Exclusive<br /></span>
+            </td>
+            <td>
+                <span ng-repeat="artist in release.artists">
+                    <a href="#/beatport/artists/{{ artist.id }}">{{ artist.name }}</a>{{ $last ? '' : ', ' }}
+                </span>
+            </td>
+            <td>
+                {{ release.releaseDate }}
+            </td>
+            <td>
+                {{ release.catalogNumber }}
+            </td>
+        </tr>
+    </tbody>
 </table>

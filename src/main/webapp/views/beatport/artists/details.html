@@ -1,43 +1,51 @@
-<table>
-    <tr>
-        <td>
-            <img src="{{ artistCtrl.artist.imageUrl }}" alt="Image" />
-        </td>
-        <td valign="top">
-            <h1>{{ artistCtrl.artist.name }}</h1>
-            <p><a ng-click="artistCtrl.reimport(artistCtrl.artist)" >Reimport</a></p>
-            <p><a ng-click="artistCtrl.delete(artistCtrl.artist)" >Delete</a></p>
-            <p><a href="https://pro.beatport.com/artist/{{ artistCtrl.artist.slug }}/{{ artistCtrl.artist.id }}"target="_blank">Beatport</a></p>
-        </td>
-    </tr>
-</table>
-<input type="text" ng-model="artistCtrl.filterText" ><br />
-<table>
-    <tr>
-        <td></td>
-        <td>Title</td>
-        <td>Artists</td>
-        <td width="100">Release date</td>
-        <td width="100">Catalog nmber</td>
-    </tr>
-    <tr ng-repeat="release in artistCtrl.releases | filter:artistCtrl.filterText | orderBy: 'releaseDate' : reverse">
-        <td>
-            <a href="#/beatport/releases/{{ release.id }}"><img src="{{ release.imageUrl }}" alt="Image" width="50" height="50" /></a>
-        </td>
-        <td>
-            <b><a href="#/beatport/releases/{{ release.id }}">{{ release.title }}</a></b><br />
-            <span ng-show="{{ release.isExclusive }}">Exclusive<br /></span>
-        </td>
-        <td>
-            <span ng-repeat="artist in release.artists">
-                <b><a href="#/beatport/artists/{{ artist.id }}">{{ artist.name }}</a></b>{{ $last ? '' : ', ' }}
-            </span>
-        </td>
-        <td>
-            {{ release.releaseDate }}
-        </td>
-        <td>
-            {{ release.catalogNumber }}
-        </td>
-    </tr>
+<div class="row">
+    <div class="col-sm-4">
+        <img src="{{ artistCtrl.artist.imageUrl }}" alt="Image" />
+    </div>
+    <div class="col-sm-4">
+        <h1>{{ artistCtrl.artist.name }}</h1>
+        <p><button type="button" class="btn btn-default" ng-click="artistCtrl.reimport(artistCtrl.artist)" >Reimport</button></p>
+        <p><button type="button" class="btn btn-danger" ng-click="artistCtrl.delete(artistCtrl.artist)" >Delete</button></p>
+        <p><a href="https://pro.beatport.com/artist/{{ artistCtrl.artist.slug }}/{{ artistCtrl.artist.id }}" target="_blank">Beatport</a></p>
+    </div>
+</div>
+
+<form class="form-inline">
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Filter" ng-model="artistCtrl.filterText" >
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Artists</th>
+            <th width="100">Release date</th>
+            <th width="100">Catalog nmber</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="release in artistCtrl.releases | filter:artistCtrl.filterText | orderBy: 'releaseDate' : reverse">
+            <td>
+                <a href="#/beatport/releases/{{ release.id }}"><img src="{{ release.imageUrl }}" alt="Image" width="50" height="50" /></a>
+            </td>
+            <td>
+                <a href="#/beatport/releases/{{ release.id }}">{{ release.title }}</a><br />
+                <span ng-show="{{ release.isExclusive }}">Exclusive<br /></span>
+            </td>
+            <td>
+                <span ng-repeat="artist in release.artists">
+                    <a href="#/beatport/artists/{{ artist.id }}">{{ artist.name }}</a>{{ $last ? '' : ', ' }}
+                </span>
+            </td>
+            <td>
+                {{ release.releaseDate }}
+            </td>
+            <td>
+                {{ release.catalogNumber }}
+            </td>
+        </tr>
+    </tbody>
 </table>

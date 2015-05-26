@@ -1,6 +1,6 @@
 <input type="text" ng-model="releases.filterText" >
 <a href="#/releases/add/">Add release</a>
-<table border="1">
+<table class="table">
     <tr ng-repeat="release in releases.releases | filter:releases.filterText | orderBy: 'name'">
         <td>{{ release.name }}</td>
         <td>{{ release.artistId }}</td>

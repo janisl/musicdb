@@ -2,12 +2,16 @@
 <html ng-app="musicdb">
     <head>
         <title>Music DB</title>
+        <link rel="stylesheet" type="text/css" href="styles/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="styles/bootstrap-theme.css" />
         <link rel="stylesheet" type="text/css" href="styles/styles.css" />
     </head>
     <body>
         <script type="text/javascript" src="scripts/lib/angular.js"></script>
         <script type="text/javascript" src="scripts/lib/angular-resource.js"></script>
         <script type="text/javascript" src="scripts/lib/angular-route.js"></script>
+        <script type="text/javascript" src="scripts/lib/jquery.js"></script>
+        <script type="text/javascript" src="scripts/lib/bootstrap.js"></script>
 
         <script type="text/javascript" src="scripts/resources.js"></script>
         
@@ -29,22 +33,57 @@
 
         <script type="text/javascript" src="scripts/app.js"></script>
 
-        <a href="#/">Home</a>
-        <a href="#/labels/">Labels</a>
-        <a href="#/genres/">Genres</a>
-        <a href="#/artists/">Artists</a>
-        <a href="#/releases/">Releases</a>
-        <a href="#/tracks/">Tracks</a>
-        <a href="#/pianos/">Pianos</a>
-        <a href="#/beatport/artists/">Beatport artists</a>
-        <a href="#/beatport/genres/">Beatport genres</a>
-        <a href="#/beatport/labels/">Beatport labels</a>
-        <a href="#/beatport/releases/">Beatport releases</a>
-        <a href="#/beatport/tracks/">Beatport tracks</a>
-        <a href="#/mixxx/tracks/">Mixxx tracks</a>
-        <a href="#/mixxx/playlists/">Mixxx playlists</a>
-        <a href="#/mixxx/crates/">Mixxx crates</a>
+        <header>
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container-fluid">
+                    
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#/">Music DB</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><a href="#/artists/">Artists</a></li>
+                            <li><a href="#/labels/">Labels</a></li>
+                            <li><a href="#/genres/">Genres</a></li>
+                            <li><a href="#/releases/">Releases</a></li>
+                            <li><a href="#/tracks/">Tracks</a></li>
+                            <li><a href="#/pianos/">Pianos</a></li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Beatport <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#/beatport/artists/">Artists</a></li>
+                                    <li><a href="#/beatport/genres/">Genres</a></li>
+                                    <li><a href="#/beatport/labels/">Labels</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#/beatport/releases/">Releases</a></li>
+                                    <li><a href="#/beatport/tracks/">Tracks</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Mixxx <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#/mixxx/tracks/">Tracks</a></li>
+                                    <li><a href="#/mixxx/playlists/">Playlists</a></li>
+                                    <li><a href="#/mixxx/crates/">Crates</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>            
+            </nav>
+        </header>
         
-        <div ng-view></div>
+        <div class="container-fluid">
+            <div ng-view></div>
+        </div>            
     </body>
 </html>

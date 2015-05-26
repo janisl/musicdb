@@ -1,5 +1,5 @@
 <input type="text" ng-model="tracks.filterText" ><br />
-<table border="1">
+<table class="table">
     <tr ng-repeat="track in tracks.tracks | filter:tracks.filterText | orderBy: 'name'">
         <td>{{ track.id }}</td>
         <td>{{ track.artist }}</td>

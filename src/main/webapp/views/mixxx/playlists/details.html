@@ -1,5 +1,5 @@
 <h1>{{ playlistCtrl.playlist.name }}</h1>
-<table border="1">
+<table class="table">
     <tr ng-repeat="track in playlistCtrl.tracks | orderBy: 'position'">
         <td>{{ track.position }}</td>
         <td>{{ track.track.artist }}</td>

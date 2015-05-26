@@ -3,7 +3,7 @@
     <input type="text" ng-model="artists.importUrl" >
     <input type="submit" value="Import" >
 </form>
-<table border="1">
+<table class="table">
     <tr ng-repeat="artist in artists.artists | filter:artists.filterText | orderBy: 'name'">
         <td><a href="#/beatport/artists/{{ artist.id }}">{{ artist.name }}</a></td>
         <td>{{ artist.id }}</td>

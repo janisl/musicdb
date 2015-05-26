@@ -1,5 +1,5 @@
 <input type="text" ng-model="cues.filterText" ><br />
-<table border="1">
+<table class="table">
     <tr ng-repeat="cue in cues.cues | filter:cues.filterText | orderBy: 'position'">
         <td>{{ cue.id }}</td>
         <td>{{ cue.type }}</td>

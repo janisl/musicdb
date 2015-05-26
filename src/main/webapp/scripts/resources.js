@@ -40,7 +40,8 @@
     app.factory( 'BeatportArtist', [ '$resource', function( $resource ) {
         return $resource( '/beatport/artist/:id', { id: '@id' }, {
             import: { method: 'GET', url: '/beatport/artist/get' },
-            reimport: { method: 'GET', url: '/beatport/artist/:id/reimport' }
+            reimport: { method: 'GET', url: '/beatport/artist/:id/reimport' },
+            importReleases: { method: 'GET', url: '/beatport/artist/:id/importReleases' }
         });
     }]);
 

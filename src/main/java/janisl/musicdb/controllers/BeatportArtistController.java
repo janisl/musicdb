@@ -84,4 +84,17 @@ public class BeatportArtistController {
         }
     }
 
+    @RequestMapping(value = "/{id}/importReleases", method = RequestMethod.GET)
+    public BeatportArtist importReleases(@PathVariable("id") int id) throws Exception {
+        try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
+            BeatportArtist artist = unitOfWork.getBeatportArtistRepository().get(id);
+            if (artist == null) {
+                throw new ArtistNotFoundException();
+            }
+            new ArtistParser(unitOfWork).importReleases(artist);
+            unitOfWork.commit();
+            return artist;
+        }
+    }
+
 }

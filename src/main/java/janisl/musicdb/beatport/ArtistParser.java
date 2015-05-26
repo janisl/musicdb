@@ -31,6 +31,11 @@ public class ArtistParser {
         save();
     }
     
+    public void importReleases(BeatportArtist artist) throws IOException {
+        this.artist = artist;
+        BeatportUtils.parseReleasesPage(BeatportUtils.downloadPage("artist", artist, "/releases"), unitOfWork);
+    }
+    
     private void createFromUrl(String url) throws BeatportInvalidPathException {
         artist = new BeatportArtist();
         if (!"artist".equals(BeatportUtils.parseBeatportUrl(url, artist))) {

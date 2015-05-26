@@ -61,6 +61,15 @@
             });
         };
         
+        this.importReleases = function() {
+            ctrl.artist.$importReleases( {}, function() {
+                alert( 'Imported' );
+                ctrl.getList();
+            }, function( httpResponse  ) {
+                alert( 'Error ' + httpResponse  );
+            });
+        };
+        
         this.delete = function( artist ) {
             if ( confirm( "Are you sure you want to delete this artist?" ) === true ) {
                 artist.$delete( {}, function() {

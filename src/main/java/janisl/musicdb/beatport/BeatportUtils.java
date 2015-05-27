@@ -65,7 +65,6 @@ public class BeatportUtils {
         Elements releaseElements = mainElement.select("div.horz-release-artwork-parent");
         for (Element releaseElement : releaseElements) {
             Element releaseLink = releaseElement.select("a").first();
-            System.out.println(releaseLink.toString());
             new ReleaseParser(unitOfWork).parseUrl(releaseLink.attr("href"));
             unitOfWork.commit();
         }

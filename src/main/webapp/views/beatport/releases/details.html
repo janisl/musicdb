@@ -6,12 +6,10 @@
         <h1>{{ releaseCtrl.release.title }}</h1>
         <p ng-show="{{ releaseCtrl.release.isExclusive }}"><b>Exclusive</b></p>
         <p>Artists: <b>
-                <span ng-repeat="artist in releaseCtrl.release.artists">
-                    <a href="#/beatport/artists/{{ artist.id }}">{{ artist.name }}</a>{{ $last ? '' : ', ' }}
-                </span>
+                <span data-beatport-artists data-artists="releaseCtrl.release.artists"></span>
             </b></p>
         <p>Release date: <b>{{ releaseCtrl.release.releaseDate }}</b></p>
-        <p>Label: <b><a href="#/beatport/labels/{{ releaseCtrl.release.label.id }}">{{ releaseCtrl.release.label.name }}</a></b></p>
+        <p>Label: <b><span data-beatport-label-link data-label="releaseCtrl.release.label"></span></b></p>
         <p>Catalog number: <b>{{ releaseCtrl.release.catalogNumber }}</b></p>
         <p style="white-space:pre-wrap;">Description: {{ releaseCtrl.release.description }}</p>
         <a ng-click="releaseCtrl.reimport(releaseCtrl.release)" >Reimport</a><br />
@@ -39,14 +37,10 @@
             <td align="right">{{ track.orderNumber }}</td>
             <td><b>{{ track.title }}</b> {{ track.remix }}</td>
             <td>
-                <span ng-repeat="artist in track.artists">
-                    <a href="#/beatport/artists/{{ artist.id }}">{{ artist.name }}</a>{{ $last ? '' : ', ' }}
-                </span>
+                <span data-beatport-artists data-artists="track.artists"></span>
             </td>
             <td>
-                <span ng-repeat="artist in track.remixers">
-                    <a href="#/beatport/artists/{{ artist.id }}">{{ artist.name }}</a>{{ $last ? '' : ', ' }}
-                </span>
+                <span data-beatport-artists data-artists="track.remixers"></span>
             </td>
             <td>{{ track.genre.name }}</td>
             <td align="right">{{ track.bpm }}</td>

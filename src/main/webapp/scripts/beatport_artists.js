@@ -83,4 +83,14 @@
         this.getList();
     }]);
 
+    app.directive("beatportArtists", function() {
+        return {
+            restrict: 'A',
+            scope: {
+                artists: '='
+            },
+            templateUrl: 'views/beatport/artists/list_directive.html'
+        };
+    });
+
 })();

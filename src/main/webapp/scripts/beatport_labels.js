@@ -64,4 +64,14 @@
         this.getList();
     }]);
 
+    app.directive("beatportLabelLink", function() {
+        return {
+            restrict: 'A',
+            scope: {
+                label: '='
+            },
+            template: '<a href="#/beatport/labels/{{ label.id }}">{{ label.name }}</a>'
+        };
+    });
+
 })();

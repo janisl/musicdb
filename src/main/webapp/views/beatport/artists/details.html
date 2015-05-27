@@ -11,42 +11,4 @@
     </div>
 </div>
 
-<form class="form-inline">
-    <div class="form-group">
-        <input type="text" class="form-control" placeholder="Filter" ng-model="artistCtrl.filterText" >
-    </div>
-</form>
-
-<table class="table table-condensed">
-    <thead>
-        <tr>
-            <th></th>
-            <th>Title</th>
-            <th>Artists</th>
-            <th width="110">Release date</th>
-            <th width="120">Catalog nmber</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="release in artistCtrl.releases | filter:artistCtrl.filterText | orderBy: 'releaseDate' : true">
-            <td>
-                <a href="#/beatport/releases/{{ release.id }}"><img src="{{ release.imageUrl }}" alt="Image" width="50" height="50" /></a>
-            </td>
-            <td>
-                <a href="#/beatport/releases/{{ release.id }}">{{ release.title }}</a><br />
-                <span ng-show="{{ release.isExclusive }}">Exclusive<br /></span>
-            </td>
-            <td>
-                <span ng-repeat="artist in release.artists">
-                    <a href="#/beatport/artists/{{ artist.id }}">{{ artist.name }}</a>{{ $last ? '' : ', ' }}
-                </span>
-            </td>
-            <td>
-                {{ release.releaseDate }}
-            </td>
-            <td>
-                {{ release.catalogNumber }}
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div data-beatport-releases data-releases="artistCtrl.releases" data-show-label="true"></div>

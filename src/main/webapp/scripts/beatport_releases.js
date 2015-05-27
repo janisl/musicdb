@@ -72,5 +72,16 @@
         
         this.getList();
     }]);
+
+    app.directive("beatportReleases", function() {
+        return {
+            restrict: 'A',
+            scope: {
+                releases: '=',
+                showLabel: '@'
+            },
+            templateUrl: 'views/beatport/releases/list_directive.html'
+        };
+    });
     
 })();

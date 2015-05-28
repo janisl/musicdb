@@ -97,4 +97,8 @@
         return $resource( '/mixxx/crate/:crateId/track', { crateId: '@crateId' } );
     }]);
 
+    app.factory( 'DiscogsLabel', [ '$resource', function( $resource ) {
+        return $resource( '/discogs/labels/:id', { id: '@id' } );
+    }]);
+
 })();

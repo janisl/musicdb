@@ -1,0 +1,84 @@
+<table>
+    <tr>
+        <td>
+            <img ng-src="{{ artistCtrl.artist.images[0].uri }}" />
+        </td>
+        <td valign="top">
+            <h1>{{ artistCtrl.artist.name }}</h1>
+
+            <p style="white-space:pre-wrap;">{{ artistCtrl.artist.profile }}</p>
+
+            <p ng-show="artistCtrl.artist.realname != null">
+                Real name: {{ artistCtrl.artist.realname }}
+            </p>
+
+            <p ng-show="artistCtrl.artist.aliases != null">
+                Aliases:
+                <span ng-repeat="alias in artistCtrl.artist.aliases">
+                    <a href="#/discogs/artists/{{ alias.id }}">{{ alias.name }}</a>, 
+                </span>
+            </p>
+
+            <p ng-show="artistCtrl.artist.members != null">
+                Members:
+                <span ng-repeat="member in artistCtrl.artist.members">
+                    <a href="#/discogs/artists/{{ member.id }}">{{ member.name }}</a> <span ng-hide="member.active">(Past)</span>, 
+                </span>
+            </p>
+
+            <p ng-show="artistCtrl.artist.groups != null">
+                In groups:
+                <span ng-repeat="group in artistCtrl.artist.groups">
+                    <a href="#/discogs/artists/{{ group.id }}">{{ group.name }}</a> <span ng-hide="group.active">(Past)</span>, 
+                </span>
+            </p>
+
+            <p ng-show="artistCtrl.artist.namevariations != null">
+                Variations:
+                <span ng-repeat="variation in artistCtrl.artist.namevariations">
+                    {{ variation }}, 
+                </span>
+            </p>
+            
+            <p><a href="{{ artistCtrl.artist.uri }}" target="_blank">Discogs</a></p>
+        </td>
+    </tr>
+</table>
+
+<div>
+    <span ng-repeat="page in artistCtrl.pages"><b ng-show="page.isCurrent">{{ page.pageNumber }}</b><a ng-hide="page.isCurrent" ng-click="artistCtrl.getReleases(page.pageNumber)">{{ page.pageNumber }}</a> </span>
+</div>
+<table class="table">
+    <tbody>
+        <tr ng-repeat="release in artistCtrl.releases.releases">
+            <td>
+                <img ng-src="{{ release.thumb }}" width="50" height="50" />
+            </td>
+            <td>
+                {{ release.artist }}
+            </td>
+            <td>
+                <!-- { "type":"release", "id":3010700 } -->
+                {{ release.title }}
+            </td>
+            <td>
+                {{ release.role }}
+            </td>
+            <td>
+                {{ release.trackinfo }}
+            </td>
+            <td>
+                {{ release.format }}
+            </td>
+            <td>
+                {{ release.label }}
+            </td>
+            <td>
+                {{ release.catno }}
+            </td>
+            <td>
+                {{ release.year }}
+            </td>
+        </tr>
+    </tbody>
+</table>

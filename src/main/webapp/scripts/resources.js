@@ -103,4 +103,10 @@
         });
     }]);
 
+    app.factory( 'DiscogsArtist', [ '$resource', function( $resource ) {
+        return $resource( '/discogs/artists/:id', { id: '@id' }, {
+            releases: { method: 'GET', url: '/discogs/artists/:id/releases' }
+        });
+    }]);
+
 })();

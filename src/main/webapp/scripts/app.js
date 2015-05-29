@@ -4,7 +4,7 @@
         'artists', 'genres', 'labels', 'releases', 'tracks',
         'beatportArtists', 'beatportGenres', 'beatportLabels', 'beatportReleases', 'beatportTracks',
         'mixxxCrates', 'mixxxPlaylists', 'mixxxTracks',
-        'discogsLabels' ]);
+        'discogsArtists', 'discogsLabels' ]);
 
     app.config( [ '$routeProvider', function( $routeProvider ) {
         $routeProvider
@@ -164,6 +164,11 @@
                 controllerAs: 'crateCtrl'
             })
 
+            .when( '/discogs/artists/:id/', {
+                templateUrl: 'views/discogs/artist.html',
+                controller: 'DiscogsArtistDetailsController',
+                controllerAs: 'artistCtrl'
+            })
             .when( '/discogs/labels/:id/', {
                 templateUrl: 'views/discogs/label.html',
                 controller: 'DiscogsLabelDetailsController',

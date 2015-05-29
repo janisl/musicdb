@@ -6,7 +6,7 @@
         <td valign="top">
             <h1>{{ labelCtrl.label.name }}</h1>
 
-            <p>{{ labelCtrl.label.profile }}</p>
+            <p style="white-space:pre-wrap;">{{ labelCtrl.label.profile }}</p>
 
             <p ng-show="labelCtrl.label.parent_label != null">
                 Parent label: <a href="#/discogs/labels/{{ labelCtrl.label.parent_label.id }}">{{ labelCtrl.label.parent_label.name }}</a>

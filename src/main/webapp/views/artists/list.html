@@ -8,7 +8,7 @@
         <td>{{ artist.discogsId }}</td>
         <td><a href="#/artists/{{ artist.id }}">Edit</a></td>
         <td><a href="#/artists/" ng-click="artists.delete(artist)" >Delete</a></td>
-        <td><span ng-show="artist.beatportId !== null"><a href="https://pro.beatport.com{{ artist.beatportUrl }}"target="_blank">Beatport</a></span></td>
-        <td><span ng-show="artist.discogsId !== null"><a href="http://www.discogs.com/artist/{{ artist.discogsId }}"target="_blank">Discogs</a></span></td>
+        <td><span ng-show="artist.beatportId !== null"><a href="#/beatport/artists/{{ artist.beatportId }}">Beatport</a></span></td>
+        <td><span ng-show="artist.discogsId !== null"><a href="#/discogs/artists/{{ artist.discogsId }}">Discogs</a></span></td>
     </tr>
 </table>

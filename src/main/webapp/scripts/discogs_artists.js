@@ -21,4 +21,15 @@
         };
     }]);
 
+    app.directive("discogsArtist", function() {
+        return {
+            restrict: 'A',
+            scope: {
+                artist: '=',
+                last: '='
+            },
+            templateUrl: 'views/discogs/artist_directive.html'
+        };
+    });
+
 })();

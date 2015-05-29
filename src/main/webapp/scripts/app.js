@@ -4,7 +4,7 @@
         'artists', 'genres', 'labels', 'releases', 'tracks',
         'beatportArtists', 'beatportGenres', 'beatportLabels', 'beatportReleases', 'beatportTracks',
         'mixxxCrates', 'mixxxPlaylists', 'mixxxTracks',
-        'discogsArtists', 'discogsLabels', 'discogsMasters' ]);
+        'discogsArtists', 'discogsLabels', 'discogsMasters', 'discogsReleases' ]);
 
     app.config( [ '$routeProvider', function( $routeProvider ) {
         $routeProvider
@@ -178,6 +178,11 @@
                 templateUrl: 'views/discogs/master.html',
                 controller: 'DiscogsMasterDetailsController',
                 controllerAs: 'masterCtrl'
+            })
+            .when( '/discogs/releases/:id/', {
+                templateUrl: 'views/discogs/release.html',
+                controller: 'DiscogsReleaseDetailsController',
+                controllerAs: 'releaseCtrl'
             })
             
             .otherwise({

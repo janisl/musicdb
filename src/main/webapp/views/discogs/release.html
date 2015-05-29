@@ -1,0 +1,86 @@
+<table>
+    <tr>
+        <td>
+            <img ng-src="{{ releaseCtrl.release.images[0].uri }}" />
+        </td>
+        <td valign="top">
+            <h1>
+                <span ng-repeat="artist in releaseCtrl.release.artists">
+                    <span data-discogs-artist data-artist="artist" data-last="$last" ></span>
+                </span>
+                - {{ releaseCtrl.release.title }}
+            </h1>
+
+            <p ng-show="releaseCtrl.release.labels != null">
+                Labels:
+                <span ng-repeat="label in releaseCtrl.release.labels">
+                    <a href="#/discogs/labels/{{ label.id }}">{{ label.name }}</a> - {{ label.catno }}{{ $last ? '' : ', ' }}
+                </span>
+            </p>
+
+            <p ng-show="releaseCtrl.release.styles != null">
+                Styles:
+                <span ng-repeat="style in releaseCtrl.release.styles">
+                    {{ style }}{{ $last ? '' : ', ' }}
+                </span>
+            </p>
+
+            <p ng-show="releaseCtrl.release.genres != null">
+                Genres:
+                <span ng-repeat="genre in releaseCtrl.release.genres">
+                    {{ genre }}{{ $last ? '' : ', ' }}
+                </span>
+            </p>
+
+            <p ng-show="releaseCtrl.release.formats != null">
+                Formats:
+                <span ng-repeat="format in releaseCtrl.release.formats">
+                    {{ format.name }} {{ format.qty }} <span ng-repeat="desc in format.descriptions">{{ desc }}{{ $last ? '' : ', ' }}</span>{{ $last ? '' : ', ' }}
+                </span>
+            </p>
+            
+            <p>Release date: {{ releaseCtrl.release.released }}</p>
+
+            <p><a href="{{ releaseCtrl.release.uri }}" target="_blank">Discogs</a></p>
+        </td>
+    </tr>
+</table>
+
+<h4>Tracklist</h4>
+<table class="table">
+    <tbody>
+        <tr ng-repeat="track in releaseCtrl.release.tracklist">
+            <td>
+                {{ track.position }}
+            </td>
+            <td>
+                <span ng-repeat="artist in track.artists">
+                    <span data-discogs-artist data-artist="artist" data-last="$last" ></span>
+                </span>
+            </td>
+            <td>
+                {{ track.title }}
+            </td>
+            <td>
+                {{ track.duration }}
+            </td>
+            <td>
+                <div ng-repeat="extraartist in track.extraartists">
+                    {{ extraartist.role }} - <span data-discogs-artist data-artist="extraartist" data-last="$last" ></span>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div ng-show="releaseCtrl.release.extraartists != null">
+    <h4>Credits</h4>
+    <div ng-repeat="extraartist in releaseCtrl.release.extraartists">
+        {{ extraartist.role }} - <span data-discogs-artist data-artist="extraartist" data-last="$last" ></span>
+    </div>
+</div>
+
+<div ng-show="releaseCtrl.release.notes != ''">
+    <h4>Notes</h4>
+    <p style="white-space:pre-wrap;">{{ releaseCtrl.release.notes }}</p>
+</div>

@@ -115,4 +115,8 @@
         });
     }]);
 
+    app.factory( 'DiscogsRelease', [ '$resource', function( $resource ) {
+        return $resource( '/discogs/releases/:id', { id: '@id' } );
+    }]);
+
 })();

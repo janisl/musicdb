@@ -6,10 +6,9 @@
         <td valign="top">
             <h1>
                 <span ng-repeat="artist in masterCtrl.master.artists">
-                    {{ artist.join }}
-                    <a href="#/discogs/artists/{{ artist.id }}">{{ artist.name }}</a>
+                    <span data-discogs-artist data-artist="artist" data-last="$last" ></span>
                 </span>
-                {{ masterCtrl.master.title }}
+                - {{ masterCtrl.master.title }}
             </h1>
 
             <p ng-show="masterCtrl.master.styles != null">

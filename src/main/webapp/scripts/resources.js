@@ -109,4 +109,10 @@
         });
     }]);
 
+    app.factory( 'DiscogsMaster', [ '$resource', function( $resource ) {
+        return $resource( '/discogs/masters/:id', { id: '@id' }, {
+            versions: { method: 'GET', url: '/discogs/masters/:id/versions' }
+        });
+    }]);
+
 })();

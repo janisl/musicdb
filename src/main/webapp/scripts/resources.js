@@ -98,7 +98,9 @@
     }]);
 
     app.factory( 'DiscogsLabel', [ '$resource', function( $resource ) {
-        return $resource( '/discogs/labels/:id', { id: '@id' } );
+        return $resource( '/discogs/labels/:id', { id: '@id' }, {
+            releases: { method: 'GET', url: '/discogs/labels/:id/releases' }
+        });
     }]);
 
 })();

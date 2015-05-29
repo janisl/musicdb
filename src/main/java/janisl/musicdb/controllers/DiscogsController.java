@@ -24,8 +24,12 @@ public class DiscogsController {
     private String discogsSecret;
 
     @RequestMapping(value = "/discogs/**", method = RequestMethod.GET)
-    public @ResponseBody String restProxyGet(HttpServletRequest request) {
-        String restOfTheUrl = ((String)request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE)).substring(9);
+    public @ResponseBody String restProxyGet(HttpServletRequest request) throws InterruptedException {
+        Thread.sleep(500);
+        
+        String restOfTheUrl = request.getServletPath().substring(9);
+        if (request.getQueryString() != null && !request.getQueryString().isEmpty())
+            restOfTheUrl = restOfTheUrl + "?" + request.getQueryString();
         
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.USER_AGENT, "MusicDB/1.0");

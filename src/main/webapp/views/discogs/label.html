@@ -23,3 +23,32 @@
         </td>
     </tr>
 </table>
+
+<div>
+    <span ng-repeat="page in labelCtrl.pages"><b ng-show="page.isCurrent">{{ page.pageNumber }}</b><a ng-hide="page.isCurrent" ng-click="labelCtrl.getReleases(page.pageNumber)">{{ page.pageNumber }}</a> </span>
+</div>
+<table class="table">
+    <tbody>
+        <tr ng-repeat="release in labelCtrl.releases.releases">
+            <td>
+                <img ng-src="{{ release.thumb }}" width="50" height="50" />
+            </td>
+            <td>
+                {{ release.artist }}
+            </td>
+            <td>
+                <!-- { "id":3010700 } -->
+                {{ release.title }}
+            </td>
+            <td>
+                {{ release.format }}
+            </td>
+            <td>
+                {{ release.catno }}
+            </td>
+            <td>
+                {{ release.year }}
+            </td>
+        </tr>
+    </tbody>
+</table>

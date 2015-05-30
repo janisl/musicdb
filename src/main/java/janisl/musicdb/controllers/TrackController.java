@@ -53,7 +53,6 @@ public class TrackController {
             }
             track.setName(newTrack.getName());
             track.setBeatportId(newTrack.getBeatportId());
-            track.setBeatportUrl(newTrack.getBeatportUrl());
             track.setVersion(newTrack.getVersion());
             track.setBpm(newTrack.getBpm());
             track.setArtistId(newTrack.getArtistId());

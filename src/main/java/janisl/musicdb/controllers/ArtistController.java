@@ -53,7 +53,6 @@ public class ArtistController {
             }
             artist.setName(newArtist.getName());
             artist.setBeatportId(newArtist.getBeatportId());
-            artist.setBeatportUrl(newArtist.getBeatportUrl());
             artist.setDiscogsId(newArtist.getDiscogsId());
 
             unitOfWork.getArtistRepository().update(artist);

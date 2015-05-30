@@ -4,7 +4,6 @@
     <tr ng-repeat="track in tracks.tracks | filter:tracks.filterText | orderBy: 'name'">
         <td>{{ track.name }}</td>
         <td>{{ track.beatportId }}</td>
-        <td>{{ track.beatportUrl }}</td>
         <td>{{ track.version }}</td>
         <td>{{ track.bpm }}</td>
         <td>{{ track.artistId }}</td>
@@ -14,6 +13,5 @@
         <td>{{ track.genreId }}</td>
         <td><a href="#/tracks/{{ track.id }}">Edit</a></td>
         <td><a href="#/tracks/" ng-click="tracks.delete(track)" >Delete</a></td>
-        <td><span ng-show="track.beatportId !== null"><a href="https://pro.beatport.com{{ track.beatportUrl }}"target="_blank">Beatport</a></span></td>
     </tr>
 </table>

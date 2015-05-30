@@ -54,7 +54,6 @@ public class ReleaseController {
             release.setName(newRelease.getName());
             release.setArtistId(newRelease.getArtistId());
             release.setBeatportId(newRelease.getBeatportId());
-            release.setBeatportUrl(newRelease.getBeatportUrl());
             release.setDiscogsId(newRelease.getDiscogsId());
             release.setLabelId(newRelease.getLabelId());
             release.setCatalogNumber(newRelease.getCatalogNumber());

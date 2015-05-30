@@ -4,7 +4,6 @@
     <tr ng-repeat="artist in artists.artists | filter:artists.filterText | orderBy: 'name'">
         <td>{{ artist.name }}</td>
         <td>{{ artist.beatportId }}</td>
-        <td>{{ artist.beatportUrl }}</td>
         <td>{{ artist.discogsId }}</td>
         <td><a href="#/artists/{{ artist.id }}">Edit</a></td>
         <td><a href="#/artists/" ng-click="artists.delete(artist)" >Delete</a></td>

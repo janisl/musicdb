@@ -15,7 +15,6 @@ public class Track implements Serializable {
     private Integer id;
     private String name;
     private Integer beatportId;
-    private String beatportUrl;
     private String version;
     private Integer bpm;
     private Integer artistId;
@@ -55,14 +54,6 @@ public class Track implements Serializable {
 
     public void setBeatportId(Integer beatportId) {
         this.beatportId = beatportId;
-    }
-
-    public String getBeatportUrl() {
-        return beatportUrl;
-    }
-
-    public void setBeatportUrl(String beatportUrl) {
-        this.beatportUrl = beatportUrl;
     }
 
     public String getVersion() {

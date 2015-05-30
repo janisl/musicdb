@@ -18,7 +18,6 @@ public class Release implements Serializable {
     private String name;
     private Integer artistId;
     private Integer beatportId;
-    private String beatportUrl;
     private Integer discogsId;
     private Integer labelId;
     private String catalogNumber;
@@ -63,14 +62,6 @@ public class Release implements Serializable {
 
     public void setBeatportId(Integer beatportId) {
         this.beatportId = beatportId;
-    }
-
-    public String getBeatportUrl() {
-        return beatportUrl;
-    }
-
-    public void setBeatportUrl(String beatportUrl) {
-        this.beatportUrl = beatportUrl;
     }
 
     public Integer getDiscogsId() {

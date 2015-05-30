@@ -2,6 +2,7 @@ package janisl.musicdb.repositories;
 
 import janisl.musicdb.models.MixxxTrack;
 import java.util.List;
+import org.hibernate.criterion.Restrictions;
 
 public class MixxxTrackRepositoryImpl implements MixxxTrackRepository {
     
@@ -12,8 +13,11 @@ public class MixxxTrackRepositoryImpl implements MixxxTrackRepository {
     }
 
     @Override
-    public List<MixxxTrack> getAll() {
-        return (List<MixxxTrack>) (unitOfWork.getMixxxSession().createCriteria(MixxxTrack.class).list());
+    public List<MixxxTrack> getAll(Integer mixxxDeleted) {
+        return (List<MixxxTrack>) (unitOfWork.getMixxxSession()
+                .createCriteria(MixxxTrack.class)
+                .add(Restrictions.eq("mixxxDeleted", mixxxDeleted))
+                .list());
     }
 
     @Override

@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface MixxxTrackRepository {
     
-    public List<MixxxTrack> getAll();
+    public List<MixxxTrack> getAll(Integer mixxxDeleted);
 
     public MixxxTrack get( Integer id );
 

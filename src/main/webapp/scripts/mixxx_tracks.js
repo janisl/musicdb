@@ -4,7 +4,7 @@
 
     app.controller( 'MixxxTracksController', [ 'MixxxTrack', function( MixxxTrack ) {
         this.filterText = '';
-        this.tracks = MixxxTrack.query();
+        this.tracks = MixxxTrack.query( { mixxxDeleted: 0 } );
     }]);
 
     app.controller( 'MixxxTrackCuesController', [ 'MixxxTrackCue', '$routeParams', function( MixxxTrackCue, $routeParams ) {

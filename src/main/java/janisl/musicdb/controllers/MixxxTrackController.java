@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -15,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class MixxxTrackController {
     
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public List<MixxxTrack> getList() throws Exception {
+    public List<MixxxTrack> getList(@RequestParam(value = "mixxxDeleted") Integer mixxxDeleted) throws Exception {
         try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
-            return unitOfWork.getMixxxTrackRepository().getAll();
+            return unitOfWork.getMixxxTrackRepository().getAll(mixxxDeleted);
         }
     }
 

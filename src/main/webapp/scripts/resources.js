@@ -119,4 +119,9 @@
         return $resource( '/discogs/releases/:id', { id: '@id' } );
     }]);
 
+    app.factory( 'DiscogsSearch', [ '$resource', function( $resource ) {
+        return $resource( '/discogs/database/search', {}, {
+            query: { method: 'GET', isArray: false } } );
+    }]);
+
 })();

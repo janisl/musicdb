@@ -116,9 +116,17 @@ public class UnitOfWorkImpl implements UnitOfWork {
     @Override
     public void close() throws Exception {
         if (session != null) {
+            if (transactionStarted) {
+                session.getTransaction().rollback();
+                transactionStarted = false;
+            }
             session.close();
         }
         if (mixxxSession != null) {
+            if (mixxxTransactionStarted) {
+                mixxxSession.getTransaction().rollback();
+                mixxxTransactionStarted = false;
+            }
             mixxxSession.close();
         }
     }

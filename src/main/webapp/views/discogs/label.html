@@ -24,9 +24,12 @@
     </tr>
 </table>
 
-<div>
-    <span ng-repeat="page in labelCtrl.pages"><b ng-show="page.isCurrent">{{ page.pageNumber }}</b><a ng-hide="page.isCurrent" ng-click="labelCtrl.getReleases(page.pageNumber)">{{ page.pageNumber }}</a> </span>
-</div>
+<nav>
+    <ul class="pagination">
+        <li ng-repeat="page in labelCtrl.pages" class="{{ page.isCurrent ? 'active' : '' }}"><a ng-click="labelCtrl.getReleases(page.pageNumber)">{{ page.pageNumber }}</a></li>
+    </ul>
+</nav>
+
 <table class="table">
     <tbody>
         <tr ng-repeat="release in labelCtrl.releases.releases">

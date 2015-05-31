@@ -1,97 +1,99 @@
-<form ng-submit="searchCtrl.search( 1 )">
-  <div class="form-group">
-    <label for="q">Query</label>
-    <input type="text" class="form-control" id="q" placeholder="Query" ng-model="searchCtrl.params.q">
-  </div>
-  <div class="form-group">
-    <label for="type">Type</label>
-    <input type="text" class="form-control" id="type" placeholder="Query" ng-model="searchCtrl.params.type">
-  </div>
-  <div class="form-group">
-    <label for="title">Title</label>
-    <input type="text" class="form-control" id="title" placeholder="Query" ng-model="searchCtrl.params.title">
-  </div>
-  <div class="form-group">
-    <label for="release_title">Release title</label>
-    <input type="text" class="form-control" id="release_title" placeholder="Query" ng-model="searchCtrl.params.release_title">
-  </div>
-  <div class="form-group">
-    <label for="credit">Credit</label>
-    <input type="text" class="form-control" id="credit" placeholder="Query" ng-model="searchCtrl.params.credit">
-  </div>
-  <div class="form-group">
-    <label for="artist">Artist</label>
-    <input type="text" class="form-control" id="artist" placeholder="Query" ng-model="searchCtrl.params.artist">
-  </div>
-  <div class="form-group">
-    <label for="anv">Artist name variation</label>
-    <input type="text" class="form-control" id="anv" placeholder="Query" ng-model="searchCtrl.params.anv">
-  </div>
-  <div class="form-group">
-    <label for="label">Label</label>
-    <input type="text" class="form-control" id="label" placeholder="Query" ng-model="searchCtrl.params.label">
-  </div>
-  <div class="form-group">
-    <label for="genre">Genre</label>
-    <input type="text" class="form-control" id="genre" placeholder="Query" ng-model="searchCtrl.params.genre">
-  </div>
-  <div class="form-group">
-    <label for="style">Style</label>
-    <input type="text" class="form-control" id="style" placeholder="Query" ng-model="searchCtrl.params.style">
-  </div>
-  <div class="form-group">
-    <label for="country">Country</label>
-    <input type="text" class="form-control" id="country" placeholder="Query" ng-model="searchCtrl.params.country">
-  </div>
-  <div class="form-group">
-    <label for="year">Year</label>
-    <input type="text" class="form-control" id="year" placeholder="Query" ng-model="searchCtrl.params.year">
-  </div>
-  <div class="form-group">
-    <label for="format">Format</label>
-    <input type="text" class="form-control" id="format" placeholder="Query" ng-model="searchCtrl.params.format">
-  </div>
-  <div class="form-group">
-    <label for="catno">Catalog number</label>
-    <input type="text" class="form-control" id="catno" placeholder="Query" ng-model="searchCtrl.params.catno">
-  </div>
-  <div class="form-group">
-    <label for="barcode">Barcode</label>
-    <input type="text" class="form-control" id="barcode" placeholder="Query" ng-model="searchCtrl.params.barcode">
-  </div>
-  <div class="form-group">
-    <label for="track">Track</label>
-    <input type="text" class="form-control" id="track" placeholder="Query" ng-model="searchCtrl.params.track">
-  </div>
-  <div class="form-group">
-    <label for="submitter">Submitter</label>
-    <input type="text" class="form-control" id="submitter" placeholder="Query" ng-model="searchCtrl.params.submitter">
-  </div>
-  <div class="form-group">
-    <label for="contributor">Contributor</label>
-    <input type="text" class="form-control" id="contributor" placeholder="Query" ng-model="searchCtrl.params.contributor">
-  </div>
-  <button type="submit" class="btn btn-default">Submit</button>
+<form ng-submit="searchCtrl.search(1)">
+    <div class="form-group">
+        <label for="q">Query</label>
+        <input type="text" class="form-control" id="q" placeholder="Query" ng-model="searchCtrl.params.q">
+    </div>
+    <div class="form-group">
+        <label for="type">Type</label>
+        <input type="text" class="form-control" id="type" placeholder="Query" ng-model="searchCtrl.params.type">
+    </div>
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" placeholder="Query" ng-model="searchCtrl.params.title">
+    </div>
+    <div class="form-group">
+        <label for="release_title">Release title</label>
+        <input type="text" class="form-control" id="release_title" placeholder="Query" ng-model="searchCtrl.params.release_title">
+    </div>
+    <div class="form-group">
+        <label for="credit">Credit</label>
+        <input type="text" class="form-control" id="credit" placeholder="Query" ng-model="searchCtrl.params.credit">
+    </div>
+    <div class="form-group">
+        <label for="artist">Artist</label>
+        <input type="text" class="form-control" id="artist" placeholder="Query" ng-model="searchCtrl.params.artist">
+    </div>
+    <div class="form-group">
+        <label for="anv">Artist name variation</label>
+        <input type="text" class="form-control" id="anv" placeholder="Query" ng-model="searchCtrl.params.anv">
+    </div>
+    <div class="form-group">
+        <label for="label">Label</label>
+        <input type="text" class="form-control" id="label" placeholder="Query" ng-model="searchCtrl.params.label">
+    </div>
+    <div class="form-group">
+        <label for="genre">Genre</label>
+        <input type="text" class="form-control" id="genre" placeholder="Query" ng-model="searchCtrl.params.genre">
+    </div>
+    <div class="form-group">
+        <label for="style">Style</label>
+        <input type="text" class="form-control" id="style" placeholder="Query" ng-model="searchCtrl.params.style">
+    </div>
+    <div class="form-group">
+        <label for="country">Country</label>
+        <input type="text" class="form-control" id="country" placeholder="Query" ng-model="searchCtrl.params.country">
+    </div>
+    <div class="form-group">
+        <label for="year">Year</label>
+        <input type="text" class="form-control" id="year" placeholder="Query" ng-model="searchCtrl.params.year">
+    </div>
+    <div class="form-group">
+        <label for="format">Format</label>
+        <input type="text" class="form-control" id="format" placeholder="Query" ng-model="searchCtrl.params.format">
+    </div>
+    <div class="form-group">
+        <label for="catno">Catalog number</label>
+        <input type="text" class="form-control" id="catno" placeholder="Query" ng-model="searchCtrl.params.catno">
+    </div>
+    <div class="form-group">
+        <label for="barcode">Barcode</label>
+        <input type="text" class="form-control" id="barcode" placeholder="Query" ng-model="searchCtrl.params.barcode">
+    </div>
+    <div class="form-group">
+        <label for="track">Track</label>
+        <input type="text" class="form-control" id="track" placeholder="Query" ng-model="searchCtrl.params.track">
+    </div>
+    <div class="form-group">
+        <label for="submitter">Submitter</label>
+        <input type="text" class="form-control" id="submitter" placeholder="Query" ng-model="searchCtrl.params.submitter">
+    </div>
+    <div class="form-group">
+        <label for="contributor">Contributor</label>
+        <input type="text" class="form-control" id="contributor" placeholder="Query" ng-model="searchCtrl.params.contributor">
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
 </form>
 
-<div>
-    <span ng-repeat="page in searchCtrl.pages"><b ng-show="page.isCurrent">{{ page.pageNumber }}</b><a ng-hide="page.isCurrent" ng-click="searchCtrl.search(page.pageNumber)">{{ page.pageNumber }}</a> </span>
-</div>
+<nav>
+    <ul class="pagination">
+        <li ng-repeat="page in searchCtrl.pages" class="{{ page.isCurrent ? 'active' : '' }}"><a ng-click="searchCtrl.search(page.pageNumber)">{{ page.pageNumber }}</a></li>
+    </ul>
+</nav>
 
 <table class="table">
     <tbody>
         <tr ng-repeat="result in searchCtrl.results.results">
             <td>
-                <img ng-src="{{ result.thumb }}" />
+                <img ng-src="{{ result.thumb}}" />
             </td>
             <td>
-                {{ result.type }}
+                {{ result.type}}
             </td>
             <td>
-                <a href="#/discogs/{{ result.type }}s/{{ result.id }}">{{ result.title }}</a>
+                <a href="#/discogs/{{ result.type}}s/{{ result.id}}">{{ result.title}}</a>
             </td>
             <td>
-                {{ result.catno }}
+                {{ result.catno}}
             </td>
         </tr>
     </tbody>

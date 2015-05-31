@@ -1,21 +1,59 @@
 <a href="#/labels/">Back</a><br />
 <form ng-submit="labelCtrl.submit()">
-    <table>
-        <tr>
-            <td>Name:</td>
-            <td><input type="text" ng-model="labelCtrl.label.name" size="64" ></td>
-        </tr>
-        <tr>
-            <td>Beatport ID:</td>
-            <td><input type="text" ng-model="labelCtrl.label.beatportId" ></td>
-        </tr>
-        <tr>
-            <td>Discogs ID:</td>
-            <td><input type="text" ng-model="labelCtrl.label.discogsId" ></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><input type="submit" value="OK" ></td>
-        </tr>
-    </table>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" ng-model="labelCtrl.label.name" size="64" >
+    </div>
+
+    <div class="panel panel-default" ng-controller="BeatportLabelsController as labels">
+        <div class="panel-heading">Beatport</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="beatportId">Beatport ID</label>
+                <input type="text" class="form-control" id="beatportId" ng-model="labelCtrl.label.beatportId">
+            </div>
+            <div class="form-group">
+                <label for="beatportLabel">Beatport</label>
+                <select ng-model="labelCtrl.label.beatportId" id="beatportLabel" class="form-control" >
+                    <option value="">-None-</option>
+                    <option ng-repeat="label in labels.labels | orderBy: 'name'" value="{{ label.id }}" ng-selected=" label.id == labelCtrl.label.beatportId ">{{ label.name }}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="beatportLabelImport">Beatport import</label>
+                <input type="text" class="form-control" id="beatportLabelImport" ng-model="labels.importUrl" />
+                <button type="button" class="btn btn-default" ng-click="labels.import()">Import</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="panel panel-default" ng-controller="DiscogsSearchController as searchCtrl" ng-init="searchCtrl.params.type = 'label'">
+        <div class="panel-heading">Discogs</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="discogsId">Discogs ID</label>
+                <input type="text" class="form-control" id="discogsId" ng-model="labelCtrl.label.discogsId" size="10" >
+            </div>
+            <div class="form-group">
+                <label for="q">Search</label>
+                <input type="text" class="form-control" id="q" ng-model="searchCtrl.params.q">
+            </div>
+            <button type="button" class="btn btn-default" ng-click="searchCtrl.search(1)">Search</button>
+
+            <nav>
+                <ul class="pagination">
+                    <li ng-repeat="page in searchCtrl.pages" class="{{ page.isCurrent ? 'active' : '' }}"><a ng-click="searchCtrl.search(page.pageNumber)">{{ page.pageNumber }}</a></li>
+                </ul>
+            </nav>
+
+            <div class="form-group">
+                <label for="discogsLabel">Select label</label>
+                <select ng-model="labelCtrl.label.discogsId" id="discogsLabel" class="form-control" >
+                    <option value="">-None-</option>
+                    <option ng-repeat="result in searchCtrl.results.results | orderBy: 'title'" value="{{ result.id }}" ng-selected=" result.id == labelCtrl.label.discogsId ">{{ result.title }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-default">OK</button>
 </form>

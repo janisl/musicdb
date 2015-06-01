@@ -1,9 +1,22 @@
-<input type="text" ng-model="genres.filterText" >
-<a href="#/genres/add/">Add genre</a>
+<div class="form-group">
+    <a href="#/genres/add/" class="btn btn-success">Add genre</a>
+</div>
+<div class="form-group">
+    <input type="text" ng-model="genres.filterText" class="form-control" placeholder="Filter">
+</div>
 <table class="table">
-    <tr ng-repeat="genre in genres.genres | filter:genres.filterText | orderBy: 'name'">
-        <td>{{ genre.name }}</td>
-        <td><a href="#/genres/{{ genre.id }}">Edit</a></td>
-        <td><a href="#/genres/" ng-click="genres.delete(genre)" >Delete</a></td>
-    </tr>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th width="60"></th>
+            <th width="80"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="genre in genres.genres | filter:genres.filterText | orderBy: 'name'">
+            <td>{{ genre.name }}</td>
+            <td><a href="#/genres/{{ genre.id }}" class="btn btn-success">Edit</a></td>
+            <td><a href="#/genres/" ng-click="genres.delete(genre)" class="btn btn-danger">Delete</a></td>
+        </tr>
+    </tbody>
 </table>

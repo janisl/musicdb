@@ -1,13 +1,8 @@
-<a href="#/genres/">Back</a><br />
 <form ng-submit="genreCtrl.submit()">
-    <table>
-        <tr>
-            <td>Name:</td>
-            <td><input type="text" ng-model="genreCtrl.genre.name" size="64" ></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><input type="submit" value="OK" ></td>
-        </tr>
-    </table>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" ng-model="genreCtrl.genre.name">
+    </div>
+    <button type="submit" class="btn btn-primary">OK</button>
+    <a href="#/genres/" class="btn btn-default">Cancel</a><br />
 </form>

@@ -1,12 +1,16 @@
 package janisl.musicdb.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.sql.Time;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -18,7 +22,7 @@ public class Track implements Serializable {
     private String version;
     private Integer bpm;
     private Integer artistId;
-    private Integer releaseId;
+    private ReleaseDetails release;
     private Integer keyId;
     private Time duration;
     private Integer genreId;
@@ -80,12 +84,15 @@ public class Track implements Serializable {
         this.artistId = artistId;
     }
 
-    public Integer getReleaseId() {
-        return releaseId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "releaseId")
+    @JsonIgnore
+    public ReleaseDetails getRelease() {
+        return release;
     }
 
-    public void setReleaseId(Integer releaseId) {
-        this.releaseId = releaseId;
+    public void setRelease(ReleaseDetails release) {
+        this.release = release;
     }
 
     public Integer getKeyId() {

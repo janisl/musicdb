@@ -37,6 +37,11 @@ public class TrackController {
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public ResponseEntity add(@RequestBody Track track) throws Exception {
         try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
+            if (track.getRelease() != null && track.getRelease().getId() != null)
+                track.setRelease(unitOfWork.getReleaseRepository().get(track.getRelease().getId()));
+            else
+                track.setRelease(null);
+
             unitOfWork.getTrackRepository().add(track);
             unitOfWork.commit();
             URI locationUri = new URI("/track/" + track.getId().toString());
@@ -56,10 +61,14 @@ public class TrackController {
             track.setVersion(newTrack.getVersion());
             track.setBpm(newTrack.getBpm());
             track.setArtistId(newTrack.getArtistId());
-            track.setReleaseId(newTrack.getReleaseId());
             track.setKeyId(newTrack.getKeyId());
             track.setDuration(newTrack.getDuration());
             track.setGenreId(newTrack.getGenreId());
+
+            if (newTrack.getRelease() != null && newTrack.getRelease().getId() != null)
+                track.setRelease(unitOfWork.getReleaseRepository().get(newTrack.getRelease().getId()));
+            else
+                track.setRelease(null);
 
             unitOfWork.getTrackRepository().update(track);
             unitOfWork.commit();

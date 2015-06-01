@@ -3,6 +3,9 @@ package janisl.musicdb.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -25,6 +29,7 @@ public class ReleaseDetails implements Serializable {
     private Label label;
     private String catalogNumber;
     private Date releaseDate;
+    private Set<Track> tracks = new HashSet<>(0);
 
     public ReleaseDetails() {
     }
@@ -97,4 +102,12 @@ public class ReleaseDetails implements Serializable {
         this.releaseDate = releaseDate;
     }
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "release")
+    public Set<Track> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(Set<Track> tracks) {
+        this.tracks = tracks;
+    }
 }

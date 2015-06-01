@@ -27,6 +27,7 @@
     app.controller( 'ReleaseAddController', [ 'Release', '$location', function( Release, $location ) {
         var ctrl = this;
         this.release = new Release();
+        this.release.tracks = [];
 
         this.submit = function() {
             ctrl.release.$save( {}, function() {
@@ -34,6 +35,10 @@
             }, function( httpResponse ) {
                 alert( 'Error ' + httpResponse );
             });
+        };
+        
+        this.addTrack = function() {
+            ctrl.release.tracks.push( {} );
         };
     }]);
 
@@ -44,10 +49,22 @@
 
         this.submit = function() {
             ctrl.release.$update( {}, function() {
-                $location.path( '/releases/' );
+                $location.path( '/releases/' + ctrl.id );
             }, function( httpResponse ) {
                 alert( 'Error ' + httpResponse );
             });
+        };
+        
+        this.addTrack = function() {
+            ctrl.release.tracks.push( {} );
+        };
+        
+        this.removeTrack = function( track ) {
+            for ( var i = ctrl.release.tracks.length - 1; i >= 0; i-- ) {
+                if (ctrl.release.tracks[i] === track) {
+                   ctrl.release.tracks.splice( i, 1 );
+                }
+            }
         };
     }]);
 

@@ -51,4 +51,20 @@
         };
     }]);
 
+    app.controller( 'ReleaseDetailsController', [ 'Release', '$routeParams', '$location', function( Release, $routeParams, $location ) {
+        var ctrl = this;
+        this.id = $routeParams.id;
+        this.release = Release.get( { id: $routeParams.id } );
+
+        this.delete = function() {
+            if ( confirm( "Are you sure you want to delete this release?" ) === true ) {
+                ctrl.release.$delete( {}, function() {
+                    $location.path( '/releases/' );
+                }, function( httpResponse ) {
+                    alert( 'Error ' + httpResponse );
+                });
+            }
+        };
+    }]);
+
 })();

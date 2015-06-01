@@ -1,6 +1,7 @@
 package janisl.musicdb.repositories;
 
 import janisl.musicdb.models.Release;
+import janisl.musicdb.models.ReleaseDetails;
 import java.util.List;
 
 public class ReleaseRepositoryImpl implements ReleaseRepository {
@@ -17,22 +18,22 @@ public class ReleaseRepositoryImpl implements ReleaseRepository {
     }
 
     @Override
-    public Release get(Integer id) {
-        return (Release) unitOfWork.getSession().get(Release.class, id);
+    public ReleaseDetails get(Integer id) {
+        return (ReleaseDetails) unitOfWork.getSession().get(ReleaseDetails.class, id);
     }
 
     @Override
-    public void add(Release release) {
+    public void add(ReleaseDetails release) {
         unitOfWork.getSession().save(release);
     }
 
     @Override
-    public void update(Release release) {
+    public void update(ReleaseDetails release) {
         unitOfWork.getSession().save(release);
     }
 
     @Override
-    public void delete(Release release) {
+    public void delete(ReleaseDetails release) {
         unitOfWork.getSession().delete(release);
     }
     

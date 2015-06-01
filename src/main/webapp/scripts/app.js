@@ -69,6 +69,11 @@
                 controllerAs: 'releaseCtrl'
             })
             .when( '/releases/:id/', {
+                templateUrl: 'views/releases/details.html',
+                controller: 'ReleaseDetailsController',
+                controllerAs: 'releaseCtrl'
+            })
+            .when( '/releases/:id/edit', {
                 templateUrl: 'views/releases/add_edit.html',
                 controller: 'ReleaseEditController',
                 controllerAs: 'releaseCtrl'

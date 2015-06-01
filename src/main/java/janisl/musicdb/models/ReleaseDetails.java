@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="Release_")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Release implements Serializable {
+public class ReleaseDetails implements Serializable {
 
     private Integer id;
     private String name;
@@ -23,7 +23,7 @@ public class Release implements Serializable {
     private String catalogNumber;
     private Date releaseDate;
 
-    public Release() {
+    public ReleaseDetails() {
     }
 
     @Id

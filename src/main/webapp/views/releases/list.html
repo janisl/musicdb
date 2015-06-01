@@ -22,14 +22,14 @@
     </thead>
     <tbody>
         <tr ng-repeat="release in releases.releases | filter:releases.filterText | orderBy: 'name'">
-            <td>{{ release.name }}</td>
+            <td><a href="#/releases/{{ release.id }}">{{ release.name }}</a></td>
             <td>{{ release.artistId }}</td>
             <td>{{ release.labelId }}</td>
             <td>{{ release.catalogNumber }}</td>
             <td>{{ release.releaseDate }}</td>
             <td>{{ release.beatportId }}</td>
             <td>{{ release.discogsId }}</td>
-            <td><a href="#/releases/{{ release.id }}" class="btn btn-success">Edit</a></td>
+            <td><a href="#/releases/{{ release.id }}/edit" class="btn btn-success">Edit</a></td>
             <td><a href="#/releases/" ng-click="releases.delete(release)" class="btn btn-danger">Delete</a></td>
             <td><span ng-show="release.beatportId !== null"><a href="#/beatport/releases/{{ release.beatportId }}" class="btn btn-info">Beatport</a></span></td>
             <td><span ng-show="release.discogsId !== null"><a href="#/discogs/releases/{{ release.discogsId }}" class="btn btn-info">Discogs</a></span></td>

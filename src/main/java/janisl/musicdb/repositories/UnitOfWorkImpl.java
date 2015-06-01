@@ -24,6 +24,7 @@ public class UnitOfWorkImpl implements UnitOfWork {
             configuration.addAnnotatedClass(janisl.musicdb.models.Genre.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.Label.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.Release.class);
+            configuration.addAnnotatedClass(janisl.musicdb.models.ReleaseDetails.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.Track.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.BeatportArtist.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.BeatportGenre.class);

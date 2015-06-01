@@ -1,6 +1,7 @@
 package janisl.musicdb.controllers;
 
 import janisl.musicdb.models.Release;
+import janisl.musicdb.models.ReleaseDetails;
 import janisl.musicdb.repositories.UnitOfWork;
 import janisl.musicdb.repositories.UnitOfWorkFactory;
 import java.net.URI;
@@ -24,9 +25,9 @@ public class ReleaseController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Release getById(@PathVariable("id") int id) throws Exception {
+    public ReleaseDetails getById(@PathVariable("id") int id) throws Exception {
         try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
-            Release release = unitOfWork.getReleaseRepository().get(id);
+            ReleaseDetails release = unitOfWork.getReleaseRepository().get(id);
             if (release == null) {
                 throw new ReleaseNotFoundException();
             }
@@ -35,7 +36,7 @@ public class ReleaseController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ResponseEntity add(@RequestBody Release release) throws Exception {
+    public ResponseEntity add(@RequestBody ReleaseDetails release) throws Exception {
         try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
             unitOfWork.getReleaseRepository().add(release);
             unitOfWork.commit();
@@ -45,9 +46,9 @@ public class ReleaseController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity update(@PathVariable("id") int id, @RequestBody Release newRelease) throws Exception {
+    public ResponseEntity update(@PathVariable("id") int id, @RequestBody ReleaseDetails newRelease) throws Exception {
         try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
-            Release release = unitOfWork.getReleaseRepository().get(id);
+            ReleaseDetails release = unitOfWork.getReleaseRepository().get(id);
             if (release == null) {
                 throw new ReleaseNotFoundException();
             }
@@ -68,7 +69,7 @@ public class ReleaseController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity delete(@PathVariable("id") int id) throws Exception {
         try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
-            Release release = unitOfWork.getReleaseRepository().get(id);
+            ReleaseDetails release = unitOfWork.getReleaseRepository().get(id);
             if (release == null) {
                 throw new ReleaseNotFoundException();
             }

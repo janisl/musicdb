@@ -22,7 +22,7 @@
             <td>{{ label.beatportId }}</td>
             <td>{{ label.discogsId }}</td>
             <td><a href="#/labels/{{ label.id }}" class="btn btn-success">Edit</a></td>
-            <td><a href="#/labels/" ng-click="labels.delete( label )" class="btn btn-danger" >Delete</a></td>
+            <td><a href="#/labels/" ng-click="labels.delete( label )" class="btn btn-danger">Delete</a></td>
             <td><span ng-show="label.beatportId !== null"><a href="#/beatport/labels/{{ label.beatportId }}" class="btn btn-info">Beatport</a></span></td>
             <td><span ng-show="label.discogsId !== null"><a href="#/discogs/labels/{{ label.discogsId }}" class="btn btn-info">Discogs</a></span></td>
         </tr>

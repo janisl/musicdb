@@ -1,8 +1,7 @@
-<a href="#/labels/">Back</a><br />
 <form ng-submit="labelCtrl.submit()">
     <div class="form-group">
         <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" ng-model="labelCtrl.label.name" size="64" >
+        <input type="text" class="form-control" id="name" ng-model="labelCtrl.label.name">
     </div>
 
     <div class="panel panel-default" ng-controller="BeatportLabelsController as labels">
@@ -32,7 +31,7 @@
         <div class="panel-body">
             <div class="form-group">
                 <label for="discogsId">Discogs ID</label>
-                <input type="text" class="form-control" id="discogsId" ng-model="labelCtrl.label.discogsId" size="10" >
+                <input type="text" class="form-control" id="discogsId" ng-model="labelCtrl.label.discogsId">
             </div>
             <div class="form-group">
                 <label for="q">Search</label>
@@ -55,5 +54,6 @@
             </div>
         </div>
     </div>
-    <button type="submit" class="btn btn-default">OK</button>
+    <button type="submit" class="btn btn-primary">OK</button>
+    <a href="#/labels/" class="btn btn-default">Cancel</a><br />
 </form>

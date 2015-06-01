@@ -1,13 +1,30 @@
-<input type="text" ng-model="artists.filterText" >
-<a href="#/artists/add/">Add artist</a>
+<div class="form-group">
+    <a href="#/artists/add/" class="btn btn-success">Add artist</a>
+</div>
+<div class="form-group">
+    <input type="text" ng-model="artists.filterText" class="form-control" placeholder="Filter" >
+</div>
 <table class="table">
-    <tr ng-repeat="artist in artists.artists | filter:artists.filterText | orderBy: 'name'">
-        <td>{{ artist.name }}</td>
-        <td>{{ artist.beatportId }}</td>
-        <td>{{ artist.discogsId }}</td>
-        <td><a href="#/artists/{{ artist.id }}">Edit</a></td>
-        <td><a href="#/artists/" ng-click="artists.delete(artist)" >Delete</a></td>
-        <td><span ng-show="artist.beatportId !== null"><a href="#/beatport/artists/{{ artist.beatportId }}">Beatport</a></span></td>
-        <td><span ng-show="artist.discogsId !== null"><a href="#/discogs/artists/{{ artist.discogsId }}">Discogs</a></span></td>
-    </tr>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Beatport ID</th>
+            <th>Discogs ID</th>
+            <th width="60"></th>
+            <th width="80"></th>
+            <th width="100"></th>
+            <th width="100"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="artist in artists.artists | filter:artists.filterText | orderBy: 'name'">
+            <td>{{ artist.name }}</td>
+            <td>{{ artist.beatportId }}</td>
+            <td>{{ artist.discogsId }}</td>
+            <td><a href="#/artists/{{ artist.id }}" class="btn btn-success">Edit</a></td>
+            <td><a href="#/artists/" ng-click="artists.delete(artist)" class="btn btn-danger">Delete</a></td>
+            <td><span ng-show="artist.beatportId !== null"><a href="#/beatport/artists/{{ artist.beatportId }}" class="btn btn-info">Beatport</a></span></td>
+            <td><span ng-show="artist.discogsId !== null"><a href="#/discogs/artists/{{ artist.discogsId }}" class="btn btn-info">Discogs</a></span></td>
+        </tr>
+    </tbody>
 </table>

@@ -4,9 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,7 +22,7 @@ public class Release implements Serializable {
     private Integer artistId;
     private Integer beatportId;
     private Integer discogsId;
-    private Integer labelId;
+    private Label label;
     private String catalogNumber;
     private Date releaseDate;
 
@@ -68,12 +71,14 @@ public class Release implements Serializable {
         this.discogsId = discogsId;
     }
 
-    public Integer getLabelId() {
-        return labelId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "labelId")
+    public Label getLabel() {
+        return label;
     }
 
-    public void setLabelId(Integer labelId) {
-        this.labelId = labelId;
+    public void setLabel(Label label) {
+        this.label = label;
     }
 
     public String getCatalogNumber() {

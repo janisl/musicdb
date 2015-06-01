@@ -38,6 +38,11 @@ public class ReleaseController {
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public ResponseEntity add(@RequestBody ReleaseDetails release) throws Exception {
         try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
+            if (release.getLabel() != null && release.getLabel().getId() != null)
+                release.setLabel(unitOfWork.getLabelRepository().get(release.getLabel().getId()));
+            else
+                release.setLabel(null);
+            
             unitOfWork.getReleaseRepository().add(release);
             unitOfWork.commit();
             URI locationUri = new URI("/release/" + release.getId().toString());
@@ -56,9 +61,13 @@ public class ReleaseController {
             release.setArtistId(newRelease.getArtistId());
             release.setBeatportId(newRelease.getBeatportId());
             release.setDiscogsId(newRelease.getDiscogsId());
-            release.setLabelId(newRelease.getLabelId());
             release.setCatalogNumber(newRelease.getCatalogNumber());
             release.setReleaseDate(newRelease.getReleaseDate());
+            
+            if (newRelease.getLabel() != null && newRelease.getLabel().getId() != null)
+                release.setLabel(unitOfWork.getLabelRepository().get(newRelease.getLabel().getId()));
+            else
+                release.setLabel(null);
 
             unitOfWork.getReleaseRepository().update(release);
             unitOfWork.commit();

@@ -9,7 +9,7 @@
         <tr>
             <th>Name</th>
             <th>Artist ID</th>
-            <th>Label ID</th>
+            <th>Label</th>
             <th>Catalog number</th>
             <th>Release date</th>
             <th>Beatport ID</th>
@@ -24,7 +24,7 @@
         <tr ng-repeat="release in releases.releases | filter:releases.filterText | orderBy: 'name'">
             <td><a href="#/releases/{{ release.id }}">{{ release.name }}</a></td>
             <td>{{ release.artistId }}</td>
-            <td>{{ release.labelId }}</td>
+            <td>{{ release.label.name }}</td>
             <td>{{ release.catalogNumber }}</td>
             <td>{{ release.releaseDate }}</td>
             <td>{{ release.beatportId }}</td>

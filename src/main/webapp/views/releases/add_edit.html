@@ -3,6 +3,7 @@
         <label for="name">Name</label>
         <input type="text" class="form-control" id="name" ng-model="releaseCtrl.release.name" size="64" >
     </div>
+    
     <div class="form-group" ng-controller="ArtistsController as artistsCtrl">
         <label for="artistId">Artist</label>
         <select class="form-control" id="artistId" ng-model="releaseCtrl.release.artistId" >
@@ -10,17 +11,20 @@
             <option ng-repeat="artist in artistsCtrl.artists | orderBy: 'name'" value="{{ artist.id }}" ng-selected=" artist.id == releaseCtrl.release.artistId ">{{ artist.name }}</option>
         </select>
     </div>
+    
     <div class="form-group" ng-controller="LabelsController as labelsCtrl">
         <label for="lablId">Label</label>
-        <select class="form-control" id="lablId" ng-model="releaseCtrl.release.labelId" >
+        <select class="form-control" id="lablId" ng-model="releaseCtrl.release.label.id" >
             <option value="">-None-</option>
-            <option ng-repeat="label in labelsCtrl.labels | orderBy: 'name'" value="{{ label.id }}" ng-selected=" label.id == releaseCtrl.release.labelId ">{{ label.name }}</option>
+            <option ng-repeat="label in labelsCtrl.labels | orderBy: 'name'" value="{{ label.id }}" ng-selected=" label.id == releaseCtrl.release.label.id ">{{ label.name }}</option>
         </select>
     </div>
+    
     <div class="form-group">
         <label for="catalogNumber">Catalog number</label>
         <input type="text" class="form-control" id="catalogNumber" ng-model="releaseCtrl.release.catalogNumber" >
     </div>
+    
     <div class="form-group">
         <label for="releaseDate">Release date</label>
         <input type="text" class="form-control" id="releaseDate" ng-model="releaseCtrl.release.releaseDate" >

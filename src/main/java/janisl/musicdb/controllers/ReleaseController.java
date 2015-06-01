@@ -48,6 +48,11 @@ public class ReleaseController {
             
             for (Track track : release.getTracks()) {
                 track.setRelease(release);
+
+                if (track.getGenre() != null && track.getGenre().getId() != null)
+                    track.setGenre(unitOfWork.getGenreRepository().get(track.getGenre().getId()));
+                else
+                    track.setGenre(null);
             }
             
             unitOfWork.getReleaseRepository().add(release);
@@ -83,6 +88,11 @@ public class ReleaseController {
             Set<Track> remainingTracks = release.getTracks();
             Set<Track> tracks = new HashSet<>(0);
             for (Track newTrack : newRelease.getTracks()) {
+                if (newTrack.getGenre() != null && newTrack.getGenre().getId() != null)
+                    newTrack.setGenre(unitOfWork.getGenreRepository().get(newTrack.getGenre().getId()));
+                else
+                    newTrack.setGenre(null);
+
                 if (newTrack.getId() != null) {
                     Track track = unitOfWork.getTrackRepository().get(newTrack.getId());
                     if (track == null) {
@@ -95,12 +105,14 @@ public class ReleaseController {
                     track.setArtistId(newTrack.getArtistId());
                     track.setKeyId(newTrack.getKeyId());
                     track.setDuration(newTrack.getDuration());
-                    track.setGenreId(newTrack.getGenreId());
+                    track.setGenre(newTrack.getGenre());
                     track.setRelease(release);
                     tracks.add(track);
                     remainingTracks.remove(track);
                 } else {
+                    
                     newTrack.setRelease(release);
+
                     tracks.add(newTrack);
                     unitOfWork.getTrackRepository().add(newTrack);
                 }

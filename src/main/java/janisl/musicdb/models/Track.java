@@ -25,7 +25,7 @@ public class Track implements Serializable {
     private ReleaseDetails release;
     private Integer keyId;
     private Time duration;
-    private Integer genreId;
+    private Genre genre;
 
     public Track() {
     }
@@ -111,11 +111,13 @@ public class Track implements Serializable {
         this.duration = duration;
     }
 
-    public Integer getGenreId() {
-        return genreId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "genreId")
+    public Genre getGenre() {
+        return genre;
     }
 
-    public void setGenreId(Integer genreId) {
-        this.genreId = genreId;
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 }

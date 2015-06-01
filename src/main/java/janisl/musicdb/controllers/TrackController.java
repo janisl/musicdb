@@ -42,6 +42,11 @@ public class TrackController {
             else
                 track.setRelease(null);
 
+            if (track.getGenre() != null && track.getGenre().getId() != null)
+                track.setGenre(unitOfWork.getGenreRepository().get(track.getGenre().getId()));
+            else
+                track.setGenre(null);
+            
             unitOfWork.getTrackRepository().add(track);
             unitOfWork.commit();
             URI locationUri = new URI("/track/" + track.getId().toString());
@@ -63,13 +68,17 @@ public class TrackController {
             track.setArtistId(newTrack.getArtistId());
             track.setKeyId(newTrack.getKeyId());
             track.setDuration(newTrack.getDuration());
-            track.setGenreId(newTrack.getGenreId());
 
             if (newTrack.getRelease() != null && newTrack.getRelease().getId() != null)
                 track.setRelease(unitOfWork.getReleaseRepository().get(newTrack.getRelease().getId()));
             else
                 track.setRelease(null);
 
+            if (newTrack.getGenre() != null && newTrack.getGenre().getId() != null)
+                track.setGenre(unitOfWork.getGenreRepository().get(newTrack.getGenre().getId()));
+            else
+                track.setGenre(null);
+            
             unitOfWork.getTrackRepository().update(track);
             unitOfWork.commit();
             return ResponseEntity.ok().build();

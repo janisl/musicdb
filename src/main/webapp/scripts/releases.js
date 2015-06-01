@@ -84,4 +84,33 @@
         };
     }]);
 
+    app.controller( 'KeysController', function() {
+        this.keys = [
+            { id: 1, name: "1A G#m" },
+            { id: 2, name: "2A D#m" },
+            { id: 3, name: "3A A#m" },
+            { id: 4, name: "4A Fm" },
+            { id: 5, name: "5A Cm" },
+            { id: 6, name: "6A Gm" },
+            { id: 7, name: "7A Dm" },
+            { id: 8, name: "8A Am" },
+            { id: 9, name: "9A Em" },
+            { id: 10, name: "10A Bm" },
+            { id: 11, name: "11A F#m" },
+            { id: 12, name: "12A C#m" },
+            { id: 13, name: "1B B" },
+            { id: 14, name: "2B F#" },
+            { id: 15, name: "3B C#" },
+            { id: 16, name: "4B G#" },
+            { id: 17, name: "5B D#" },
+            { id: 18, name: "6B A#" },
+            { id: 19, name: "7B F" },
+            { id: 20, name: "8B C" },
+            { id: 21, name: "9B G" },
+            { id: 22, name: "10B D" },
+            { id: 23, name: "11B A" },
+            { id: 24, name: "12B E" }
+        ];
+    });
+
 })();

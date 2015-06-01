@@ -52,20 +52,41 @@
                     <td><input type="text" ng-model="track.bpm" ></td>
                 </tr>
                 <tr>
-                    <td>Artist ID:</td>
-                    <td><input type="text" ng-model="track.artistId" ></td>
+                    <td><label for="trackArtist">Artist</label></td>
+                    <td>
+                        <div ng-controller="ArtistsController as artistsCtrl">
+                            <select class="form-control" id="trackArtist" ng-model="track.artistId" >
+                                <option value="">-None-</option>
+                                <option ng-repeat="artist in artistsCtrl.artists | orderBy: 'name'" value="{{ artist.id }}" ng-selected=" artist.id == track.artistId ">{{ artist.name }}</option>
+                            </select>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
-                    <td>Key ID:</td>
-                    <td><input type="text" ng-model="track.keyId" ></td>
+                    <td><label for="trackKey">Key</label></td>
+                    <td>
+                        <div ng-controller="KeysController as keysCtrl">
+                            <select class="form-control" id="trackKey" ng-model="track.keyId" >
+                                <option value="">-None-</option>
+                                <option ng-repeat="key in keysCtrl.keys" value="{{ key.id }}" ng-selected=" key.id == track.keyId ">{{ key.name }}</option>
+                            </select>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>Duration:</td>
                     <td><input type="text" ng-model="track.duration" ></td>
                 </tr>
                 <tr>
-                    <td>Genre ID:</td>
-                    <td><input type="text" ng-model="track.genreId" ></td>
+                    <td><label for="trackGenre">Genre</label></td>
+                    <td>
+                        <div ng-controller="GenresController as genresCtrl">
+                            <select class="form-control" id="trackGenre" ng-model="track.genre.id" >
+                                <option value="">-None-</option>
+                                <option ng-repeat="genre in genresCtrl.genres | orderBy: 'name'" value="{{ genre.id }}" ng-selected=" genre.id == track.genre.id ">{{ genre.name }}</option>
+                            </select>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>

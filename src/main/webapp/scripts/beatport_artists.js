@@ -93,4 +93,11 @@
         };
     });
 
+    app.directive("beatportLogo", function() {
+        return {
+            restrict: 'A',
+            templateUrl: 'views/beatport/logo.html'
+        };
+    });
+
 })();

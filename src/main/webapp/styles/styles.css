@@ -1,3 +1,18 @@
 body {
     padding-top: 65px;
 }
+
+.beatport-logo-icon {
+    height:16px;
+    width:16px;
+    margin-right:5px;
+    display:inline-block;
+    fill:#94d500
+}
+
+.beatport-logo-type {
+    height:12px;
+    width:60px;
+    fill:#94d500;
+    display:inline-block
+}

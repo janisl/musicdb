@@ -47,7 +47,7 @@
             </nav>
 
             <div class="form-group">
-                <label for="discogsLabel">Select label</label>
+                <label for="discogsLabel">Select</label>
                 <select ng-model="artistCtrl.artist.discogsId" id="discogsLabel" class="form-control" >
                     <option value="">-None-</option>
                     <option ng-repeat="result in searchCtrl.results.results | orderBy: 'title'" value="{{ result.id }}" ng-selected=" result.id == artistCtrl.artist.discogsId ">{{ result.title }}</option>

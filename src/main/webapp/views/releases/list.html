@@ -1,17 +1,38 @@
-<input type="text" ng-model="releases.filterText" >
-<a href="#/releases/add/">Add release</a>
+<div class="form-group">
+    <a href="#/releases/add/" class="btn btn-success">Add release</a>
+</div>
+<div class="form-group">
+    <input type="text" ng-model="releases.filterText" class="form-control" placeholder="Filter">
+</div>
 <table class="table">
-    <tr ng-repeat="release in releases.releases | filter:releases.filterText | orderBy: 'name'">
-        <td>{{ release.name }}</td>
-        <td>{{ release.artistId }}</td>
-        <td>{{ release.labelId }}</td>
-        <td>{{ release.catalogNumber }}</td>
-        <td>{{ release.releaseDate }}</td>
-        <td>{{ release.beatportId }}</td>
-        <td>{{ release.discogsId }}</td>
-        <td><a href="#/releases/{{ release.id }}">Edit</a></td>
-        <td><a href="#/releases/" ng-click="releases.delete(release)" >Delete</a></td>
-        <td><span ng-show="release.beatportId !== null"><a href="#/beatport/releases/{{ release.beatportId }}">Beatport</a></span></td>
-        <td><span ng-show="release.discogsId !== null"><a href="#/discogs/releases/{{ release.discogsId }}">Discogs</a></span></td>
-    </tr>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Artist ID</th>
+            <th>Label ID</th>
+            <th>Catalog number</th>
+            <th>Release date</th>
+            <th>Beatport ID</th>
+            <th>Discogs ID</th>
+            <th width="60"></th>
+            <th width="80"></th>
+            <th width="100"></th>
+            <th width="100"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="release in releases.releases | filter:releases.filterText | orderBy: 'name'">
+            <td>{{ release.name }}</td>
+            <td>{{ release.artistId }}</td>
+            <td>{{ release.labelId }}</td>
+            <td>{{ release.catalogNumber }}</td>
+            <td>{{ release.releaseDate }}</td>
+            <td>{{ release.beatportId }}</td>
+            <td>{{ release.discogsId }}</td>
+            <td><a href="#/releases/{{ release.id }}" class="btn btn-success">Edit</a></td>
+            <td><a href="#/releases/" ng-click="releases.delete(release)" class="btn btn-danger">Delete</a></td>
+            <td><span ng-show="release.beatportId !== null"><a href="#/beatport/releases/{{ release.beatportId }}" class="btn btn-info">Beatport</a></span></td>
+            <td><span ng-show="release.discogsId !== null"><a href="#/discogs/releases/{{ release.discogsId }}" class="btn btn-info">Discogs</a></span></td>
+        </tr>
+    </tbody>
 </table>

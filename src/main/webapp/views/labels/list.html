@@ -1,13 +1,30 @@
-<input type="text" ng-model="labels.filterText" >
-<a href="#/labels/add/">Add label</a>
+<div class="form-group">
+    <a href="#/labels/add/" class="btn btn-success">Add label</a>
+</div>
+<div class="form-group">
+    <input type="text" ng-model="labels.filterText" class="form-control" placeholder="Filter">
+</div>
 <table class="table">
-    <tr ng-repeat="label in labels.labels | filter:labels.filterText | orderBy: 'name'">
-        <td>{{ label.name }}</td>
-        <td>{{ label.beatportId }}</td>
-        <td>{{ label.discogsId }}</td>
-        <td><a href="#/labels/{{ label.id }}">Edit</a></td>
-        <td><a href="#/labels/" ng-click="labels.delete(label)" >Delete</a></td>
-        <td><span ng-show="label.beatportId !== null"><a href="#/beatport/labels/{{ label.beatportId }}">Beatport</a></span></td>
-        <td><span ng-show="label.discogsId !== null"><a href="#/discogs/labels/{{ label.discogsId }}">Discogs</a></span></td>
-    </tr>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Beatport ID</th>
+            <th>Discogs ID</th>
+            <th width="60"></th>
+            <th width="80"></th>
+            <th width="100"></th>
+            <th width="100"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="label in labels.labels| filter:labels.filterText | orderBy: 'name'">
+            <td>{{ label.name }}</td>
+            <td>{{ label.beatportId }}</td>
+            <td>{{ label.discogsId }}</td>
+            <td><a href="#/labels/{{ label.id }}" class="btn btn-success">Edit</a></td>
+            <td><a href="#/labels/" ng-click="labels.delete( label )" class="btn btn-danger" >Delete</a></td>
+            <td><span ng-show="label.beatportId !== null"><a href="#/beatport/labels/{{ label.beatportId }}" class="btn btn-info">Beatport</a></span></td>
+            <td><span ng-show="label.discogsId !== null"><a href="#/discogs/labels/{{ label.discogsId }}" class="btn btn-info">Discogs</a></span></td>
+        </tr>
+    </tbody>
 </table>

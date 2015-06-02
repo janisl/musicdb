@@ -23,7 +23,7 @@ public class Track implements Serializable {
     private Integer bpm;
     private Integer artistId;
     private ReleaseDetails release;
-    private Integer keyId;
+    private Key key;
     private Time duration;
     private Genre genre;
 
@@ -95,12 +95,14 @@ public class Track implements Serializable {
         this.release = release;
     }
 
-    public Integer getKeyId() {
-        return keyId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "keyId")
+    public Key getKey() {
+        return key;
     }
 
-    public void setKeyId(Integer keyId) {
-        this.keyId = keyId;
+    public void setKey(Key key) {
+        this.key = key;
     }
 
     public Time getDuration() {

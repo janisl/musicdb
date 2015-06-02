@@ -1,0 +1,24 @@
+package janisl.musicdb.repositories;
+
+import janisl.musicdb.models.Key;
+import java.util.List;
+
+public class KeyRepositoryImpl implements KeyRepository {
+
+    private final UnitOfWorkImpl unitOfWork;
+
+    public KeyRepositoryImpl(UnitOfWorkImpl unitOfWork) {
+        this.unitOfWork = unitOfWork;
+    }
+
+    @Override
+    public List<Key> getAll() {
+        return (List<Key>) (unitOfWork.getSession().createCriteria(Key.class).list());
+    }
+
+    @Override
+    public Key get(Integer id) {
+        return (Key) unitOfWork.getSession().get(Key.class, id);
+    }
+
+}

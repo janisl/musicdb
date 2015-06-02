@@ -8,6 +8,8 @@ public interface UnitOfWork extends AutoCloseable {
     
     public GenreRepository getGenreRepository();
     
+    public KeyRepository getKeyRepository();
+    
     public LabelRepository getLabelRepository();
     
     public ReleaseRepository getReleaseRepository();

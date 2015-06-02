@@ -66,9 +66,9 @@
                     <td><label for="trackKey">Key</label></td>
                     <td>
                         <div ng-controller="KeysController as keysCtrl">
-                            <select class="form-control" id="trackKey" ng-model="track.keyId" >
+                            <select class="form-control" id="trackKey" ng-model="track.key.id" >
                                 <option value="">-None-</option>
-                                <option ng-repeat="key in keysCtrl.keys" value="{{ key.id }}" ng-selected=" key.id == track.keyId ">{{ key.name }}</option>
+                                <option ng-repeat="key in keysCtrl.keys" value="{{ key.id }}" ng-selected=" key.id == track.key.id ">{{ key.name }}</option>
                             </select>
                         </div>
                     </td>

@@ -46,6 +46,11 @@ public class TrackController {
                 track.setGenre(unitOfWork.getGenreRepository().get(track.getGenre().getId()));
             else
                 track.setGenre(null);
+
+            if (track.getKey() != null && track.getKey().getId() != null)
+                track.setKey(unitOfWork.getKeyRepository().get(track.getKey().getId()));
+            else
+                track.setKey(null);
             
             unitOfWork.getTrackRepository().add(track);
             unitOfWork.commit();
@@ -66,7 +71,6 @@ public class TrackController {
             track.setVersion(newTrack.getVersion());
             track.setBpm(newTrack.getBpm());
             track.setArtistId(newTrack.getArtistId());
-            track.setKeyId(newTrack.getKeyId());
             track.setDuration(newTrack.getDuration());
 
             if (newTrack.getRelease() != null && newTrack.getRelease().getId() != null)
@@ -78,6 +82,11 @@ public class TrackController {
                 track.setGenre(unitOfWork.getGenreRepository().get(newTrack.getGenre().getId()));
             else
                 track.setGenre(null);
+
+            if (newTrack.getKey() != null && newTrack.getKey().getId() != null)
+                track.setKey(unitOfWork.getKeyRepository().get(newTrack.getKey().getId()));
+            else
+                track.setKey(null);
             
             unitOfWork.getTrackRepository().update(track);
             unitOfWork.commit();

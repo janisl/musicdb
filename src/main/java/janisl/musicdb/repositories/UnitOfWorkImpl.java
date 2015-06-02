@@ -22,6 +22,7 @@ public class UnitOfWorkImpl implements UnitOfWork {
             // Add all annotated classes for the main DB.
             configuration.addAnnotatedClass(janisl.musicdb.models.Artist.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.Genre.class);
+            configuration.addAnnotatedClass(janisl.musicdb.models.Key.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.Label.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.Release.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.ReleaseDetails.class);
@@ -66,6 +67,7 @@ public class UnitOfWorkImpl implements UnitOfWork {
     
     private ArtistRepositoryImpl artistRepository;
     private GenreRepositoryImpl genreRepository;
+    private KeyRepositoryImpl keyRepository;
     private LabelRepositoryImpl labelRepository;
     private ReleaseRepositoryImpl releaseRepository;
     private TrackRepositoryImpl trackRepository;
@@ -146,6 +148,14 @@ public class UnitOfWorkImpl implements UnitOfWork {
             genreRepository = new GenreRepositoryImpl(this);
         }
         return genreRepository;
+    }
+
+    @Override
+    public KeyRepository getKeyRepository() {
+        if (keyRepository == null) {
+            keyRepository = new KeyRepositoryImpl(this);
+        }
+        return keyRepository;
     }
 
     @Override

@@ -125,7 +125,7 @@ public class Track implements Serializable {
         this.artists = artists;
     }
 
-    public void ResolveTrackReferences(UnitOfWork unitOfWork, Set<TrackArtist> existingArtists) {
+    public void resolveReferences(UnitOfWork unitOfWork, Set<TrackArtist> existingArtists) {
         if (getGenre() != null && getGenre().getId() != null)
             setGenre(unitOfWork.getGenreRepository().get(getGenre().getId()));
         else
@@ -160,8 +160,10 @@ public class Track implements Serializable {
         }
         setArtists(newArtists);
         
-        for (TrackArtist trackArtist : existingArtists) {
-            unitOfWork.getTrackArtistRepository().delete(trackArtist);
+        if (existingArtists != null) {
+            for (TrackArtist trackArtist : existingArtists) {
+                unitOfWork.getTrackArtistRepository().delete(trackArtist);
+            }
         }
     }
 

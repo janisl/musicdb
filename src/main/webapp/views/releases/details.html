@@ -1,4 +1,10 @@
-<h1>{{ releaseCtrl.release.name }}</h1>
+<h1>
+    <span ng-repeat="artist in releaseCtrl.release.artists | orderBy: 'orderNumber'">
+        <a href="#/artists/{{ artist.artist.id }}">{{ artist.artist.name }}</a> {{ artist.joinText }}
+    </span>
+    - {{ releaseCtrl.release.name }}
+</h1>
+
 <p>Label: {{ releaseCtrl.release.label.name }}</p>
 <p>Catalog number: {{ releaseCtrl.release.catalogNumber }}</p>
 <p>Release date: {{ releaseCtrl.release.releaseDate }}</p>

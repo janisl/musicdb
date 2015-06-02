@@ -6,11 +6,15 @@
         </div>
 
         <div class="form-group">
-            <label for="artistId">Artist</label>
-            <select class="form-control" id="artistId" ng-model="releaseCtrl.release.artistId" >
-                <option value="">-None-</option>
-                <option ng-repeat="artist in artistsCtrl.artists | orderBy: 'name'" value="{{ artist.id }}" ng-selected=" artist.id == releaseCtrl.release.artistId ">{{ artist.name }}</option>
-            </select>
+            <label>Artist</label>
+            <div ng-repeat="releaseArtist in releaseCtrl.release.artists | orderBy: 'orderNumber'">
+                <select class="form-control" ng-model="releaseArtist.artist.id" >
+                    <option value="">-None-</option>
+                    <option ng-repeat="artist in artistsCtrl.artists | orderBy: 'name'" value="{{ artist.id }}" ng-selected=" artist.id == releaseArtist.artist.id ">{{ artist.name }}</option>
+                </select>
+                <input type="text" ng-model="releaseArtist.joinText" ><button type="button" class="btn btn-danger" ng-click="releaseCtrl.removeArtist( releaseArtist )">Remove</button>
+            </div>
+            <button type="button" class="btn btn-success" ng-click="releaseCtrl.addArtist()">Add</button>
         </div>
 
         <div class="form-group" ng-controller="LabelsController as labelsCtrl">
@@ -67,9 +71,9 @@
                                                         <option value="">-None-</option>
                                                         <option ng-repeat="artist in artistsCtrl.artists | orderBy: 'name'" value="{{ artist.id }}" ng-selected=" artist.id == trackArtist.artist.id ">{{ artist.name }}</option>
                                                     </select>
-                                                    <input type="text" ng-model="trackArtist.joinText" ><button type="button" class="btn btn-danger" ng-click="releaseCtrl.removeArtist( track, trackArtist )">Remove</button>
+                                                    <input type="text" ng-model="trackArtist.joinText" ><button type="button" class="btn btn-danger" ng-click="releaseCtrl.removeTrackArtist( track, trackArtist )">Remove</button>
                                                 </div>
-                                                <button type="button" class="btn btn-success" ng-click="releaseCtrl.addArtist( track )">Add</button>
+                                                <button type="button" class="btn btn-success" ng-click="releaseCtrl.addTrackArtist( track )">Add</button>
                                             </td>
                                         </tr>
                                         <tr>

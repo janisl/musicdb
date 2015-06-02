@@ -1,6 +1,7 @@
 package janisl.musicdb.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import janisl.musicdb.repositories.UnitOfWork;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashSet;
@@ -23,12 +24,12 @@ public class ReleaseDetails implements Serializable {
 
     private Integer id;
     private String name;
-    private Integer artistId;
     private Integer beatportId;
     private Integer discogsId;
     private Label label;
     private String catalogNumber;
     private Date releaseDate;
+    private Set<ReleaseDetailsArtist> artists = new HashSet<>(0);
     private Set<Track> tracks = new HashSet<>(0);
 
     public ReleaseDetails() {
@@ -50,14 +51,6 @@ public class ReleaseDetails implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getArtistId() {
-        return artistId;
-    }
-
-    public void setArtistId(Integer artistId) {
-        this.artistId = artistId;
     }
 
     public Integer getBeatportId() {
@@ -109,5 +102,51 @@ public class ReleaseDetails implements Serializable {
 
     public void setTracks(Set<Track> tracks) {
         this.tracks = tracks;
+    }
+
+    @OneToMany(mappedBy = "release", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    public Set<ReleaseDetailsArtist> getArtists() {
+        return artists;
+    }
+
+    public void setArtists(Set<ReleaseDetailsArtist> artists) {
+        this.artists = artists;
+    }
+
+    public void resolveReferences(UnitOfWork unitOfWork, Set<ReleaseDetailsArtist> existingArtists) {
+        if (getLabel() != null && getLabel().getId() != null)
+            setLabel(unitOfWork.getLabelRepository().get(getLabel().getId()));
+        else
+            setLabel(null);
+        
+        Set<ReleaseDetailsArtist> newArtists = new HashSet<>(0);
+        for (ReleaseDetailsArtist newArtist : getArtists()) {
+            ReleaseDetailsArtist releaseArtist = null;
+            if (newArtist.getId() != null && existingArtists != null) {
+                for (ReleaseDetailsArtist check : existingArtists) {
+                    if (check.getId() == newArtist.getId()) {
+                        releaseArtist = check;
+                        releaseArtist.setArtist(newArtist.getArtist());
+                        releaseArtist.setOrderNumber(newArtist.getOrderNumber());
+                        releaseArtist.setJoinText(newArtist.getJoinText());
+                        existingArtists.remove(check);
+                        break;
+                    }
+                }
+            }
+            if (releaseArtist == null) {
+                releaseArtist = newArtist;
+                releaseArtist.setRelease(this);
+            }
+            releaseArtist.setArtist(unitOfWork.getArtistRepository().get(releaseArtist.getArtist().getId()));
+            newArtists.add(releaseArtist);
+        }
+        setArtists(newArtists);
+        
+        if (existingArtists != null) {
+            for (ReleaseDetailsArtist releaseArtist : existingArtists) {
+                unitOfWork.getReleaseArtistRepository().delete(releaseArtist);
+            }
+        }
     }
 }

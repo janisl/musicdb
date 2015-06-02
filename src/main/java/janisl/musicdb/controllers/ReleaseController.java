@@ -42,14 +42,11 @@ public class ReleaseController {
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public ResponseEntity add(@RequestBody ReleaseDetails release) throws Exception {
         try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
-            if (release.getLabel() != null && release.getLabel().getId() != null)
-                release.setLabel(unitOfWork.getLabelRepository().get(release.getLabel().getId()));
-            else
-                release.setLabel(null);
-            
+
+            release.resolveReferences(unitOfWork, null);
             for (Track track : release.getTracks()) {
                 track.setRelease(release);
-                track.ResolveTrackReferences(unitOfWork, null);
+                track.resolveReferences(unitOfWork, null);
             }
             
             unitOfWork.getReleaseRepository().add(release);
@@ -71,18 +68,17 @@ public class ReleaseController {
             if (release == null) {
                 throw new ReleaseNotFoundException();
             }
+
+            newRelease.resolveReferences(unitOfWork, release.getArtists());
+
             release.setName(newRelease.getName());
-            release.setArtistId(newRelease.getArtistId());
             release.setBeatportId(newRelease.getBeatportId());
             release.setDiscogsId(newRelease.getDiscogsId());
             release.setCatalogNumber(newRelease.getCatalogNumber());
             release.setReleaseDate(newRelease.getReleaseDate());
+            release.setLabel(newRelease.getLabel());
+            release.setArtists(newRelease.getArtists());
             
-            if (newRelease.getLabel() != null && newRelease.getLabel().getId() != null)
-                release.setLabel(unitOfWork.getLabelRepository().get(newRelease.getLabel().getId()));
-            else
-                release.setLabel(null);
-
             Set<Track> remainingTracks = release.getTracks();
             Set<Track> tracks = new HashSet<>(0);
             for (Track newTrack : newRelease.getTracks()) {
@@ -91,7 +87,7 @@ public class ReleaseController {
                     if (track == null) {
                         throw new TrackNotFoundException();
                     }
-                    newTrack.ResolveTrackReferences(unitOfWork, track.getArtists());
+                    newTrack.resolveReferences(unitOfWork, track.getArtists());
                     track.setName(newTrack.getName());
                     track.setBeatportId(newTrack.getBeatportId());
                     track.setVersion(newTrack.getVersion());
@@ -104,7 +100,7 @@ public class ReleaseController {
                     remainingTracks.remove(track);
                 } else {
                     newTrack.setRelease(release);
-                    newTrack.ResolveTrackReferences(unitOfWork, null);
+                    newTrack.resolveReferences(unitOfWork, null);
 
                     tracks.add(newTrack);
                     unitOfWork.getTrackRepository().add(newTrack);

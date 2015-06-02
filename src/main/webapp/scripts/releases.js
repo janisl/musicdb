@@ -27,6 +27,7 @@
     app.controller( 'ReleaseAddController', [ 'Release', '$location', function( Release, $location ) {
         var ctrl = this;
         this.release = new Release();
+        this.release.artists = [];
         this.release.tracks = [];
 
         this.submit = function() {
@@ -41,10 +42,6 @@
             ctrl.release.tracks.push( { artists: [] } );
         };
         
-        this.addArtist = function( track ) {
-            track.artists.push( { orderNumber: track.artists.length + 1 } );
-        };
-        
         this.removeTrack = function( track ) {
             for ( var i = ctrl.release.tracks.length - 1; i >= 0; i-- ) {
                 if ( ctrl.release.tracks[i] === track ) {
@@ -52,6 +49,32 @@
                 }
             }
         };
+        
+        this.addTrackArtist = function( track ) {
+            track.artists.push( { orderNumber: track.artists.length + 1 } );
+        };
+        
+        this.removeTrackArtist = function( track, trackArtist ) {
+            for ( var i = track.artists.length - 1; i >= 0; i-- ) {
+                if ( track.artists[i] === trackArtist ) {
+                   track.artists.splice( i, 1 );
+                }
+            }
+        };
+        
+        this.addArtist = function() {
+            ctrl.release.artists.push( { orderNumber: ctrl.release.artists.length + 1 } );
+        };
+        
+        this.removeArtist = function( releaseArtist ) {
+            for ( var i = ctrl.release.artists.length - 1; i >= 0; i-- ) {
+                if ( ctrl.release.artists[i] === releaseArtist ) {
+                   ctrl.release.artists.splice( i, 1 );
+                }
+            }
+        };
+
+        this.addArtist();
     }]);
 
     app.controller( 'ReleaseEditController', [ 'Release', '$routeParams', '$location', function( Release, $routeParams, $location ) {
@@ -79,14 +102,26 @@
             }
         };
         
-        this.addArtist = function( track ) {
+        this.addTrackArtist = function( track ) {
             track.artists.push( { orderNumber: track.artists.length + 1 } );
         };
         
-        this.removeArtist = function( track, trackArtist ) {
+        this.removeTrackArtist = function( track, trackArtist ) {
             for ( var i = track.artists.length - 1; i >= 0; i-- ) {
                 if ( track.artists[i] === trackArtist ) {
                    track.artists.splice( i, 1 );
+                }
+            }
+        };
+        
+        this.addArtist = function() {
+            ctrl.release.artists.push( { orderNumber: ctrl.release.artists.length + 1 } );
+        };
+        
+        this.removeArtist = function( releaseArtist ) {
+            for ( var i = ctrl.release.artists.length - 1; i >= 0; i-- ) {
+                if ( ctrl.release.artists[i] === releaseArtist ) {
+                   ctrl.release.artists.splice( i, 1 );
                 }
             }
         };

@@ -42,7 +42,7 @@ public class TrackController {
             else
                 track.setRelease(null);
 
-            track.ResolveTrackReferences(unitOfWork, null);
+            track.resolveReferences(unitOfWork, null);
             
             unitOfWork.getTrackRepository().add(track);
             unitOfWork.commit();
@@ -59,7 +59,7 @@ public class TrackController {
                 throw new TrackNotFoundException();
             }
 
-            newTrack.ResolveTrackReferences(unitOfWork, track.getArtists());
+            newTrack.resolveReferences(unitOfWork, track.getArtists());
             if (newTrack.getRelease() != null && newTrack.getRelease().getId() != null)
                 track.setRelease(unitOfWork.getReleaseRepository().get(newTrack.getRelease().getId()));
             else

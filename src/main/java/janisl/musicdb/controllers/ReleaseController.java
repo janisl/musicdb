@@ -3,6 +3,7 @@ package janisl.musicdb.controllers;
 import janisl.musicdb.models.Release;
 import janisl.musicdb.models.ReleaseDetails;
 import janisl.musicdb.models.Track;
+import janisl.musicdb.models.TrackArtist;
 import janisl.musicdb.repositories.UnitOfWork;
 import janisl.musicdb.repositories.UnitOfWorkFactory;
 import java.net.URI;
@@ -48,16 +49,7 @@ public class ReleaseController {
             
             for (Track track : release.getTracks()) {
                 track.setRelease(release);
-
-                if (track.getGenre() != null && track.getGenre().getId() != null)
-                    track.setGenre(unitOfWork.getGenreRepository().get(track.getGenre().getId()));
-                else
-                    track.setGenre(null);
-
-                if (track.getKey() != null && track.getKey().getId() != null)
-                    track.setKey(unitOfWork.getKeyRepository().get(track.getKey().getId()));
-                else
-                    track.setKey(null);
+                track.ResolveTrackReferences(unitOfWork, null);
             }
             
             unitOfWork.getReleaseRepository().add(release);
@@ -70,6 +62,7 @@ public class ReleaseController {
             return ResponseEntity.ok().location(locationUri).build();
         }
     }
+
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity update(@PathVariable("id") int id, @RequestBody ReleaseDetails newRelease) throws Exception {
@@ -93,35 +86,25 @@ public class ReleaseController {
             Set<Track> remainingTracks = release.getTracks();
             Set<Track> tracks = new HashSet<>(0);
             for (Track newTrack : newRelease.getTracks()) {
-                if (newTrack.getGenre() != null && newTrack.getGenre().getId() != null)
-                    newTrack.setGenre(unitOfWork.getGenreRepository().get(newTrack.getGenre().getId()));
-                else
-                    newTrack.setGenre(null);
-
-                if (newTrack.getKey() != null && newTrack.getKey().getId() != null)
-                    newTrack.setKey(unitOfWork.getKeyRepository().get(newTrack.getKey().getId()));
-                else
-                    newTrack.setKey(null);
-
                 if (newTrack.getId() != null) {
                     Track track = unitOfWork.getTrackRepository().get(newTrack.getId());
                     if (track == null) {
                         throw new TrackNotFoundException();
                     }
+                    newTrack.ResolveTrackReferences(unitOfWork, track.getArtists());
                     track.setName(newTrack.getName());
                     track.setBeatportId(newTrack.getBeatportId());
                     track.setVersion(newTrack.getVersion());
                     track.setBpm(newTrack.getBpm());
-                    track.setArtistId(newTrack.getArtistId());
                     track.setKey(newTrack.getKey());
                     track.setDuration(newTrack.getDuration());
                     track.setGenre(newTrack.getGenre());
-                    track.setRelease(release);
+                    track.setArtists(newTrack.getArtists());
                     tracks.add(track);
                     remainingTracks.remove(track);
                 } else {
-                    
                     newTrack.setRelease(release);
+                    newTrack.ResolveTrackReferences(unitOfWork, null);
 
                     tracks.add(newTrack);
                     unitOfWork.getTrackRepository().add(newTrack);

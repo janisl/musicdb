@@ -1,189 +1,201 @@
-<form ng-submit="releaseCtrl.submit()">
-    <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" ng-model="releaseCtrl.release.name" size="64" >
-    </div>
-    
-    <div class="form-group" ng-controller="ArtistsController as artistsCtrl">
-        <label for="artistId">Artist</label>
-        <select class="form-control" id="artistId" ng-model="releaseCtrl.release.artistId" >
-            <option value="">-None-</option>
-            <option ng-repeat="artist in artistsCtrl.artists | orderBy: 'name'" value="{{ artist.id }}" ng-selected=" artist.id == releaseCtrl.release.artistId ">{{ artist.name }}</option>
-        </select>
-    </div>
-    
-    <div class="form-group" ng-controller="LabelsController as labelsCtrl">
-        <label for="lablId">Label</label>
-        <select class="form-control" id="lablId" ng-model="releaseCtrl.release.label.id" >
-            <option value="">-None-</option>
-            <option ng-repeat="label in labelsCtrl.labels | orderBy: 'name'" value="{{ label.id }}" ng-selected=" label.id == releaseCtrl.release.label.id ">{{ label.name }}</option>
-        </select>
-    </div>
-    
-    <div class="form-group">
-        <label for="catalogNumber">Catalog number</label>
-        <input type="text" class="form-control" id="catalogNumber" ng-model="releaseCtrl.release.catalogNumber" >
-    </div>
-    
-    <div class="form-group">
-        <label for="releaseDate">Release date</label>
-        <input type="text" class="form-control" id="releaseDate" ng-model="releaseCtrl.release.releaseDate" >
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">Tracks</div>
-        <div class="panel-body">
-            <button type="button" class="btn btn-success" ng-click="releaseCtrl.addTrack()">Add</button>
-            <table ng-repeat="track in releaseCtrl.release.tracks">
-                <tr>
-                    <td>Name:</td>
-                    <td><input type="text" ng-model="track.name" size="64" ></td>
-                </tr>
-                <tr>
-                    <td>Beatport ID:</td>
-                    <td><input type="text" ng-model="track.beatportId" ></td>
-                </tr>
-                <tr>
-                    <td>Version:</td>
-                    <td><input type="text" ng-model="track.version" ></td>
-                </tr>
-                <tr>
-                    <td>BPM:</td>
-                    <td><input type="text" ng-model="track.bpm" ></td>
-                </tr>
-                <tr>
-                    <td><label for="trackArtist">Artist</label></td>
-                    <td>
-                        <div ng-controller="ArtistsController as artistsCtrl">
-                            <select class="form-control" id="trackArtist" ng-model="track.artistId" >
-                                <option value="">-None-</option>
-                                <option ng-repeat="artist in artistsCtrl.artists | orderBy: 'name'" value="{{ artist.id }}" ng-selected=" artist.id == track.artistId ">{{ artist.name }}</option>
-                            </select>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><label for="trackKey">Key</label></td>
-                    <td>
-                        <div ng-controller="KeysController as keysCtrl">
-                            <select class="form-control" id="trackKey" ng-model="track.key.id" >
-                                <option value="">-None-</option>
-                                <option ng-repeat="key in keysCtrl.keys" value="{{ key.id }}" ng-selected=" key.id == track.key.id ">{{ key.name }}</option>
-                            </select>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Duration:</td>
-                    <td><input type="text" ng-model="track.duration" ></td>
-                </tr>
-                <tr>
-                    <td><label for="trackGenre">Genre</label></td>
-                    <td>
-                        <div ng-controller="GenresController as genresCtrl">
-                            <select class="form-control" id="trackGenre" ng-model="track.genre.id" >
-                                <option value="">-None-</option>
-                                <option ng-repeat="genre in genresCtrl.genres | orderBy: 'name'" value="{{ genre.id }}" ng-selected=" genre.id == track.genre.id ">{{ genre.name }}</option>
-                            </select>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-danger" ng-click="releaseCtrl.removeTrack( track )">Remove</button>
-                    </td>
-                </tr>
-            </table>
+<div ng-controller="ArtistsController as artistsCtrl">
+    <form ng-submit="releaseCtrl.submit()">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" ng-model="releaseCtrl.release.name" size="64" >
         </div>
-    </div>
-    
-    
-    
-    <div class="panel panel-default" ng-controller="BeatportReleasesController as releases">
-        <div class="panel-heading">Beatport</div>
-        <div class="panel-body">
-            <div class="form-group">
-                <label for="beatportId">Beatport ID</label>
-                <input type="text" class="form-control" id="beatportId" ng-model="releaseCtrl.release.beatportId">
+
+        <div class="form-group">
+            <label for="artistId">Artist</label>
+            <select class="form-control" id="artistId" ng-model="releaseCtrl.release.artistId" >
+                <option value="">-None-</option>
+                <option ng-repeat="artist in artistsCtrl.artists | orderBy: 'name'" value="{{ artist.id }}" ng-selected=" artist.id == releaseCtrl.release.artistId ">{{ artist.name }}</option>
+            </select>
+        </div>
+
+        <div class="form-group" ng-controller="LabelsController as labelsCtrl">
+            <label for="lablId">Label</label>
+            <select class="form-control" id="lablId" ng-model="releaseCtrl.release.label.id" >
+                <option value="">-None-</option>
+                <option ng-repeat="label in labelsCtrl.labels | orderBy: 'name'" value="{{ label.id }}" ng-selected=" label.id == releaseCtrl.release.label.id ">{{ label.name }}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="catalogNumber">Catalog number</label>
+            <input type="text" class="form-control" id="catalogNumber" ng-model="releaseCtrl.release.catalogNumber" >
+        </div>
+
+        <div class="form-group">
+            <label for="releaseDate">Release date</label>
+            <input type="text" class="form-control" id="releaseDate" ng-model="releaseCtrl.release.releaseDate" >
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Tracks</div>
+            <div class="panel-body">
+                <button type="button" class="btn btn-success" ng-click="releaseCtrl.addTrack()">Add</button>
             </div>
-            <div class="form-group">
-                <label for="beatportFilter">Filter</label>
-                <input type="text" class="form-control" id="beatportFilter" ng-model="releases.filterText">
-            </div>
-            <div class="form-group">
-                <label for="beatportLabel">Beatport</label>
-                <select ng-model="releaseCtrl.release.beatportId" id="beatportLabel" class="form-control" >
-                    <option value="">-None-</option>
-                    <option ng-repeat="release in releases.releases | filter: releases.filterText | orderBy: 'name'" value="{{ release.id }}" ng-selected=" release.id == releaseCtrl.release.beatportId ">
-                        {{ release.artists[0].name }} - {{ release.title }}
-                    </option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="beatportImport">Beatport import</label>
-                <input type="text" class="form-control" id="beatportImport" ng-model="releases.importUrl" />
-                <button type="button" class="btn btn-default" ng-click="releases.import()">Import</button>
+            <div ng-controller="KeysController as keysCtrl">
+                <div ng-controller="GenresController as genresCtrl">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr ng-repeat="track in releaseCtrl.release.tracks">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>Name:</td>
+                                            <td><input type="text" ng-model="track.name" size="64" ></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Beatport ID:</td>
+                                            <td><input type="text" ng-model="track.beatportId" ></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Version:</td>
+                                            <td><input type="text" ng-model="track.version" ></td>
+                                        </tr>
+                                        <tr>
+                                            <td>BPM:</td>
+                                            <td><input type="text" ng-model="track.bpm" ></td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Artist</label></td>
+                                            <td>
+                                                <div ng-repeat="trackArtist in track.artists | orderBy: 'orderNumber'">
+                                                    <select class="form-control" ng-model="trackArtist.artist.id" >
+                                                        <option value="">-None-</option>
+                                                        <option ng-repeat="artist in artistsCtrl.artists | orderBy: 'name'" value="{{ artist.id }}" ng-selected=" artist.id == trackArtist.artist.id ">{{ artist.name }}</option>
+                                                    </select>
+                                                    <input type="text" ng-model="trackArtist.joinText" ><button type="button" class="btn btn-danger" ng-click="releaseCtrl.removeArtist( track, trackArtist )">Remove</button>
+                                                </div>
+                                                <button type="button" class="btn btn-success" ng-click="releaseCtrl.addArtist( track )">Add</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label for="trackKey">Key</label></td>
+                                            <td>
+                                                <select class="form-control" id="trackKey" ng-model="track.key.id" >
+                                                    <option value="">-None-</option>
+                                                    <option ng-repeat="key in keysCtrl.keys" value="{{ key.id }}" ng-selected=" key.id == track.key.id ">{{ key.name }}</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Duration:</td>
+                                            <td><input type="text" ng-model="track.duration" ></td>
+                                        </tr>
+                                        <tr>
+                                            <td><label for="trackGenre">Genre</label></td>
+                                            <td>
+                                                <select class="form-control" id="trackGenre" ng-model="track.genre.id" >
+                                                    <option value="">-None-</option>
+                                                    <option ng-repeat="genre in genresCtrl.genres | orderBy: 'name'" value="{{ genre.id }}" ng-selected=" genre.id == track.genre.id ">{{ genre.name }}</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger" ng-click="releaseCtrl.removeTrack( track )">Remove</button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-    
-    <div class="panel panel-default" ng-controller="DiscogsSearchController as searchCtrl" ng-init="searchCtrl.params.type = 'release'">
-        <div class="panel-heading">Discogs</div>
-        <div class="panel-body">
-            <div class="form-group">
-                <label for="discogsId">Discogs ID</label>
-                <input type="text" class="form-control" id="discogsId" ng-model="releaseCtrl.release.discogsId">
-            </div>
-            <div class="form-group">
-                <label for="q">Search</label>
-                <input type="text" class="form-control" id="q" ng-model="searchCtrl.params.q">
-            </div>
-            <div class="form-group">
-                <label for="title">Title</label>
-                <input type="text" class="form-control" id="title" placeholder="Query" ng-model="searchCtrl.params.title">
-            </div>
-            <div class="form-group">
-                <label for="release_title">Release title</label>
-                <input type="text" class="form-control" id="release_title" placeholder="Query" ng-model="searchCtrl.params.release_title">
-            </div>
-            <div class="form-group">
-                <label for="artist">Artist</label>
-                <input type="text" class="form-control" id="artist" placeholder="Query" ng-model="searchCtrl.params.artist">
-            </div>
-            <div class="form-group">
-                <label for="anv">Artist name variation</label>
-                <input type="text" class="form-control" id="anv" placeholder="Query" ng-model="searchCtrl.params.anv">
-            </div>
-            <div class="form-group">
-                <label for="label">Label</label>
-                <input type="text" class="form-control" id="label" placeholder="Query" ng-model="searchCtrl.params.label">
-            </div>
-            <div class="form-group">
-                <label for="catno">Catalog number</label>
-                <input type="text" class="form-control" id="catno" placeholder="Query" ng-model="searchCtrl.params.catno">
-            </div>
-            <button type="button" class="btn btn-default" ng-click="searchCtrl.search(1)">Search</button>
-            <button type="button" class="btn btn-default" ng-click="searchCtrl.params.title = releaseCtrl.release.name">Copy title</button>
-            <button type="button" class="btn btn-default" ng-click="searchCtrl.params.catno = releaseCtrl.release.catalogNumber">Copy cat. #</button>
 
-            <nav>
-                <ul class="pagination">
-                    <li ng-repeat="page in searchCtrl.pages" class="{{ page.isCurrent ? 'active' : '' }}"><a ng-click="searchCtrl.search(page.pageNumber)">{{ page.pageNumber }}</a></li>
-                </ul>
-            </nav>
 
-            <div class="form-group">
-                <label for="discogsLabel">Select</label>
-                <select ng-model="releaseCtrl.release.discogsId" id="discogsLabel" class="form-control" >
-                    <option value="">-None-</option>
-                    <option ng-repeat="result in searchCtrl.results.results | orderBy: 'title'" value="{{ result.id }}" ng-selected=" result.id == releaseCtrl.release.discogsId ">{{ result.title }} {{ result.format }}</option>
-                </select>
+
+        <div class="panel panel-default" ng-controller="BeatportReleasesController as releases">
+            <div class="panel-heading">Beatport</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="beatportId">Beatport ID</label>
+                    <input type="text" class="form-control" id="beatportId" ng-model="releaseCtrl.release.beatportId">
+                </div>
+                <div class="form-group">
+                    <label for="beatportFilter">Filter</label>
+                    <input type="text" class="form-control" id="beatportFilter" ng-model="releases.filterText">
+                </div>
+                <div class="form-group">
+                    <label for="beatportLabel">Beatport</label>
+                    <select ng-model="releaseCtrl.release.beatportId" id="beatportLabel" class="form-control" >
+                        <option value="">-None-</option>
+                        <option ng-repeat="release in releases.releases | filter: releases.filterText | orderBy: 'name'" value="{{ release.id }}" ng-selected=" release.id == releaseCtrl.release.beatportId ">
+                            {{ release.artists[0].name }} - {{ release.title }}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="beatportImport">Beatport import</label>
+                    <input type="text" class="form-control" id="beatportImport" ng-model="releases.importUrl" />
+                    <button type="button" class="btn btn-default" ng-click="releases.import()">Import</button>
+                </div>
             </div>
         </div>
-    </div>
-    
-    <button type="submit" class="btn btn-primary">OK</button>
-    <a href="#/releases/" class="btn btn-default">Cancel</a><br />
-</form>
+
+        <div class="panel panel-default" ng-controller="DiscogsSearchController as searchCtrl" ng-init="searchCtrl.params.type = 'release'">
+            <div class="panel-heading">Discogs</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="discogsId">Discogs ID</label>
+                    <input type="text" class="form-control" id="discogsId" ng-model="releaseCtrl.release.discogsId">
+                </div>
+                <div class="form-group">
+                    <label for="q">Search</label>
+                    <input type="text" class="form-control" id="q" ng-model="searchCtrl.params.q">
+                </div>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" id="title" placeholder="Query" ng-model="searchCtrl.params.title">
+                </div>
+                <div class="form-group">
+                    <label for="release_title">Release title</label>
+                    <input type="text" class="form-control" id="release_title" placeholder="Query" ng-model="searchCtrl.params.release_title">
+                </div>
+                <div class="form-group">
+                    <label for="artist">Artist</label>
+                    <input type="text" class="form-control" id="artist" placeholder="Query" ng-model="searchCtrl.params.artist">
+                </div>
+                <div class="form-group">
+                    <label for="anv">Artist name variation</label>
+                    <input type="text" class="form-control" id="anv" placeholder="Query" ng-model="searchCtrl.params.anv">
+                </div>
+                <div class="form-group">
+                    <label for="label">Label</label>
+                    <input type="text" class="form-control" id="label" placeholder="Query" ng-model="searchCtrl.params.label">
+                </div>
+                <div class="form-group">
+                    <label for="catno">Catalog number</label>
+                    <input type="text" class="form-control" id="catno" placeholder="Query" ng-model="searchCtrl.params.catno">
+                </div>
+                <button type="button" class="btn btn-default" ng-click="searchCtrl.search(1)">Search</button>
+                <button type="button" class="btn btn-default" ng-click="searchCtrl.params.title = releaseCtrl.release.name">Copy title</button>
+                <button type="button" class="btn btn-default" ng-click="searchCtrl.params.catno = releaseCtrl.release.catalogNumber">Copy cat. #</button>
+
+                <nav>
+                    <ul class="pagination">
+                        <li ng-repeat="page in searchCtrl.pages" class="{{ page.isCurrent ? 'active' : '' }}"><a ng-click="searchCtrl.search(page.pageNumber)">{{ page.pageNumber }}</a></li>
+                    </ul>
+                </nav>
+
+                <div class="form-group">
+                    <label for="discogsLabel">Select</label>
+                    <select ng-model="releaseCtrl.release.discogsId" id="discogsLabel" class="form-control" >
+                        <option value="">-None-</option>
+                        <option ng-repeat="result in searchCtrl.results.results | orderBy: 'title'" value="{{ result.id }}" ng-selected=" result.id == releaseCtrl.release.discogsId ">{{ result.title }} {{ result.format }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">OK</button>
+        <a href="#/releases/" class="btn btn-default">Cancel</a><br />
+    </form>
+</div>

@@ -38,7 +38,19 @@
         };
         
         this.addTrack = function() {
-            ctrl.release.tracks.push( {} );
+            ctrl.release.tracks.push( { artists: [] } );
+        };
+        
+        this.addArtist = function( track ) {
+            track.artists.push( { orderNumber: track.artists.length + 1 } );
+        };
+        
+        this.removeTrack = function( track ) {
+            for ( var i = ctrl.release.tracks.length - 1; i >= 0; i-- ) {
+                if ( ctrl.release.tracks[i] === track ) {
+                   ctrl.release.tracks.splice( i, 1 );
+                }
+            }
         };
     }]);
 
@@ -56,13 +68,25 @@
         };
         
         this.addTrack = function() {
-            ctrl.release.tracks.push( {} );
+            ctrl.release.tracks.push( { artists: [] } );
         };
         
         this.removeTrack = function( track ) {
             for ( var i = ctrl.release.tracks.length - 1; i >= 0; i-- ) {
-                if (ctrl.release.tracks[i] === track) {
+                if ( ctrl.release.tracks[i] === track ) {
                    ctrl.release.tracks.splice( i, 1 );
+                }
+            }
+        };
+        
+        this.addArtist = function( track ) {
+            track.artists.push( { orderNumber: track.artists.length + 1 } );
+        };
+        
+        this.removeArtist = function( track, trackArtist ) {
+            for ( var i = track.artists.length - 1; i >= 0; i-- ) {
+                if ( track.artists[i] === trackArtist ) {
+                   track.artists.splice( i, 1 );
                 }
             }
         };

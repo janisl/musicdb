@@ -16,6 +16,8 @@ public interface UnitOfWork extends AutoCloseable {
     
     public TrackRepository getTrackRepository();
     
+    public TrackArtistRepository getTrackArtistRepository();
+    
     public BeatportArtistRepository getBeatportArtistRepository();
     
     public BeatportGenreRepository getBeatportGenreRepository();

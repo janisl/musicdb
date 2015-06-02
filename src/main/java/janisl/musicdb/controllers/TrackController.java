@@ -42,15 +42,7 @@ public class TrackController {
             else
                 track.setRelease(null);
 
-            if (track.getGenre() != null && track.getGenre().getId() != null)
-                track.setGenre(unitOfWork.getGenreRepository().get(track.getGenre().getId()));
-            else
-                track.setGenre(null);
-
-            if (track.getKey() != null && track.getKey().getId() != null)
-                track.setKey(unitOfWork.getKeyRepository().get(track.getKey().getId()));
-            else
-                track.setKey(null);
+            track.ResolveTrackReferences(unitOfWork, null);
             
             unitOfWork.getTrackRepository().add(track);
             unitOfWork.commit();
@@ -66,27 +58,21 @@ public class TrackController {
             if (track == null) {
                 throw new TrackNotFoundException();
             }
-            track.setName(newTrack.getName());
-            track.setBeatportId(newTrack.getBeatportId());
-            track.setVersion(newTrack.getVersion());
-            track.setBpm(newTrack.getBpm());
-            track.setArtistId(newTrack.getArtistId());
-            track.setDuration(newTrack.getDuration());
 
+            newTrack.ResolveTrackReferences(unitOfWork, track.getArtists());
             if (newTrack.getRelease() != null && newTrack.getRelease().getId() != null)
                 track.setRelease(unitOfWork.getReleaseRepository().get(newTrack.getRelease().getId()));
             else
                 track.setRelease(null);
 
-            if (newTrack.getGenre() != null && newTrack.getGenre().getId() != null)
-                track.setGenre(unitOfWork.getGenreRepository().get(newTrack.getGenre().getId()));
-            else
-                track.setGenre(null);
-
-            if (newTrack.getKey() != null && newTrack.getKey().getId() != null)
-                track.setKey(unitOfWork.getKeyRepository().get(newTrack.getKey().getId()));
-            else
-                track.setKey(null);
+            track.setName(newTrack.getName());
+            track.setBeatportId(newTrack.getBeatportId());
+            track.setVersion(newTrack.getVersion());
+            track.setBpm(newTrack.getBpm());
+            track.setDuration(newTrack.getDuration());
+            track.setGenre(newTrack.getGenre());
+            track.setKey(newTrack.getKey());
+            track.setArtists(newTrack.getArtists());
             
             unitOfWork.getTrackRepository().update(track);
             unitOfWork.commit();

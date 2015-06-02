@@ -22,7 +22,11 @@
     </thead>
     <tbody>
         <tr ng-repeat="track in releaseCtrl.release.tracks | orderBy: 'name'">
-            <td>{{ track.artistId }}</td>
+            <td>
+                <span ng-repeat="artist in track.artists | orderBy: 'orderNumber'">
+                    <a href="#/artists/{{ artist.artist.id }}">{{ artist.artist.name }}</a> {{ artist.joinText }}
+                </span>
+            </td>
             <td>{{ track.name }}</td>
             <td>{{ track.version }}</td>
             <td>{{ track.genre.name }}</td>

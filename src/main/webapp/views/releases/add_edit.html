@@ -48,8 +48,16 @@
                                 <td>
                                     <table>
                                         <tr>
+                                            <td>Position:</td>
+                                            <td><input type="text" ng-model="track.position" size="64" ></td>
+                                        </tr>
+                                        <tr>
                                             <td>Name:</td>
                                             <td><input type="text" ng-model="track.name" size="64" ></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Disc:</td>
+                                            <td><input type="text" ng-model="track.disc" size="64" ></td>
                                         </tr>
                                         <tr>
                                             <td>Beatport ID:</td>
@@ -97,6 +105,10 @@
                                                     <option ng-repeat="genre in genresCtrl.genres | orderBy: 'name'" value="{{ genre.id }}" ng-selected=" genre.id == track.genre.id ">{{ genre.name }}</option>
                                                 </select>
                                             </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Composer:</td>
+                                            <td><input type="text" ng-model="track.composer" size="64" ></td>
                                         </tr>
                                         <tr>
                                             <td>

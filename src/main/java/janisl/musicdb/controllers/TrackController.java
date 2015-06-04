@@ -73,6 +73,9 @@ public class TrackController {
             track.setGenre(newTrack.getGenre());
             track.setKey(newTrack.getKey());
             track.setArtists(newTrack.getArtists());
+            track.setPosition(newTrack.getPosition());
+            track.setDisc(newTrack.getDisc());
+            track.setComposer(newTrack.getComposer());
             
             unitOfWork.getTrackRepository().update(track);
             unitOfWork.commit();

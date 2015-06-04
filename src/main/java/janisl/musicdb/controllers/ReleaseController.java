@@ -96,6 +96,9 @@ public class ReleaseController {
                     track.setDuration(newTrack.getDuration());
                     track.setGenre(newTrack.getGenre());
                     track.setArtists(newTrack.getArtists());
+                    track.setPosition(newTrack.getPosition());
+                    track.setDisc(newTrack.getDisc());
+                    track.setComposer(newTrack.getComposer());
                     tracks.add(track);
                     remainingTracks.remove(track);
                 } else {

@@ -30,6 +30,9 @@ public class Track implements Serializable {
     private Key key;
     private Time duration;
     private Genre genre;
+    private Integer position;
+    private String disc;
+    private String composer;
     private Set<TrackArtist> artists = new HashSet<>(0);
 
     public Track() {
@@ -116,6 +119,30 @@ public class Track implements Serializable {
         this.genre = genre;
     }
 
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
+    }
+
+    public String getDisc() {
+        return disc;
+    }
+
+    public void setDisc(String disc) {
+        this.disc = disc;
+    }
+
+    public String getComposer() {
+        return composer;
+    }
+
+    public void setComposer(String composer) {
+        this.composer = composer;
+    }
+
     @OneToMany(mappedBy = "track", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Set<TrackArtist> getArtists() {
         return artists;
@@ -126,16 +153,18 @@ public class Track implements Serializable {
     }
 
     public void resolveReferences(UnitOfWork unitOfWork, Set<TrackArtist> existingArtists) {
-        if (getGenre() != null && getGenre().getId() != null)
+        if (getGenre() != null && getGenre().getId() != null) {
             setGenre(unitOfWork.getGenreRepository().get(getGenre().getId()));
-        else
+        } else {
             setGenre(null);
-        
-        if (getKey() != null && getKey().getId() != null)
+        }
+
+        if (getKey() != null && getKey().getId() != null) {
             setKey(unitOfWork.getKeyRepository().get(getKey().getId()));
-        else
+        } else {
             setKey(null);
-        
+        }
+
         Set<TrackArtist> newArtists = new HashSet<>(0);
         for (TrackArtist newArtist : getArtists()) {
             TrackArtist trackArtist = null;
@@ -159,7 +188,7 @@ public class Track implements Serializable {
             newArtists.add(trackArtist);
         }
         setArtists(newArtists);
-        
+
         if (existingArtists != null) {
             for (TrackArtist trackArtist : existingArtists) {
                 unitOfWork.getTrackArtistRepository().delete(trackArtist);

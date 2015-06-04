@@ -17,6 +17,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>#</th>
             <th>Artist</th>
             <th>Title</th>
             <th>Mix</th>
@@ -27,7 +28,8 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="track in releaseCtrl.release.tracks | orderBy: 'name'">
+        <tr ng-repeat="track in releaseCtrl.release.tracks | orderBy: 'position'">
+            <td>{{ track.disc }} {{ track.position }}</td>
             <td>
                 <span ng-repeat="artist in track.artists | orderBy: 'orderNumber'">
                     <a href="#/artists/{{ artist.artist.id }}">{{ artist.artist.name }}</a> {{ artist.joinText }}

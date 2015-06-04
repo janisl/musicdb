@@ -13,6 +13,7 @@ public class Key implements Serializable {
 
     private Integer id;
     private String name;
+    private String beatportName;
 
     public Key() {
     }
@@ -34,4 +35,11 @@ public class Key implements Serializable {
         this.name = name;
     }
 
+    public String getBeatportName() {
+        return beatportName;
+    }
+
+    public void setBeatportName(String beatportName) {
+        this.beatportName = beatportName;
+    }
 }

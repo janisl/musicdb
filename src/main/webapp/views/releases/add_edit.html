@@ -85,6 +85,19 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td><label>Remixers</label></td>
+                                            <td>
+                                                <div ng-repeat="trackRemixer in track.remixers">
+                                                    <select class="form-control" ng-model="trackRemixer.id" >
+                                                        <option value="">-None-</option>
+                                                        <option ng-repeat="artist in artistsCtrl.artists | orderBy: 'name'" value="{{ artist.id }}" ng-selected=" artist.id == trackRemixer.id ">{{ artist.name }}</option>
+                                                    </select>
+                                                    <button type="button" class="btn btn-danger" ng-click="releaseCtrl.removeTrackRemixer( track, trackRemixer )">Remove</button>
+                                                </div>
+                                                <button type="button" class="btn btn-success" ng-click="releaseCtrl.addTrackRemixer( track )">Add</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td><label for="trackKey">Key</label></td>
                                             <td>
                                                 <select class="form-control" id="trackKey" ng-model="track.key.id" >

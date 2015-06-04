@@ -64,18 +64,7 @@ public class TrackController {
                 track.setRelease(unitOfWork.getReleaseRepository().get(newTrack.getRelease().getId()));
             else
                 track.setRelease(null);
-
-            track.setName(newTrack.getName());
-            track.setBeatportId(newTrack.getBeatportId());
-            track.setVersion(newTrack.getVersion());
-            track.setBpm(newTrack.getBpm());
-            track.setDuration(newTrack.getDuration());
-            track.setGenre(newTrack.getGenre());
-            track.setKey(newTrack.getKey());
-            track.setArtists(newTrack.getArtists());
-            track.setPosition(newTrack.getPosition());
-            track.setDisc(newTrack.getDisc());
-            track.setComposer(newTrack.getComposer());
+            track.copyForUpdate(newTrack);
             
             unitOfWork.getTrackRepository().update(track);
             unitOfWork.commit();

@@ -88,17 +88,7 @@ public class ReleaseController {
                         throw new TrackNotFoundException();
                     }
                     newTrack.resolveReferences(unitOfWork, track.getArtists());
-                    track.setName(newTrack.getName());
-                    track.setBeatportId(newTrack.getBeatportId());
-                    track.setVersion(newTrack.getVersion());
-                    track.setBpm(newTrack.getBpm());
-                    track.setKey(newTrack.getKey());
-                    track.setDuration(newTrack.getDuration());
-                    track.setGenre(newTrack.getGenre());
-                    track.setArtists(newTrack.getArtists());
-                    track.setPosition(newTrack.getPosition());
-                    track.setDisc(newTrack.getDisc());
-                    track.setComposer(newTrack.getComposer());
+                    track.copyForUpdate(newTrack);
                     tracks.add(track);
                     remainingTracks.remove(track);
                 } else {

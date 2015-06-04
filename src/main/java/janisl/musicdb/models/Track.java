@@ -14,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -34,6 +36,7 @@ public class Track implements Serializable {
     private String disc;
     private String composer;
     private Set<TrackArtist> artists = new HashSet<>(0);
+    private Set<Artist> remixers = new HashSet<>(0);
 
     public Track() {
     }
@@ -152,6 +155,20 @@ public class Track implements Serializable {
         this.artists = artists;
     }
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "TrackRemixer",
+            joinColumns = {
+                @JoinColumn(name = "trackId", nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                @JoinColumn(name = "artistId", nullable = false, updatable = false)})
+    public Set<Artist> getRemixers() {
+        return remixers;
+    }
+
+    public void setRemixers(Set<Artist> remixers) {
+        this.remixers = remixers;
+    }
+
     public void resolveReferences(UnitOfWork unitOfWork, Set<TrackArtist> existingArtists) {
         if (getGenre() != null && getGenre().getId() != null) {
             setGenre(unitOfWork.getGenreRepository().get(getGenre().getId()));
@@ -194,6 +211,27 @@ public class Track implements Serializable {
                 unitOfWork.getTrackArtistRepository().delete(trackArtist);
             }
         }
+        
+        Set<Artist> newRemixers = new HashSet<>(0);
+        for (Artist remixer : getRemixers()) {
+            newRemixers.add(unitOfWork.getArtistRepository().get(remixer.getId()));
+        }
+        setRemixers(newRemixers);
     }
 
+    public void copyForUpdate(Track newTrack) {
+        setName(newTrack.getName());
+        setBeatportId(newTrack.getBeatportId());
+        setVersion(newTrack.getVersion());
+        setBpm(newTrack.getBpm());
+        setKey(newTrack.getKey());
+        setDuration(newTrack.getDuration());
+        setGenre(newTrack.getGenre());
+        setArtists(newTrack.getArtists());
+        setPosition(newTrack.getPosition());
+        setDisc(newTrack.getDisc());
+        setComposer(newTrack.getComposer());
+        setRemixers(newTrack.getRemixers());
+    }
+    
 }

@@ -125,6 +125,18 @@
                 }
             }
         };
+        
+        this.addTrackRemixer = function( track ) {
+            track.remixers.push( {} );
+        };
+        
+        this.removeTrackRemixer = function( track, trackRemixer ) {
+            for ( var i = track.remixers.length - 1; i >= 0; i-- ) {
+                if ( track.remixers[i] === trackRemixer ) {
+                   track.remixers.splice( i, 1 );
+                }
+            }
+        };
     }]);
 
     app.controller( 'ReleaseDetailsController', [ 'Release', '$routeParams', '$location', function( Release, $routeParams, $location ) {

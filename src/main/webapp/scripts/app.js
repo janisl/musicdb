@@ -78,6 +78,11 @@
                 controller: 'ReleaseEditController',
                 controllerAs: 'releaseCtrl'
             })
+            .when( '/releases/:id/mixxx', {
+                templateUrl: 'views/releases/link_with_mixxx.html',
+                controller: 'ReleaseLinkWithMixxxController',
+                controllerAs: 'releaseCtrl'
+            })
             .when( '/tracks/', {
                 templateUrl: 'views/tracks/list.html',
                 controller: 'TracksController',
@@ -147,6 +152,11 @@
                 templateUrl: 'views/mixxx/tracks/cues.html',
                 controller: 'MixxxTrackCuesController',
                 controllerAs: 'cues'
+            })
+            .when( '/mixxx/tracks/notLinked', {
+                templateUrl: 'views/mixxx/tracks/list.html',
+                controller: 'MixxxTracksNotLinkedController',
+                controllerAs: 'tracks'
             })
             .when( '/mixxx/playlists/', {
                 templateUrl: 'views/mixxx/playlists/list.html',

@@ -75,7 +75,9 @@
     }]);
 
     app.factory( 'MixxxTrack', [ '$resource', function( $resource ) {
-        return $resource( '/mixxx/track/:id', { id: '@id' } );
+        return $resource( '/mixxx/track/:id', { id: '@id' }, {
+            notLinked: { method: 'GET', url: '/mixxx/track/notLinked', isArray: true }
+        } );
     }]);
 
     app.factory( 'MixxxTrackCue', [ '$resource', function( $resource ) {

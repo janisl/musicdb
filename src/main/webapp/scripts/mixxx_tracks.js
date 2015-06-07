@@ -12,4 +12,9 @@
         this.cues = MixxxTrackCue.query( { trackId: $routeParams.trackId } );
     }]);
 
+    app.controller( 'MixxxTracksNotLinkedController', [ 'MixxxTrack', function( MixxxTrack ) {
+        this.filterText = '';
+        this.tracks = MixxxTrack.notLinked( {} );
+    }]);
+
 })();

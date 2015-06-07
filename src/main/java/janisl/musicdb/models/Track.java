@@ -241,6 +241,7 @@ public class Track implements Serializable {
         setDisc(newTrack.getDisc());
         setComposer(newTrack.getComposer());
         setRemixers(newTrack.getRemixers());
+        setMixxxId(newTrack.getMixxxId());
     }
 
 }

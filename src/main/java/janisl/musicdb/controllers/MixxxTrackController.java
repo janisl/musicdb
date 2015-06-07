@@ -1,5 +1,6 @@
 package janisl.musicdb.controllers;
 
+import janisl.musicdb.mixxx.LinkHelper;
 import janisl.musicdb.models.MixxxTrack;
 import janisl.musicdb.models.MixxxTrackCue;
 import janisl.musicdb.repositories.UnitOfWork;
@@ -19,6 +20,13 @@ public class MixxxTrackController {
     public List<MixxxTrack> getList(@RequestParam(value = "mixxxDeleted") Integer mixxxDeleted) throws Exception {
         try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
             return unitOfWork.getMixxxTrackRepository().getAll(mixxxDeleted);
+        }
+    }
+
+    @RequestMapping(value = "/notLinked", method = RequestMethod.GET)
+    public List<MixxxTrack> getListNotLinked() throws Exception {
+        try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
+            return new LinkHelper(unitOfWork).getMixxxNotLinked();
         }
     }
 

@@ -1,0 +1,38 @@
+<form ng-submit="releaseCtrl.submit()">
+    <h1>{{ releaseCtrl.release.name }}</h1>
+    <div class="panel panel-default">
+        <div class="panel-heading">Linked tracks</div>
+        <table class="table table-striped">
+            <tbody>
+                <tr ng-repeat="track in releaseCtrl.linkedTracks">
+                    <td>
+                        {{ track.name}} {{ track.version }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Tracks not linked</div>
+        <div ng-controller="MixxxTracksNotLinkedController as mixxxTracksCtrl">
+            <table class="table table-striped">
+                <tbody>
+                    <tr ng-repeat="track in releaseCtrl.notLinkedTracks">
+                        <td>
+                            <div class="form-group">
+                                {{ track.name}} {{ track.version }}
+                                <select class="form-control" ng-model="track.mixxxId" >
+                                    <option value="">-None-</option>
+                                    <option ng-repeat="mixxxTrack in mixxxTracksCtrl.tracks | orderBy: 'name'" value="{{ mixxxTrack.id }}" ng-selected=" mixxxTrack.id == track.mixxxId ">{{ mixxxTrack.artist }} - {{ mixxxTrack.title }}</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">OK</button>
+    <a href="#/releases/{{ releaseCtrl.release.id }}" class="btn btn-default">Cancel</a><br />
+</form>

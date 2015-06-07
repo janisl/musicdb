@@ -1,8 +1,10 @@
 package janisl.musicdb.controllers;
 
+import janisl.musicdb.beatport.ReleaseImporter;
 import janisl.musicdb.beatport.ReleaseParser;
 import janisl.musicdb.models.BeatportRelease;
 import janisl.musicdb.models.BeatportTrack;
+import janisl.musicdb.models.ReleaseDetails;
 import janisl.musicdb.repositories.UnitOfWork;
 import janisl.musicdb.repositories.UnitOfWorkFactory;
 import java.util.List;
@@ -81,6 +83,19 @@ public class BeatportReleaseController {
             }
             release.getTracks().size();
             return release.getTracks();
+        }
+    }
+
+    @RequestMapping(value = "/{id}/import", method = RequestMethod.GET)
+    public ReleaseDetails importById(@PathVariable("id") int id) throws Exception {
+        try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
+            BeatportRelease release = unitOfWork.getBeatportReleaseRepository().get(id);
+            if (release == null) {
+                throw new ReleaseNotFoundException();
+            }
+            ReleaseDetails imported = new ReleaseImporter(unitOfWork).importToLibrary(release);
+            unitOfWork.commit();
+            return imported;
         }
     }
 

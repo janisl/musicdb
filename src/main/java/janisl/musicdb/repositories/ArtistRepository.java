@@ -9,6 +9,10 @@ public interface ArtistRepository {
 
     public Artist get( Integer id );
 
+    public List<Artist> getByName(String name);
+
+    public List<Artist> getByBeatportId(Integer beatportId);
+
     public void add(Artist artist);
     
     public void update(Artist artist);

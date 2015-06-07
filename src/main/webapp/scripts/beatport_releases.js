@@ -51,6 +51,14 @@
             ctrl.tracks = BeatportTrack.byRelease( { releaseId: $routeParams.id } );
         };
         
+        this.importToLibrary = function( release ) {
+            BeatportRelease.import( { id: release.id }, function( data ) {
+                $location.path( '/releases/' + data.id );
+            }, function( httpResponse  ) {
+                alert( 'Error ' + httpResponse  );
+            });
+        };
+        
         this.reimport = function( release ) {
             release.$reimport( {}, function() {
                 alert( 'Reimported' );

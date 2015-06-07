@@ -2,6 +2,7 @@ package janisl.musicdb.repositories;
 
 import janisl.musicdb.models.Artist;
 import java.util.List;
+import org.hibernate.criterion.Restrictions;
 
 public class ArtistRepositoryImpl implements ArtistRepository {
     
@@ -22,6 +23,16 @@ public class ArtistRepositoryImpl implements ArtistRepository {
     }
 
     @Override
+    public List<Artist> getByName(String name) {
+        return (List<Artist>) (unitOfWork.getSession().createCriteria(Artist.class).add(Restrictions.eq("name", name)).list());
+    }
+
+    @Override
+    public List<Artist> getByBeatportId(Integer beatportId) {
+        return (List<Artist>) (unitOfWork.getSession().createCriteria(Artist.class).add(Restrictions.eq("beatportId", beatportId)).list());
+    }
+    
+    @Override
     public void add(Artist artist) {
         unitOfWork.getSession().save(artist);
     }
@@ -35,5 +46,5 @@ public class ArtistRepositoryImpl implements ArtistRepository {
     public void delete(Artist artist) {
         unitOfWork.getSession().delete(artist);
     }
-    
+
 }

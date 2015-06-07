@@ -62,6 +62,7 @@
         return $resource( '/beatport/release/:id', { id: '@id' }, {
             import: { method: 'GET', url: '/beatport/release/get' },
             reimport: { method: 'GET', url: '/beatport/release/:id/reimport' },
+            import: { method: 'GET', url: '/beatport/release/:id/import' },
             byLabel: { method: 'GET', url: '/beatport/label/:labelId/releases', isArray: true },
             byArtist: { method: 'GET', url: '/beatport/artist/:artistId/releases', isArray: true }
         });

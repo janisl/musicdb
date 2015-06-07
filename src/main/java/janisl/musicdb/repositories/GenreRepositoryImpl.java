@@ -2,6 +2,7 @@ package janisl.musicdb.repositories;
 
 import janisl.musicdb.models.Genre;
 import java.util.List;
+import org.hibernate.criterion.Restrictions;
 
 public class GenreRepositoryImpl implements GenreRepository {
     
@@ -22,6 +23,11 @@ public class GenreRepositoryImpl implements GenreRepository {
     }
 
     @Override
+    public List<Genre> getByName(String name) {
+        return (List<Genre>) (unitOfWork.getSession().createCriteria(Genre.class).add(Restrictions.eq("name", name)).list());
+    }
+    
+    @Override
     public void add(Genre genre) {
         unitOfWork.getSession().save(genre);
     }
@@ -35,5 +41,5 @@ public class GenreRepositoryImpl implements GenreRepository {
     public void delete(Genre genre) {
         unitOfWork.getSession().delete(genre);
     }
-    
+
 }

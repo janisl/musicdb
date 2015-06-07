@@ -37,6 +37,7 @@ public class Track implements Serializable {
     private String composer;
     private Set<TrackArtist> artists = new HashSet<>(0);
     private Set<Artist> remixers = new HashSet<>(0);
+    private Integer mixxxId;
 
     public Track() {
     }
@@ -169,6 +170,14 @@ public class Track implements Serializable {
         this.remixers = remixers;
     }
 
+    public Integer getMixxxId() {
+        return mixxxId;
+    }
+
+    public void setMixxxId(Integer mixxxId) {
+        this.mixxxId = mixxxId;
+    }
+
     public void resolveReferences(UnitOfWork unitOfWork, Set<TrackArtist> existingArtists) {
         if (getGenre() != null && getGenre().getId() != null) {
             setGenre(unitOfWork.getGenreRepository().get(getGenre().getId()));
@@ -211,7 +220,7 @@ public class Track implements Serializable {
                 unitOfWork.getTrackArtistRepository().delete(trackArtist);
             }
         }
-        
+
         Set<Artist> newRemixers = new HashSet<>(0);
         for (Artist remixer : getRemixers()) {
             newRemixers.add(unitOfWork.getArtistRepository().get(remixer.getId()));
@@ -233,5 +242,5 @@ public class Track implements Serializable {
         setComposer(newTrack.getComposer());
         setRemixers(newTrack.getRemixers());
     }
-    
+
 }

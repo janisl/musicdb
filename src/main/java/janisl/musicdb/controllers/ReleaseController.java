@@ -3,7 +3,6 @@ package janisl.musicdb.controllers;
 import janisl.musicdb.models.Release;
 import janisl.musicdb.models.ReleaseDetails;
 import janisl.musicdb.models.Track;
-import janisl.musicdb.models.TrackArtist;
 import janisl.musicdb.repositories.UnitOfWork;
 import janisl.musicdb.repositories.UnitOfWorkFactory;
 import java.net.URI;

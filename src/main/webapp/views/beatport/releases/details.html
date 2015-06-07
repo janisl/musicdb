@@ -12,9 +12,10 @@
         <p>Label: <b><span data-beatport-label-link data-label="releaseCtrl.release.label"></span></b></p>
         <p>Catalog number: <b>{{ releaseCtrl.release.catalogNumber }}</b></p>
         <p style="white-space:pre-wrap;">Description: {{ releaseCtrl.release.description }}</p>
-        <a ng-click="releaseCtrl.reimport(releaseCtrl.release)" >Reimport</a><br />
-        <a ng-click="releaseCtrl.delete(releaseCtrl.release)" >Delete</a><br />
-        <a href="https://pro.beatport.com/release/{{ releaseCtrl.release.slug }}/{{ releaseCtrl.release.id }}"target="_blank">Beatport</a><br />
+        <a ng-click="releaseCtrl.importToLibrary(releaseCtrl.release)" class="btn btn-default" >Import</a>
+        <a ng-click="releaseCtrl.reimport(releaseCtrl.release)" class="btn btn-default" >Reimport</a>
+        <a ng-click="releaseCtrl.delete(releaseCtrl.release)" class="btn btn-danger" >Delete</a>
+        <a href="https://pro.beatport.com/release/{{ releaseCtrl.release.slug }}/{{ releaseCtrl.release.id }}" class="btn btn-success" target="_blank">Beatport</a><br />
     </div>
 </div>
 

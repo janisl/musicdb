@@ -1,7 +1,6 @@
 package janisl.musicdb.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import janisl.musicdb.repositories.UnitOfWork;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashSet;

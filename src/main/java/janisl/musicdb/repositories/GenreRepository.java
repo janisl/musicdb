@@ -9,6 +9,8 @@ public interface GenreRepository {
 
     public Genre get( Integer id );
 
+    public List<Genre> getByName(String name);
+
     public void add(Genre genre);
     
     public void update(Genre genre);

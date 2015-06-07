@@ -9,6 +9,8 @@ public interface LabelRepository {
 
     public Label get( Integer id );
 
+    public List<Label> getByBeatportId( Integer beatportId );
+
     public void add(Label label);
     
     public void update(Label label);

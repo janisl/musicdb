@@ -2,6 +2,7 @@ package janisl.musicdb.repositories;
 
 import janisl.musicdb.models.Label;
 import java.util.List;
+import org.hibernate.criterion.Restrictions;
 
 public class LabelRepositoryImpl implements LabelRepository {
 
@@ -22,6 +23,11 @@ public class LabelRepositoryImpl implements LabelRepository {
     }
 
     @Override
+    public List<Label> getByBeatportId(Integer beatportId) {
+        return (List<Label>) (unitOfWork.getSession().createCriteria(Label.class).add(Restrictions.eq("beatportId", beatportId)).list());
+    }
+    
+    @Override
     public void add(Label label) {
         unitOfWork.getSession().save(label);
     }
@@ -35,5 +41,5 @@ public class LabelRepositoryImpl implements LabelRepository {
     public void delete(Label label) {
         unitOfWork.getSession().delete(label);
     }
-    
+
 }

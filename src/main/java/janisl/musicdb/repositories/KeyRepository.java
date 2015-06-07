@@ -9,4 +9,6 @@ public interface KeyRepository {
 
     public Key get( Integer id );
     
+    public List<Key> getByBeatportName(String beatportName);
+
 }

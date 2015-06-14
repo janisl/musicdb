@@ -17,7 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Release_")
+@Table(name = "Release_")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Release implements Serializable {
 
@@ -29,6 +29,7 @@ public class Release implements Serializable {
     private String catalogNumber;
     private Date releaseDate;
     private Set<ReleaseArtist> artists = new HashSet<>(0);
+    private ReleaseImportStatus importStatus;
 
     public Release() {
     }
@@ -102,4 +103,13 @@ public class Release implements Serializable {
         this.artists = artists;
     }
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "importStatusId")
+    public ReleaseImportStatus getImportStatus() {
+        return importStatus;
+    }
+
+    public void setImportStatus(ReleaseImportStatus importStatus) {
+        this.importStatus = importStatus;
+    }
 }

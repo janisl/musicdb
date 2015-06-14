@@ -1,8 +1,6 @@
+<h1>{{ statusCtrl.status.name }}</h1>
 <div class="form-group">
-    <a href="#/releases/add/" class="btn btn-success">Add release</a>
-</div>
-<div class="form-group">
-    <input type="text" ng-model="releases.filterText" class="form-control" placeholder="Filter">
+    <input type="text" ng-model="statusCtrl.filterText" class="form-control" placeholder="Filter">
 </div>
 <table class="table">
     <thead>
@@ -22,7 +20,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="release in releases.releases | filter:releases.filterText | orderBy: 'name'">
+        <tr ng-repeat="release in statusCtrl.releases | filter:statusCtrl.filterText | orderBy: 'name'">
             <td><a href="#/releases/{{ release.id }}">{{ release.name }}</a></td>
             <td>
                 <span ng-repeat="artist in release.artists | orderBy: 'orderNumber'">
@@ -35,10 +33,10 @@
             <td>{{ release.importStatus.name }}</td>
             <td>{{ release.beatportId }}</td>
             <td>{{ release.discogsId }}</td>
-            <td><a href="#/releases/{{ release.id }}/edit" class="btn btn-success">Edit</a></td>
-            <td><a href="#/releases/" ng-click="releases.delete(release)" class="btn btn-danger">Delete</a></td>
-            <td><span ng-show="release.beatportId !== null"><a href="#/beatport/releases/{{ release.beatportId }}" class="btn btn-info">Beatport</a></span></td>
-            <td><span ng-show="release.discogsId !== null"><a href="#/discogs/releases/{{ release.discogsId }}" class="btn btn-info">Discogs</a></span></td>
+            <td><a href="#/statusCtrl/{{ release.id }}/edit" class="btn btn-success">Edit</a></td>
+            <td><a href="#/statusCtrl/" ng-click="statusCtrl.delete(release)" class="btn btn-danger">Delete</a></td>
+            <td><span ng-show="release.beatportId !== null"><a href="#/beatport/statusCtrl/{{ release.beatportId }}" class="btn btn-info">Beatport</a></span></td>
+            <td><span ng-show="release.discogsId !== null"><a href="#/discogs/statusCtrl/{{ release.discogsId }}" class="btn btn-info">Discogs</a></span></td>
         </tr>
     </tbody>
 </table>

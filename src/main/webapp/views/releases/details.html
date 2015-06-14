@@ -8,6 +8,7 @@
 <p>Label: {{ releaseCtrl.release.label.name }}</p>
 <p>Catalog number: {{ releaseCtrl.release.catalogNumber }}</p>
 <p>Release date: {{ releaseCtrl.release.releaseDate }}</p>
+<p>Import status: {{ releaseCtrl.release.importStatus.name }}</p>
 <p>
     <a href="#/releases/{{ releaseCtrl.release.id }}/edit" class="btn btn-success">Edit</a>
     <a href="#/releases/{{ releaseCtrl.release.id }}/mixxx" class="btn btn-default">Mixxx</a>
@@ -27,6 +28,7 @@
             <th>BPM</th>
             <th>Key</th>
             <th>Duration</th>
+            <th>Import status</th>
         </tr>
     </thead>
     <tbody>
@@ -48,6 +50,7 @@
             <td>{{ track.bpm }}</td>
             <td>{{ track.key.name }}</td>
             <td>{{ track.duration }}</td>
+            <td>{{ track.importStatus.name }}</td>
         </tr>
     </tbody>
 </table>

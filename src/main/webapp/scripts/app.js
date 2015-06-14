@@ -1,7 +1,7 @@
 (function () {
 
     var app = angular.module( 'musicdb', [ 'ngRoute', 'resources',
-        'artists', 'genres', 'labels', 'releases', 'tracks',
+        'artists', 'genres', 'labels', 'releaseImportStatuses', 'releases', 'tracks', 'trackImportStatuses',
         'beatportArtists', 'beatportGenres', 'beatportLabels', 'beatportReleases', 'beatportTracks',
         'mixxxCrates', 'mixxxPlaylists', 'mixxxTracks',
         'discogsArtists', 'discogsLabels', 'discogsMasters', 'discogsReleases', 'discogsSearch' ]);
@@ -58,6 +58,31 @@
                 controller: 'LabelEditController',
                 controllerAs: 'labelCtrl'
             })
+            .when( '/releaseImportStatuses/', {
+                templateUrl: 'views/releaseImportStatuses/list.html',
+                controller: 'ReleaseImportStatusesController',
+                controllerAs: 'statuses'
+            })
+            .when( '/releaseImportStatuses/add/', {
+                templateUrl: 'views/releaseImportStatuses/add_edit.html',
+                controller: 'ReleaseImportStatusAddController',
+                controllerAs: 'statusCtrl'
+            })
+            .when( '/releaseImportStatuses/without/', {
+                templateUrl: 'views/releaseImportStatuses/details.html',
+                controller: 'ReleasesWithoutImportStatusController',
+                controllerAs: 'statusCtrl'
+            })
+            .when( '/releaseImportStatuses/:id/', {
+                templateUrl: 'views/releaseImportStatuses/details.html',
+                controller: 'ReleaseImportStatusDetailsController',
+                controllerAs: 'statusCtrl'
+            })
+            .when( '/releaseImportStatuses/:id/edit', {
+                templateUrl: 'views/releaseImportStatuses/add_edit.html',
+                controller: 'ReleaseImportStatusEditController',
+                controllerAs: 'statusCtrl'
+            })
             .when( '/releases/', {
                 templateUrl: 'views/releases/list.html',
                 controller: 'ReleasesController',
@@ -82,6 +107,21 @@
                 templateUrl: 'views/releases/link_with_mixxx.html',
                 controller: 'ReleaseLinkWithMixxxController',
                 controllerAs: 'releaseCtrl'
+            })
+            .when( '/trackImportStatuses/', {
+                templateUrl: 'views/trackImportStatuses/list.html',
+                controller: 'TrackImportStatusesController',
+                controllerAs: 'statuses'
+            })
+            .when( '/trackImportStatuses/add/', {
+                templateUrl: 'views/trackImportStatuses/add_edit.html',
+                controller: 'TrackImportStatusAddController',
+                controllerAs: 'statusCtrl'
+            })
+            .when( '/trackImportStatuses/:id/', {
+                templateUrl: 'views/trackImportStatuses/add_edit.html',
+                controller: 'TrackImportStatusEditController',
+                controllerAs: 'statusCtrl'
             })
             .when( '/tracks/', {
                 templateUrl: 'views/tracks/list.html',
@@ -130,6 +170,11 @@
             .when( '/beatport/releases/', {
                 templateUrl: 'views/beatport/releases/list.html',
                 controller: 'BeatportReleasesController',
+                controllerAs: 'releases'
+            })
+            .when( '/beatport/releases/import/', {
+                templateUrl: 'views/beatport/releases/list.html',
+                controller: 'BeatportReleasesImportController',
                 controllerAs: 'releases'
             })
             .when( '/beatport/releases/:id', {

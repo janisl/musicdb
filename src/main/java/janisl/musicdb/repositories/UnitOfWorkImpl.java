@@ -28,8 +28,10 @@ public class UnitOfWorkImpl implements UnitOfWork {
             configuration.addAnnotatedClass(janisl.musicdb.models.ReleaseArtist.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.ReleaseDetails.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.ReleaseDetailsArtist.class);
+            configuration.addAnnotatedClass(janisl.musicdb.models.ReleaseImportStatus.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.Track.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.TrackArtist.class);
+            configuration.addAnnotatedClass(janisl.musicdb.models.TrackImportStatus.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.BeatportArtist.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.BeatportGenre.class);
             configuration.addAnnotatedClass(janisl.musicdb.models.BeatportLabel.class);
@@ -74,8 +76,10 @@ public class UnitOfWorkImpl implements UnitOfWork {
     private LabelRepositoryImpl labelRepository;
     private ReleaseRepositoryImpl releaseRepository;
     private ReleaseArtistRepositoryImpl releaseArtistRepository;
+    private ReleaseImportStatusRepositoryImpl releaseImportStatusRepository;
     private TrackRepositoryImpl trackRepository;
     private TrackArtistRepositoryImpl trackArtistRepository;
+    private TrackImportStatusRepositoryImpl trackImportStatusRepository;
     private BeatportArtistRepositoryImpl beatportArtistRepository;
     private BeatportGenreRepositoryImpl beatportGenreRepository;
     private BeatportLabelRepositoryImpl beatportLabelRepository;
@@ -188,6 +192,14 @@ public class UnitOfWorkImpl implements UnitOfWork {
     }
 
     @Override
+    public ReleaseImportStatusRepository getReleaseImportStatusRepository() {
+        if (releaseImportStatusRepository == null) {
+            releaseImportStatusRepository = new ReleaseImportStatusRepositoryImpl(this);
+        }
+        return releaseImportStatusRepository;
+    }
+
+    @Override
     public TrackRepository getTrackRepository() {
         if (trackRepository == null) {
             trackRepository = new TrackRepositoryImpl(this);
@@ -201,6 +213,14 @@ public class UnitOfWorkImpl implements UnitOfWork {
             trackArtistRepository = new TrackArtistRepositoryImpl(this);
         }
         return trackArtistRepository;
+    }
+
+    @Override
+    public TrackImportStatusRepository getTrackImportStatusRepository() {
+        if (trackImportStatusRepository == null) {
+            trackImportStatusRepository = new TrackImportStatusRepositoryImpl(this);
+        }
+        return trackImportStatusRepository;
     }
 
     @Override

@@ -52,7 +52,7 @@
         };
         
         this.importToLibrary = function( release ) {
-            BeatportRelease.import( { id: release.id }, function( data ) {
+            BeatportRelease.importToLibrary( { id: release.id }, function( data ) {
                 $location.path( '/releases/' + data.id );
             }, function( httpResponse  ) {
                 alert( 'Error ' + httpResponse  );
@@ -79,6 +79,41 @@
         };
         
         this.getList();
+    }]);
+
+    app.controller( 'BeatportReleasesImportController', [ 'BeatportRelease', function( BeatportRelease ) {
+        var ctrl = this;
+        this.filterText = '';
+        this.releases = [];
+        this.importUrl = '';
+
+        this.import = function() {
+            BeatportRelease.import( { url: ctrl.importUrl }, function( data ) {
+                ctrl.importUrl = '';
+                ctrl.releases.push( data );
+            }, function( httpResponse ) {
+                alert( 'Error ' + httpResponse );
+            });
+        };
+        
+        this.reimport = function( release ) {
+            release.$reimport( {}, function() {
+                alert( 'Reimported' );
+                ctrl.getList();
+            }, function( httpResponse  ) {
+                alert( 'Error ' + httpResponse  );
+            });
+        };
+        
+        this.delete = function( release ) {
+            if ( confirm( "Are you sure you want to delete this release?" ) === true ) {
+                release.$delete( {}, function() {
+                    ctrl.getList();
+                }).error( function( httpResponse ) {
+                    alert( 'Error ' + httpResponse );
+                });
+            }
+        };
     }]);
 
     app.directive("beatportReleases", function() {

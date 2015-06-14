@@ -38,6 +38,7 @@ public class Track implements Serializable {
     private Set<TrackArtist> artists = new HashSet<>(0);
     private Set<Artist> remixers = new HashSet<>(0);
     private Integer mixxxId;
+    private TrackImportStatus importStatus;
 
     public Track() {
     }
@@ -178,6 +179,16 @@ public class Track implements Serializable {
         this.mixxxId = mixxxId;
     }
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "importStatusId")
+    public TrackImportStatus getImportStatus() {
+        return importStatus;
+    }
+
+    public void setImportStatus(TrackImportStatus importStatus) {
+        this.importStatus = importStatus;
+    }
+
     public void resolveReferences(UnitOfWork unitOfWork, Set<TrackArtist> existingArtists) {
         if (getGenre() != null && getGenre().getId() != null) {
             setGenre(unitOfWork.getGenreRepository().get(getGenre().getId()));
@@ -189,6 +200,12 @@ public class Track implements Serializable {
             setKey(unitOfWork.getKeyRepository().get(getKey().getId()));
         } else {
             setKey(null);
+        }
+
+        if (getImportStatus() != null && getImportStatus().getId() != null) {
+            setImportStatus(unitOfWork.getTrackImportStatusRepository().get(getImportStatus().getId()));
+        } else {
+            setImportStatus(null);
         }
 
         Set<TrackArtist> newArtists = new HashSet<>(0);
@@ -242,6 +259,7 @@ public class Track implements Serializable {
         setComposer(newTrack.getComposer());
         setRemixers(newTrack.getRemixers());
         setMixxxId(newTrack.getMixxxId());
+        setImportStatus(newTrack.getImportStatus());
     }
 
 }

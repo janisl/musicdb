@@ -27,12 +27,26 @@
 
     app.factory( 'Release', [ '$resource', function( $resource ) {
         return $resource( '/release/:id', { id: '@id' }, {
+            update: { method: 'PUT' },
+            byImportStatus: { method: 'GET', url: '/releaseImportStatus/:importStatusId/releases', isArray: true },
+            withoutImportStatus: { method: 'GET', url: '/releaseImportStatus/releases', isArray: true }
+        });
+    }]);
+
+    app.factory( 'ReleaseImportStatus', [ '$resource', function( $resource ) {
+        return $resource( '/releaseImportStatus/:id', { id: '@id' }, {
             update: { method: 'PUT' }
         });
     }]);
 
     app.factory( 'Track', [ '$resource', function( $resource ) {
         return $resource( '/track/:id', { id: '@id' }, {
+            update: { method: 'PUT' }
+        });
+    }]);
+
+    app.factory( 'TrackImportStatus', [ '$resource', function( $resource ) {
+        return $resource( '/trackImportStatus/:id', { id: '@id' }, {
             update: { method: 'PUT' }
         });
     }]);
@@ -62,7 +76,7 @@
         return $resource( '/beatport/release/:id', { id: '@id' }, {
             import: { method: 'GET', url: '/beatport/release/get' },
             reimport: { method: 'GET', url: '/beatport/release/:id/reimport' },
-            import: { method: 'GET', url: '/beatport/release/:id/import' },
+            importToLibrary: { method: 'GET', url: '/beatport/release/:id/import' },
             byLabel: { method: 'GET', url: '/beatport/label/:labelId/releases', isArray: true },
             byArtist: { method: 'GET', url: '/beatport/artist/:artistId/releases', isArray: true }
         });

@@ -77,6 +77,7 @@ public class ReleaseController {
             release.setReleaseDate(newRelease.getReleaseDate());
             release.setLabel(newRelease.getLabel());
             release.setArtists(newRelease.getArtists());
+            release.setImportStatus(newRelease.getImportStatus());
             
             Set<Track> remainingTracks = release.getTracks();
             Set<Track> tracks = new HashSet<>(0);

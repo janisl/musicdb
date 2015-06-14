@@ -5,6 +5,7 @@ import janisl.musicdb.repositories.UnitOfWork;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -18,7 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Release_")
+@Table(name = "Release_")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ReleaseDetails implements Serializable {
 
@@ -31,6 +32,7 @@ public class ReleaseDetails implements Serializable {
     private Date releaseDate;
     private Set<ReleaseDetailsArtist> artists = new HashSet<>(0);
     private Set<Track> tracks = new HashSet<>(0);
+    private ReleaseImportStatus importStatus;
 
     public ReleaseDetails() {
     }
@@ -95,6 +97,16 @@ public class ReleaseDetails implements Serializable {
         this.releaseDate = releaseDate;
     }
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "importStatusId")
+    public ReleaseImportStatus getImportStatus() {
+        return importStatus;
+    }
+
+    public void setImportStatus(ReleaseImportStatus importStatus) {
+        this.importStatus = importStatus;
+    }
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "release")
     public Set<Track> getTracks() {
         return tracks;
@@ -114,17 +126,24 @@ public class ReleaseDetails implements Serializable {
     }
 
     public void resolveReferences(UnitOfWork unitOfWork, Set<ReleaseDetailsArtist> existingArtists) {
-        if (getLabel() != null && getLabel().getId() != null)
+        if (getLabel() != null && getLabel().getId() != null) {
             setLabel(unitOfWork.getLabelRepository().get(getLabel().getId()));
-        else
+        } else {
             setLabel(null);
-        
+        }
+
+        if (getImportStatus() != null && getImportStatus().getId() != null) {
+            setImportStatus(unitOfWork.getReleaseImportStatusRepository().get(getImportStatus().getId()));
+        } else {
+            setImportStatus(null);
+        }
+
         Set<ReleaseDetailsArtist> newArtists = new HashSet<>(0);
         for (ReleaseDetailsArtist newArtist : getArtists()) {
             ReleaseDetailsArtist releaseArtist = null;
             if (newArtist.getId() != null && existingArtists != null) {
                 for (ReleaseDetailsArtist check : existingArtists) {
-                    if (check.getId() == newArtist.getId()) {
+                    if (Objects.equals(check.getId(), newArtist.getId())) {
                         releaseArtist = check;
                         releaseArtist.setArtist(newArtist.getArtist());
                         releaseArtist.setOrderNumber(newArtist.getOrderNumber());
@@ -142,7 +161,7 @@ public class ReleaseDetails implements Serializable {
             newArtists.add(releaseArtist);
         }
         setArtists(newArtists);
-        
+
         if (existingArtists != null) {
             for (ReleaseDetailsArtist releaseArtist : existingArtists) {
                 unitOfWork.getReleaseArtistRepository().delete(releaseArtist);

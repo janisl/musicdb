@@ -2,6 +2,7 @@ package janisl.musicdb.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import janisl.musicdb.FileUtils;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -71,6 +72,10 @@ public class ReleaseDetailsArtist implements Serializable {
 
     public void setJoinText(String joinText) {
         this.joinText = joinText;
+    }
+    
+    public String calculatePath() {
+        return "/home/janis/music/artists/" + FileUtils.fixName(artist.getName());
     }
 
 }

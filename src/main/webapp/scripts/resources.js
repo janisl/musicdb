@@ -29,7 +29,8 @@
         return $resource( '/release/:id', { id: '@id' }, {
             update: { method: 'PUT' },
             byImportStatus: { method: 'GET', url: '/releaseImportStatus/:importStatusId/releases', isArray: true },
-            withoutImportStatus: { method: 'GET', url: '/releaseImportStatus/releases', isArray: true }
+            withoutImportStatus: { method: 'GET', url: '/releaseImportStatus/releases', isArray: true },
+            createDir: { method: 'GET', url: '/release/:id/createDir' }
         });
     }]);
 

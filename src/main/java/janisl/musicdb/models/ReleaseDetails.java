@@ -1,10 +1,16 @@
 package janisl.musicdb.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import janisl.musicdb.FileUtils;
 import janisl.musicdb.repositories.UnitOfWork;
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -16,7 +22,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "Release_")
@@ -33,6 +41,8 @@ public class ReleaseDetails implements Serializable {
     private Set<ReleaseDetailsArtist> artists = new HashSet<>(0);
     private Set<Track> tracks = new HashSet<>(0);
     private ReleaseImportStatus importStatus;
+    private String path;
+    private String coverLocation;
 
     public ReleaseDetails() {
     }
@@ -108,6 +118,7 @@ public class ReleaseDetails implements Serializable {
     }
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "release")
+    @OrderBy("position")
     public Set<Track> getTracks() {
         return tracks;
     }
@@ -117,12 +128,30 @@ public class ReleaseDetails implements Serializable {
     }
 
     @OneToMany(mappedBy = "release", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OrderBy("orderNumber")
     public Set<ReleaseDetailsArtist> getArtists() {
         return artists;
     }
 
     public void setArtists(Set<ReleaseDetailsArtist> artists) {
         this.artists = artists;
+    }
+
+    public String getCoverLocation() {
+        return coverLocation;
+    }
+
+    public void setCoverLocation(String coverLocation) {
+        this.coverLocation = coverLocation;
+    }
+
+    @Transient
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public void resolveReferences(UnitOfWork unitOfWork, Set<ReleaseDetailsArtist> existingArtists) {
@@ -139,6 +168,7 @@ public class ReleaseDetails implements Serializable {
         }
 
         Set<ReleaseDetailsArtist> newArtists = new HashSet<>(0);
+        int artistOrderNumber = 0;
         for (ReleaseDetailsArtist newArtist : getArtists()) {
             ReleaseDetailsArtist releaseArtist = null;
             if (newArtist.getId() != null && existingArtists != null) {
@@ -167,5 +197,41 @@ public class ReleaseDetails implements Serializable {
                 unitOfWork.getReleaseArtistRepository().delete(releaseArtist);
             }
         }
+    }
+
+    public String calculateFullArtistName() {
+        List<ReleaseDetailsArtist> tmpArtists = new ArrayList<>(getArtists());
+        if (tmpArtists.isEmpty()) {
+            return "";
+        }
+        String artistString = tmpArtists.get(0).getArtist().getName();
+        for (int i = 1; i < tmpArtists.size(); i++) {
+            if (tmpArtists.get(i - 1).getJoinText() == null || "".equals(tmpArtists.get(i - 1).getJoinText())) {
+                artistString += ", ";
+            } else {
+                artistString += " " + tmpArtists.get(i - 1).getJoinText() + " ";
+            }
+            artistString += tmpArtists.get(i).getArtist().getName();
+        }
+        return artistString;
+    }
+
+    public String calculatePath() {
+        String tmpPath;
+        if (getArtists().isEmpty()) {
+            tmpPath = "/home/janis/music/various/";
+        } else {
+            tmpPath = ((ReleaseDetailsArtist) getArtists().toArray()[0]).calculatePath() + "/";
+        }
+        String releaseDirName = getReleaseDate().toString() + " ";
+        if (getArtists().size() > 1) {
+            releaseDirName += calculateFullArtistName() + " - ";
+        }
+        releaseDirName += name;
+        return tmpPath + FileUtils.fixName(releaseDirName);
+    }
+
+    public void createDir() throws IOException {
+        Files.createDirectories(Paths.get(calculatePath()));
     }
 }

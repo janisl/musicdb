@@ -9,11 +9,13 @@ import java.net.URI;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -34,6 +36,7 @@ public class ReleaseController {
             if (release == null) {
                 throw new ReleaseNotFoundException();
             }
+            release.setPath(release.calculatePath());
             return release;
         }
     }
@@ -78,6 +81,7 @@ public class ReleaseController {
             release.setLabel(newRelease.getLabel());
             release.setArtists(newRelease.getArtists());
             release.setImportStatus(newRelease.getImportStatus());
+            release.setCoverLocation(newRelease.getCoverLocation());
             
             Set<Track> remainingTracks = release.getTracks();
             Set<Track> tracks = new HashSet<>(0);
@@ -125,4 +129,29 @@ public class ReleaseController {
         }
     }
 
+    @RequestMapping(value = "/{id}/createDir", method = RequestMethod.GET)
+    public void createDir(@PathVariable("id") int id) throws Exception {
+        try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
+            ReleaseDetails release = unitOfWork.getReleaseRepository().get(id);
+            if (release == null) {
+                throw new ReleaseNotFoundException();
+            }
+            release.createDir();
+        }
+    }
+
+    @RequestMapping(value = "{id}/cover", method = RequestMethod.GET)
+    @ResponseBody
+    public FileSystemResource getCover(@PathVariable("id") int id) throws Exception {
+        try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
+            ReleaseDetails release = unitOfWork.getReleaseRepository().get(id);
+            if (release == null) {
+                throw new ReleaseNotFoundException();
+            }
+            if (release.getCoverLocation() == null || release.getCoverLocation().isEmpty()) {
+                return new FileSystemResource("/home/janis/music/blank_cover.jpg"); 
+            }
+            return new FileSystemResource(release.getCoverLocation()); 
+        }
+    }
 }

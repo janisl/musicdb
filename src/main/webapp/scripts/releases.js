@@ -31,11 +31,51 @@
         this.release.tracks = [];
 
         this.submit = function() {
+            for ( var i = 0; i < ctrl.release.artists.length; i++ ) {
+                ctrl.release.artists[ i ].orderNumber = i + 1;
+            }
+            for ( var i = ctrl.release.tracks.length - 1; i >= 0; i-- ) {
+                for ( var j = 0; j < ctrl.release.tracks[ i ].artists.length; j++ ) {
+                    ctrl.release.tracks[ i ].artists[ j ].orderNumber = j + 1;
+                }
+            }
             ctrl.release.$save( {}, function() {
                 $location.path( '/releases/' );
             }, function( httpResponse ) {
                 alert( 'Error ' + httpResponse );
             });
+        };
+        
+        this.addArtist = function() {
+            ctrl.release.artists.push( { orderNumber: ctrl.release.artists.length + 1 } );
+        };
+        
+        this.removeArtist = function( releaseArtist ) {
+            for ( var i = ctrl.release.artists.length - 1; i >= 0; i-- ) {
+                if ( ctrl.release.artists[i] === releaseArtist ) {
+                   ctrl.release.artists.splice( i, 1 );
+                }
+            }
+        };
+        
+        this.artistMoveUp = function( releaseArtist ) {
+            for ( var i = 1; i < ctrl.release.artists.length; i++ ) {
+                if ( ctrl.release.artists[i] === releaseArtist ) {
+                    var tmp = ctrl.release.artists[ i - 1 ];
+                    ctrl.release.artists[ i - 1 ] = ctrl.release.artists[ i ];
+                    ctrl.release.artists[ i ] = tmp;
+                }
+            }
+        };
+        
+        this.artistMoveDown = function( releaseArtist ) {
+            for ( var i = 0; i < ctrl.release.artists.length - 1; i++ ) {
+                if ( ctrl.release.artists[i] === releaseArtist ) {
+                    var tmp = ctrl.release.artists[ i + 1 ];
+                    ctrl.release.artists[ i + 1 ] = ctrl.release.artists[ i ];
+                    ctrl.release.artists[ i ] = tmp;
+                }
+            }
         };
         
         this.addTrack = function() {
@@ -62,14 +102,22 @@
             }
         };
         
-        this.addArtist = function() {
-            ctrl.release.artists.push( { orderNumber: ctrl.release.artists.length + 1 } );
+        this.trackArtistMoveUp = function( track, trackArtist ) {
+            for ( var i = 1; i < track.artists.length; i++ ) {
+                if ( track.artists[i] === trackArtist ) {
+                    var tmp = track.artists[ i - 1 ];
+                    track.artists[ i - 1 ] = track.artists[ i ];
+                    track.artists[ i ] = tmp;
+                }
+            }
         };
         
-        this.removeArtist = function( releaseArtist ) {
-            for ( var i = ctrl.release.artists.length - 1; i >= 0; i-- ) {
-                if ( ctrl.release.artists[i] === releaseArtist ) {
-                   ctrl.release.artists.splice( i, 1 );
+        this.trackArtistMoveDown = function( track, trackArtist ) {
+            for ( var i = 0; i < track.artists.length - 1; i++ ) {
+                if ( track.artists[i] === trackArtist ) {
+                    var tmp = track.artists[ i + 1 ];
+                    track.artists[ i + 1 ] = track.artists[ i ];
+                    track.artists[ i ] = tmp;
                 }
             }
         };
@@ -83,11 +131,51 @@
         this.release = Release.get( { id: $routeParams.id } );
 
         this.submit = function() {
+            for ( var i = 0; i < ctrl.release.artists.length; i++ ) {
+                ctrl.release.artists[ i ].orderNumber = i + 1;
+            }
+            for ( var i = ctrl.release.tracks.length - 1; i >= 0; i-- ) {
+                for ( var j = 0; j < ctrl.release.tracks[ i ].artists.length; j++ ) {
+                    ctrl.release.tracks[ i ].artists[ j ].orderNumber = j + 1;
+                }
+            }
             ctrl.release.$update( {}, function() {
                 $location.path( '/releases/' + ctrl.id );
             }, function( httpResponse ) {
                 alert( 'Error ' + httpResponse );
             });
+        };
+        
+        this.addArtist = function() {
+            ctrl.release.artists.push( { orderNumber: ctrl.release.artists.length + 1 } );
+        };
+        
+        this.removeArtist = function( releaseArtist ) {
+            for ( var i = ctrl.release.artists.length - 1; i >= 0; i-- ) {
+                if ( ctrl.release.artists[i] === releaseArtist ) {
+                    ctrl.release.artists.splice( i, 1 );
+                }
+            }
+        };
+        
+        this.artistMoveUp = function( releaseArtist ) {
+            for ( var i = 1; i < ctrl.release.artists.length; i++ ) {
+                if ( ctrl.release.artists[i] === releaseArtist ) {
+                    var tmp = ctrl.release.artists[ i - 1 ];
+                    ctrl.release.artists[ i - 1 ] = ctrl.release.artists[ i ];
+                    ctrl.release.artists[ i ] = tmp;
+                }
+            }
+        };
+        
+        this.artistMoveDown = function( releaseArtist ) {
+            for ( var i = 0; i < ctrl.release.artists.length - 1; i++ ) {
+                if ( ctrl.release.artists[i] === releaseArtist ) {
+                    var tmp = ctrl.release.artists[ i + 1 ];
+                    ctrl.release.artists[ i + 1 ] = ctrl.release.artists[ i ];
+                    ctrl.release.artists[ i ] = tmp;
+                }
+            }
         };
         
         this.addTrack = function() {
@@ -109,19 +197,27 @@
         this.removeTrackArtist = function( track, trackArtist ) {
             for ( var i = track.artists.length - 1; i >= 0; i-- ) {
                 if ( track.artists[i] === trackArtist ) {
-                   track.artists.splice( i, 1 );
+                    track.artists.splice( i, 1 );
                 }
             }
         };
         
-        this.addArtist = function() {
-            ctrl.release.artists.push( { orderNumber: ctrl.release.artists.length + 1 } );
+        this.trackArtistMoveUp = function( track, trackArtist ) {
+            for ( var i = 1; i < track.artists.length; i++ ) {
+                if ( track.artists[i] === trackArtist ) {
+                    var tmp = track.artists[ i - 1 ];
+                    track.artists[ i - 1 ] = track.artists[ i ];
+                    track.artists[ i ] = tmp;
+                }
+            }
         };
         
-        this.removeArtist = function( releaseArtist ) {
-            for ( var i = ctrl.release.artists.length - 1; i >= 0; i-- ) {
-                if ( ctrl.release.artists[i] === releaseArtist ) {
-                   ctrl.release.artists.splice( i, 1 );
+        this.trackArtistMoveDown = function( track, trackArtist ) {
+            for ( var i = 0; i < track.artists.length - 1; i++ ) {
+                if ( track.artists[i] === trackArtist ) {
+                    var tmp = track.artists[ i + 1 ];
+                    track.artists[ i + 1 ] = track.artists[ i ];
+                    track.artists[ i ] = tmp;
                 }
             }
         };
@@ -152,6 +248,13 @@
                     alert( 'Error ' + httpResponse );
                 });
             }
+        };
+
+        this.createDir = function() {
+            ctrl.release.$createDir( {}, function() {
+            }, function( httpResponse ) {
+                alert( 'Error ' + httpResponse );
+            });
         };
     }]);
 

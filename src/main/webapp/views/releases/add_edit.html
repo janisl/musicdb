@@ -7,12 +7,15 @@
 
         <div class="form-group">
             <label>Artist</label>
-            <div ng-repeat="releaseArtist in releaseCtrl.release.artists | orderBy: 'orderNumber'">
+            <div ng-repeat="releaseArtist in releaseCtrl.release.artists">
                 <select class="form-control" ng-model="releaseArtist.artist.id" >
                     <option value="">-None-</option>
                     <option ng-repeat="artist in artistsCtrl.artists | orderBy: 'name'" value="{{ artist.id }}" ng-selected=" artist.id == releaseArtist.artist.id ">{{ artist.name }}</option>
                 </select>
-                <input type="text" ng-model="releaseArtist.joinText" ><button type="button" class="btn btn-danger" ng-click="releaseCtrl.removeArtist( releaseArtist )">Remove</button>
+                <input type="text" ng-model="releaseArtist.joinText" >
+                <button type="button" class="btn btn-default" ng-click="releaseCtrl.artistMoveUp( releaseArtist )">Move up</button>
+                <button type="button" class="btn btn-default" ng-click="releaseCtrl.artistMoveDown( releaseArtist )">Move down</button>
+                <button type="button" class="btn btn-danger" ng-click="releaseCtrl.removeArtist( releaseArtist )">Remove</button>
             </div>
             <button type="button" class="btn btn-success" ng-click="releaseCtrl.addArtist()">Add</button>
         </div>
@@ -33,6 +36,11 @@
         <div class="form-group">
             <label for="releaseDate">Release date</label>
             <input type="text" class="form-control" id="releaseDate" ng-model="releaseCtrl.release.releaseDate" >
+        </div>
+
+        <div class="form-group">
+            <label for="coverLocation">Cover location</label>
+            <input type="text" class="form-control" id="coverLocation" ng-model="releaseCtrl.release.coverLocation" >
         </div>
 
         <div class="form-group" ng-controller="ReleaseImportStatusesController as statusesCtrl">
@@ -83,12 +91,15 @@
                                             <tr>
                                                 <td><label>Artist</label></td>
                                                 <td>
-                                                    <div ng-repeat="trackArtist in track.artists | orderBy: 'orderNumber'">
+                                                    <div ng-repeat="trackArtist in track.artists">
                                                         <select class="form-control" ng-model="trackArtist.artist.id" >
                                                             <option value="">-None-</option>
                                                             <option ng-repeat="artist in artistsCtrl.artists | orderBy: 'name'" value="{{ artist.id }}" ng-selected=" artist.id == trackArtist.artist.id ">{{ artist.name }}</option>
                                                         </select>
-                                                        <input type="text" ng-model="trackArtist.joinText" ><button type="button" class="btn btn-danger" ng-click="releaseCtrl.removeTrackArtist( track, trackArtist )">Remove</button>
+                                                        <input type="text" ng-model="trackArtist.joinText" >
+                                                        <button type="button" class="btn btn-default" ng-click="releaseCtrl.trackArtistMoveUp( track, trackArtist )">Move up</button>
+                                                        <button type="button" class="btn btn-default" ng-click="releaseCtrl.trackArtistMoveDown( track, trackArtist )">Move down</button>
+                                                        <button type="button" class="btn btn-danger" ng-click="releaseCtrl.removeTrackArtist( track, trackArtist )">Remove</button>
                                                     </div>
                                                     <button type="button" class="btn btn-success" ng-click="releaseCtrl.addTrackArtist( track )">Add</button>
                                                 </td>

@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 @Entity
@@ -30,6 +31,7 @@ public class Release implements Serializable {
     private Date releaseDate;
     private Set<ReleaseArtist> artists = new HashSet<>(0);
     private ReleaseImportStatus importStatus;
+    private String coverLocation;
 
     public Release() {
     }
@@ -95,6 +97,7 @@ public class Release implements Serializable {
     }
 
     @OneToMany(mappedBy = "release", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OrderBy("orderNumber")
     public Set<ReleaseArtist> getArtists() {
         return artists;
     }
@@ -111,5 +114,13 @@ public class Release implements Serializable {
 
     public void setImportStatus(ReleaseImportStatus importStatus) {
         this.importStatus = importStatus;
+    }
+
+    public String getCoverLocation() {
+        return coverLocation;
+    }
+
+    public void setCoverLocation(String coverLocation) {
+        this.coverLocation = coverLocation;
     }
 }

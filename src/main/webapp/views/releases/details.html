@@ -1,21 +1,33 @@
-<h1>
-    <span ng-repeat="artist in releaseCtrl.release.artists | orderBy: 'orderNumber'">
-        <a href="#/artists/{{ artist.artist.id }}">{{ artist.artist.name }}</a> {{ artist.joinText }}
-    </span>
-    - {{ releaseCtrl.release.name }}
-</h1>
+<table>
+    <tbody>
+        <tr>
+            <td>
+                <img ng-src="/release/{{ releaseCtrl.release.id }}/cover" />
+            </td>
+            <td>
+                <h1>
+                    <span ng-repeat="artist in releaseCtrl.release.artists">
+                        <a href="#/artists/{{ artist.artist.id }}">{{ artist.artist.name }}</a> {{ artist.joinText }}
+                    </span>
+                    - {{ releaseCtrl.release.name }}
+                </h1>
 
-<p>Label: {{ releaseCtrl.release.label.name }}</p>
-<p>Catalog number: {{ releaseCtrl.release.catalogNumber }}</p>
-<p>Release date: {{ releaseCtrl.release.releaseDate }}</p>
-<p>Import status: {{ releaseCtrl.release.importStatus.name }}</p>
-<p>
-    <a href="#/releases/{{ releaseCtrl.release.id }}/edit" class="btn btn-success">Edit</a>
-    <a href="#/releases/{{ releaseCtrl.release.id }}/mixxx" class="btn btn-default">Mixxx</a>
-    <a href="#/releases/" ng-click="releaseCtrl.delete()" class="btn btn-danger">Delete</a>
-    <a ng-show="releaseCtrl.release.beatportId !== null" href="#/beatport/releases/{{ releaseCtrl.release.beatportId }}" class="btn btn-info">Beatport</a>
-    <a ng-show="releaseCtrl.release.discogsId !== null" href="#/discogs/releases/{{ releaseCtrl.release.discogsId }}" class="btn btn-info">Discogs</a>
-</p>
+                <p>Label: {{ releaseCtrl.release.label.name }}</p>
+                <p>Catalog number: {{ releaseCtrl.release.catalogNumber }}</p>
+                <p>Release date: {{ releaseCtrl.release.releaseDate }}</p>
+                <p>Import status: {{ releaseCtrl.release.importStatus.name }}</p>
+                <p>Path: {{ releaseCtrl.release.path }} <a ng-click="releaseCtrl.createDir()" class="btn btn-default">Create</a></p>
+                <p>
+                    <a href="#/releases/{{ releaseCtrl.release.id }}/edit" class="btn btn-success">Edit</a>
+                    <a href="#/releases/{{ releaseCtrl.release.id }}/mixxx" class="btn btn-default">Mixxx</a>
+                    <a href="#/releases/" ng-click="releaseCtrl.delete()" class="btn btn-danger">Delete</a>
+                    <a ng-show="releaseCtrl.release.beatportId !== null" href="#/beatport/releases/{{ releaseCtrl.release.beatportId }}" class="btn btn-info">Beatport</a>
+                    <a ng-show="releaseCtrl.release.discogsId !== null" href="#/discogs/releases/{{ releaseCtrl.release.discogsId }}" class="btn btn-info">Discogs</a>
+                </p>
+            </td>
+        </tr>
+    </tbody>
+</table>
 <table class="table">
     <thead>
         <tr>
@@ -35,7 +47,7 @@
         <tr ng-repeat="track in releaseCtrl.release.tracks | orderBy: 'position'">
             <td>{{ track.disc }} {{ track.position }}</td>
             <td>
-                <span ng-repeat="artist in track.artists | orderBy: 'orderNumber'">
+                <span ng-repeat="artist in track.artists">
                     <a href="#/artists/{{ artist.artist.id }}">{{ artist.artist.name }}</a> {{ artist.joinText }}
                 </span>
             </td>

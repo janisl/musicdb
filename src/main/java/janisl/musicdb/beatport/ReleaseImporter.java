@@ -68,7 +68,14 @@ public class ReleaseImporter {
     
     private Label resolveLabel(BeatportLabel beatportLabel) {
         List<Label> labels = unitOfWork.getLabelRepository().getByBeatportId(beatportLabel.getId());
-        return labels.size() > 0 ? labels.get(0) : null;
+        if (labels.size() > 0) {
+            return labels.get(0);
+        }
+        Label label = new Label();
+        label.setName(beatportLabel.getName());
+        label.setBeatportId(beatportLabel.getId());
+        unitOfWork.getLabelRepository().add(label);
+        return label;
     }
     
     private Genre resolveGenre(BeatportGenre beatportGenre) {

@@ -1,0 +1,21 @@
+<h1>
+    <span ng-repeat="artist in releaseCtrl.release.artists">
+        <a href="#/artists/{{ artist.artist.id }}">{{ artist.artist.name }}</a> {{ artist.joinText }}
+    </span>
+    - {{ releaseCtrl.release.name }}
+</h1>
+
+<h2>Current</h2>
+<div>
+    <img ng-src="/release/{{ releaseCtrl.release.id }}/cover" />
+</div>
+
+<h2>Beatport</h2>
+<div>
+    <a ng-click="releaseCtrl.setCover( releaseCtrl.beatportRelease.imageUrl )"><img ng-src="{{ releaseCtrl.beatportRelease.imageUrl }}" alt="Image" /></a>
+</div>
+
+<h2>Discogs</h2>
+<div ng-repeat="image in releaseCtrl.discogsRelease.images">
+    <a ng-click="releaseCtrl.setCover( image.uri )"><img ng-src="{{ image.uri }}" /></a>
+</div>

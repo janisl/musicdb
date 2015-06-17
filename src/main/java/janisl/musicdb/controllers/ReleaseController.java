@@ -5,16 +5,22 @@ import janisl.musicdb.models.ReleaseDetails;
 import janisl.musicdb.models.Track;
 import janisl.musicdb.repositories.UnitOfWork;
 import janisl.musicdb.repositories.UnitOfWorkFactory;
+import java.io.File;
 import java.net.URI;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.apache.commons.io.FileUtils;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -152,6 +158,28 @@ public class ReleaseController {
                 return new FileSystemResource("/home/janis/music/blank_cover.jpg"); 
             }
             return new FileSystemResource(release.getCoverLocation()); 
+        }
+    }
+
+    @RequestMapping(value = "/{id}/setCover", method = RequestMethod.GET)
+    public void setCover(@PathVariable("id") int id, @RequestParam(value = "url") String url) throws Exception {
+        try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
+            ReleaseDetails release = unitOfWork.getReleaseRepository().get(id);
+            if (release == null) {
+                throw new ReleaseNotFoundException();
+            }
+            
+            if (release.getCoverLocation() != null && !release.getCoverLocation().isEmpty()) {
+                Files.deleteIfExists(Paths.get(release.getCoverLocation()));
+            } else {
+                release.setCoverLocation(release.calculatePath() + "/cover.jpg");
+            }
+
+            Files.createDirectories(Paths.get(release.getCoverLocation()).getParent());
+            FileUtils.copyURLToFile(new URL(url), new File(release.getCoverLocation()));
+            
+            unitOfWork.getReleaseRepository().update(release);
+            unitOfWork.commit();
         }
     }
 }

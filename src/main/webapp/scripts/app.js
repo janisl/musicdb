@@ -108,6 +108,11 @@
                 controller: 'ReleaseLinkWithMixxxController',
                 controllerAs: 'releaseCtrl'
             })
+            .when( '/releases/:id/covers', {
+                templateUrl: 'views/releases/covers.html',
+                controller: 'ReleaseSetCoverController',
+                controllerAs: 'releaseCtrl'
+            })
             .when( '/trackImportStatuses/', {
                 templateUrl: 'views/trackImportStatuses/list.html',
                 controller: 'TrackImportStatusesController',

@@ -19,6 +19,7 @@
                 <p>Path: {{ releaseCtrl.release.path }} <a ng-click="releaseCtrl.createDir()" class="btn btn-default">Create</a></p>
                 <p>
                     <a href="#/releases/{{ releaseCtrl.release.id }}/edit" class="btn btn-success">Edit</a>
+                    <a href="#/releases/{{ releaseCtrl.release.id }}/covers" class="btn btn-default">Covers</a>
                     <a href="#/releases/{{ releaseCtrl.release.id }}/mixxx" class="btn btn-default">Mixxx</a>
                     <a href="#/releases/" ng-click="releaseCtrl.delete()" class="btn btn-danger">Delete</a>
                     <a ng-show="releaseCtrl.release.beatportId !== null" href="#/beatport/releases/{{ releaseCtrl.release.beatportId }}" class="btn btn-info">Beatport</a>

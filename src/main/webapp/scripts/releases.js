@@ -283,6 +283,27 @@
         
     }]);
 
+    app.controller( 'ReleaseSetCoverController', [ 'Release', 'BeatportRelease', 'DiscogsRelease', '$routeParams', '$location', function( Release, BeatportRelease, DiscogsRelease, $routeParams, $location ) {
+        var ctrl = this;
+        this.id = $routeParams.id;
+        this.release = Release.get( { id: $routeParams.id }, function() {
+            if ( ctrl.release.beatportId !== null ) {
+                ctrl.beatportRelease = BeatportRelease.get( { id: ctrl.release.beatportId } );
+            }
+            if ( ctrl.release.discogsId !== null ) {
+                ctrl.discogsRelease = DiscogsRelease.get( { id: ctrl.release.discogsId } );
+            }
+        });
+
+        this.setCover = function( url ) {
+            ctrl.release.$setCover( { url: url }, function() {
+                $location.path( '/releases/' + ctrl.id );
+            }, function( httpResponse ) {
+                alert( 'Error ' + httpResponse );
+            });
+        };
+    }]);
+
     app.controller( 'KeysController', function() {
         this.keys = [
             { id: 1, name: "1A G#m" },

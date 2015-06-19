@@ -302,6 +302,14 @@
                 alert( 'Error ' + httpResponse );
             });
         };
+
+        this.moveCover = function() {
+            ctrl.release.$moveCover( {}, function() {
+                $location.path( '/releases/' + ctrl.id );
+            }, function( httpResponse ) {
+                alert( 'Error ' + httpResponse );
+            });
+        };
     }]);
 
     app.controller( 'KeysController', function() {

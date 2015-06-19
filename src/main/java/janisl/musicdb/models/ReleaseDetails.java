@@ -1,10 +1,12 @@
 package janisl.musicdb.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import janisl.musicdb.FileUtils;
+import janisl.musicdb.MyFileUtils;
 import janisl.musicdb.repositories.UnitOfWork;
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Date;
@@ -25,6 +27,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import org.apache.commons.io.FileUtils;
 
 @Entity
 @Table(name = "Release_")
@@ -228,10 +231,38 @@ public class ReleaseDetails implements Serializable {
             releaseDirName += calculateFullArtistName() + " - ";
         }
         releaseDirName += name;
-        return tmpPath + FileUtils.fixName(releaseDirName);
+        return tmpPath + MyFileUtils.fixName(releaseDirName);
     }
 
     public void createDir() throws IOException {
         Files.createDirectories(Paths.get(calculatePath()));
+    }
+
+    public void setCover(String url) throws Exception {
+        if (getCoverLocation() != null && !getCoverLocation().isEmpty()) {
+            Files.deleteIfExists(Paths.get(getCoverLocation()));
+        } else {
+            setCoverLocation(calculatePath() + "/cover.jpg");
+        }
+
+        Files.createDirectories(Paths.get(getCoverLocation()).getParent());
+        FileUtils.copyURLToFile(new URL(url), new File(getCoverLocation()));
+    }
+    
+    public void moveCover() throws Exception {
+        if (getCoverLocation() == null || getCoverLocation().isEmpty()) {
+            return;
+        }
+
+        String newLocation = calculatePath() + "/cover.jpg";
+        if (getCoverLocation().equals(newLocation)) {
+            return;
+        }
+
+        Files.createDirectories(Paths.get(newLocation).getParent());
+        FileUtils.moveFile(new File(getCoverLocation()), new File(newLocation));
+        MyFileUtils.removeFileAndParentsIfEmpty(Paths.get(getCoverLocation()).getParent());
+
+        setCoverLocation(newLocation);
     }
 }

@@ -169,15 +169,21 @@ public class ReleaseController {
                 throw new ReleaseNotFoundException();
             }
             
-            if (release.getCoverLocation() != null && !release.getCoverLocation().isEmpty()) {
-                Files.deleteIfExists(Paths.get(release.getCoverLocation()));
-            } else {
-                release.setCoverLocation(release.calculatePath() + "/cover.jpg");
-            }
+            release.setCover(url);
+            unitOfWork.getReleaseRepository().update(release);
+            unitOfWork.commit();
+        }
+    }
 
-            Files.createDirectories(Paths.get(release.getCoverLocation()).getParent());
-            FileUtils.copyURLToFile(new URL(url), new File(release.getCoverLocation()));
+    @RequestMapping(value = "/{id}/moveCover", method = RequestMethod.GET)
+    public void moveCover(@PathVariable("id") int id) throws Exception {
+        try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
+            ReleaseDetails release = unitOfWork.getReleaseRepository().get(id);
+            if (release == null) {
+                throw new ReleaseNotFoundException();
+            }
             
+            release.moveCover();
             unitOfWork.getReleaseRepository().update(release);
             unitOfWork.commit();
         }

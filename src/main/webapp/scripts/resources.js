@@ -31,7 +31,8 @@
             byImportStatus: { method: 'GET', url: '/releaseImportStatus/:importStatusId/releases', isArray: true },
             withoutImportStatus: { method: 'GET', url: '/releaseImportStatus/releases', isArray: true },
             createDir: { method: 'GET', url: '/release/:id/createDir' },
-            setCover: { method: 'GET', url: '/release/:id/setCover' }
+            setCover: { method: 'GET', url: '/release/:id/setCover' },
+            moveCover: { method: 'GET', url: '/release/:id/moveCover' }
         });
     }]);
 

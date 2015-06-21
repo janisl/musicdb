@@ -266,6 +266,7 @@
             ctrl.notLinkedTracks = [];
             for ( var i = 0; i < ctrl.release.tracks.length; i++ ) {
                 if ( ctrl.release.tracks[i].mixxxId === null ) {
+                    ctrl.release.tracks[i].mixxxTrack = null;
                     ctrl.notLinkedTracks.push( ctrl.release.tracks[i] );
                 } else {
                     ctrl.linkedTracks.push( ctrl.release.tracks[i] );
@@ -273,7 +274,19 @@
             }
         });
 
+        this.unlink = function( track ) {
+            track.mixxxId = null;
+        };
+
         this.submit = function() {
+            for ( var i = 0; i < ctrl.notLinkedTracks.length; i++ ) {
+                if ( ctrl.notLinkedTracks[i].mixxxTrack !== null ) {
+                    ctrl.notLinkedTracks[i].mixxxId = ctrl.notLinkedTracks[i].mixxxTrack.id;
+                    if ( ctrl.notLinkedTracks[i].location === null || ctrl.notLinkedTracks[i].location === "" ) {
+                        ctrl.notLinkedTracks[i].location = ctrl.notLinkedTracks[i].mixxxTrack.location.location;
+                    }
+                }
+            }
             ctrl.release.$update( {}, function() {
                 $location.path( '/releases/' + ctrl.id );
             }, function( httpResponse ) {

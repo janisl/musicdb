@@ -40,6 +40,7 @@ public class Track implements Serializable {
     private Set<Artist> remixers = new HashSet<>(0);
     private Integer mixxxId;
     private TrackImportStatus importStatus;
+    private String location;
 
     public Track() {
     }
@@ -191,6 +192,14 @@ public class Track implements Serializable {
         this.importStatus = importStatus;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public void resolveReferences(UnitOfWork unitOfWork, Set<TrackArtist> existingArtists) {
         if (getGenre() != null && getGenre().getId() != null) {
             setGenre(unitOfWork.getGenreRepository().get(getGenre().getId()));
@@ -262,6 +271,7 @@ public class Track implements Serializable {
         setRemixers(newTrack.getRemixers());
         setMixxxId(newTrack.getMixxxId());
         setImportStatus(newTrack.getImportStatus());
+        setLocation(newTrack.getLocation());
     }
 
 }

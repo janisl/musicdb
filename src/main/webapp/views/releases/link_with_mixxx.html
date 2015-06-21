@@ -1,5 +1,10 @@
 <form ng-submit="releaseCtrl.submit()">
-    <h1>{{ releaseCtrl.release.name }}</h1>
+    <h1>
+        <span ng-repeat="artist in releaseCtrl.release.artists">
+            <a href="#/artists/{{ artist.artist.id }}">{{ artist.artist.name }}</a> {{ artist.joinText }}
+        </span>
+        - {{ releaseCtrl.release.name }}
+    </h1>
     <div class="panel panel-default">
         <div class="panel-heading">Linked tracks</div>
         <table class="table table-striped">
@@ -7,6 +12,7 @@
                 <tr ng-repeat="track in releaseCtrl.linkedTracks">
                     <td>
                         {{ track.name}} {{ track.version }}
+                        <button type="button" class="btn btn-default" ng-click="releaseCtrl.unlink(track)">Unlink</button>
                     </td>
                 </tr>
             </tbody>
@@ -21,9 +27,8 @@
                         <td>
                             <div class="form-group">
                                 {{ track.name}} {{ track.version }}
-                                <select class="form-control" ng-model="track.mixxxId" >
+                                <select class="form-control" ng-model="track.mixxxTrack" ng-options="mixxxTrack.artist + ' - ' + mixxxTrack.title for mixxxTrack in mixxxTracksCtrl.tracks | orderBy: 'title'" >
                                     <option value="">-None-</option>
-                                    <option ng-repeat="mixxxTrack in mixxxTracksCtrl.tracks | orderBy: 'name'" value="{{ mixxxTrack.id }}" ng-selected=" mixxxTrack.id == track.mixxxId ">{{ mixxxTrack.artist }} - {{ mixxxTrack.title }}</option>
                                 </select>
                             </div>
                         </td>

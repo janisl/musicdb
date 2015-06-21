@@ -133,15 +133,18 @@
                                             <tr>
                                                 <td><label for="trackGenre">Genre</label></td>
                                                 <td>
-                                                    <select class="form-control" id="trackGenre" ng-model="track.genre.id" >
+                                                    <select class="form-control" id="trackGenre" ng-model="track.genre" ng-options="genre.name for genre in genresCtrl.genres | orderBy: 'name' track by genre.id" >
                                                         <option value="">-None-</option>
-                                                        <option ng-repeat="genre in genresCtrl.genres | orderBy: 'name'" value="{{ genre.id }}" ng-selected=" genre.id == track.genre.id ">{{ genre.name }}</option>
                                                     </select>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Composer:</td>
                                                 <td><input type="text" ng-model="track.composer" size="64" ></td>
+                                            </tr>
+                                            <tr>
+                                                <td><label for="trackLocation">Location:</label></td>
+                                                <td><input type="text" class="form-control" id="trackLocation" ng-model="track.location" size="256" ></td>
                                             </tr>
                                             <tr>
                                                 <td><label for="trackImportStatus">Import status</label></td>

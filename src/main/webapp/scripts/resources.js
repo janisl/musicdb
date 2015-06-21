@@ -13,6 +13,10 @@
         });
     }]);
 
+    app.factory( 'Download', [ '$resource', function( $resource ) {
+        return $resource( '/download');
+    }]);
+
     app.factory( 'Genre', [ '$resource', function( $resource ) {
         return $resource( '/genre/:id', { id: '@id' }, {
             update: { method: 'PUT' }

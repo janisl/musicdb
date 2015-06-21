@@ -1,7 +1,7 @@
 (function () {
 
     var app = angular.module( 'musicdb', [ 'ngRoute', 'resources',
-        'artists', 'genres', 'labels', 'releaseImportStatuses', 'releases', 'tracks', 'trackImportStatuses',
+        'artists', 'downloads', 'genres', 'labels', 'releaseImportStatuses', 'releases', 'tracks', 'trackImportStatuses',
         'beatportArtists', 'beatportGenres', 'beatportLabels', 'beatportReleases', 'beatportTracks',
         'mixxxCrates', 'mixxxPlaylists', 'mixxxTracks',
         'discogsArtists', 'discogsLabels', 'discogsMasters', 'discogsReleases', 'discogsSearch' ]);
@@ -27,6 +27,11 @@
                 templateUrl: 'views/artists/add_edit.html',
                 controller: 'ArtistEditController',
                 controllerAs: 'artistCtrl'
+            })
+            .when( '/downloads/', {
+                templateUrl: 'views/downloads/list.html',
+                controller: 'DownloadsController',
+                controllerAs: 'downloads'
             })
             .when( '/genres/', {
                 templateUrl: 'views/genres/list.html',

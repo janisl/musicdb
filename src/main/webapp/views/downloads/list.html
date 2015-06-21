@@ -1,0 +1,21 @@
+<div class="form-group">
+    <input type="text" ng-model="downloads.filterText" class="form-control" placeholder="Filter">
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Path</th>
+            <th>Size</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="download in downloads.downloads | filter:downloads.filterText | orderBy: 'name'">
+            <td>{{ download.name }}</td>
+            <td>{{ download.absolutePath }}</td>
+            <td>{{ download.size }}</td>
+            <td>{{ download.lastModified }}</td>
+        </tr>
+    </tbody>
+</table>

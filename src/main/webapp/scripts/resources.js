@@ -36,7 +36,8 @@
             withoutImportStatus: { method: 'GET', url: '/releaseImportStatus/releases', isArray: true },
             createDir: { method: 'GET', url: '/release/:id/createDir' },
             setCover: { method: 'GET', url: '/release/:id/setCover' },
-            moveCover: { method: 'GET', url: '/release/:id/moveCover' }
+            moveCover: { method: 'GET', url: '/release/:id/moveCover' },
+            moveTracks: { method: 'GET', url: '/release/:id/moveTracks' }
         });
     }]);
 

@@ -2,10 +2,17 @@ package janisl.musicdb.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import janisl.musicdb.MyFileUtils;
 import janisl.musicdb.repositories.UnitOfWork;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -19,6 +26,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -272,6 +281,56 @@ public class Track implements Serializable {
         setMixxxId(newTrack.getMixxxId());
         setImportStatus(newTrack.getImportStatus());
         setLocation(newTrack.getLocation());
+    }
+    
+    public void move(String baseLocation, boolean artistPerTrack) throws IOException {
+        if (getLocation() == null || getLocation().isEmpty()) {
+            return;
+        }
+
+        String newLocation = baseLocation + "/" + calculateFileName(artistPerTrack) + FilenameUtils.getExtension(getLocation());
+        if (getLocation().equals(newLocation)) {
+            return;
+        }
+
+        Files.createDirectories(Paths.get(newLocation).getParent());
+        FileUtils.moveFile(new File(getLocation()), new File(newLocation));
+        MyFileUtils.removeFileAndParentsIfEmpty(Paths.get(getLocation()).getParent());
+
+        setLocation(newLocation);
+    }
+    
+    public String calculateFileName(boolean artistPerTrack) {
+        String fileName = "";
+        if (getPosition() != null) {
+            fileName = String.format("%02d - ", getPosition());
+        }
+        if (artistPerTrack) {
+            fileName += calculateFullArtistName() + " - ";
+        }
+        fileName += getName();
+        if (getVersion() != null && !getVersion().isEmpty()) {
+            fileName += " (" + getVersion() + ")";
+        }
+        return MyFileUtils.fixName(fileName);
+    }
+    
+    public String calculateFullArtistName() {
+        if (getArtists().isEmpty()) {
+            return getRelease().calculateFullArtistName();
+        }
+
+        List<TrackArtist> tmpArtists = new ArrayList<>(getArtists());
+        String artistString = tmpArtists.get(0).getArtist().getName();
+        for (int i = 1; i < tmpArtists.size(); i++) {
+            if (tmpArtists.get(i - 1).getJoinText() == null || "".equals(tmpArtists.get(i - 1).getJoinText())) {
+                artistString += ", ";
+            } else {
+                artistString += " " + tmpArtists.get(i - 1).getJoinText() + " ";
+            }
+            artistString += tmpArtists.get(i).getArtist().getName();
+        }
+        return artistString;
     }
 
 }

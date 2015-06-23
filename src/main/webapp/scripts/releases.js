@@ -256,6 +256,14 @@
                 alert( 'Error ' + httpResponse );
             });
         };
+
+        this.moveTracks = function() {
+            ctrl.release.$moveTracks( {}, function() {
+                ctrl.release = Release.get( { id: ctrl.id } );
+            }, function( httpResponse ) {
+                alert( 'Error ' + httpResponse );
+            });
+        };
     }]);
 
     app.controller( 'ReleaseLinkWithMixxxController', [ 'Release', '$routeParams', '$location', function( Release, $routeParams, $location ) {
@@ -323,6 +331,27 @@
                 alert( 'Error ' + httpResponse );
             });
         };
+    }]);
+
+    app.controller( 'ReleaseLinkDownloadsController', [ 'Release', '$routeParams', '$location', function( Release, $routeParams, $location ) {
+        var ctrl = this;
+        this.id = $routeParams.id;
+        this.release = Release.get( { id: $routeParams.id } );
+
+        this.submit = function() {
+            for ( var i = 0; i < ctrl.release.tracks.length; i++ ) {
+                if ( ctrl.release.tracks[ i ].download !== undefined  &&
+                    ctrl.release.tracks[ i ].download !== null ) {
+                    ctrl.release.tracks[ i ].location = ctrl.release.tracks[ i ].download.absolutePath;
+                }
+            }
+            ctrl.release.$update( {}, function() {
+                $location.path( '/releases/' + ctrl.id );
+            }, function( httpResponse ) {
+                alert( 'Error ' + httpResponse );
+            });
+        };
+        
     }]);
 
     app.controller( 'KeysController', function() {

@@ -5,15 +5,10 @@ import janisl.musicdb.models.ReleaseDetails;
 import janisl.musicdb.models.Track;
 import janisl.musicdb.repositories.UnitOfWork;
 import janisl.musicdb.repositories.UnitOfWorkFactory;
-import java.io.File;
 import java.net.URI;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import org.apache.commons.io.FileUtils;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -184,6 +179,20 @@ public class ReleaseController {
             }
             
             release.moveCover();
+            unitOfWork.getReleaseRepository().update(release);
+            unitOfWork.commit();
+        }
+    }
+
+    @RequestMapping(value = "/{id}/moveTracks", method = RequestMethod.GET)
+    public void moveTracks(@PathVariable("id") int id) throws Exception {
+        try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
+            ReleaseDetails release = unitOfWork.getReleaseRepository().get(id);
+            if (release == null) {
+                throw new ReleaseNotFoundException();
+            }
+            
+            release.moveTracks();
             unitOfWork.getReleaseRepository().update(release);
             unitOfWork.commit();
         }

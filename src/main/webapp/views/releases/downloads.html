@@ -1,0 +1,30 @@
+<form ng-submit="releaseCtrl.submit()">
+    <h1>
+        <span ng-repeat="artist in releaseCtrl.release.artists">
+            <a href="#/artists/{{ artist.artist.id }}">{{ artist.artist.name }}</a> {{ artist.joinText }}
+        </span>
+        - {{ releaseCtrl.release.name }}
+    </h1>
+    <div class="panel panel-default">
+        <div class="panel-heading">Tracks not linked</div>
+        <div ng-controller="DownloadsController as downloadsCtrl">
+            <table class="table table-striped">
+                <tbody>
+                    <tr ng-repeat="track in releaseCtrl.release.tracks">
+                        <td>
+                            <div class="form-group">
+                                {{ track.name}} {{ track.version }}
+                                <select class="form-control" ng-model="track.download" ng-options="download.name for download in downloadsCtrl.downloads | orderBy: 'name'" >
+                                    <option value="">-None-</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">OK</button>
+    <a href="#/releases/{{ releaseCtrl.release.id }}" class="btn btn-default">Cancel</a><br />
+</form>

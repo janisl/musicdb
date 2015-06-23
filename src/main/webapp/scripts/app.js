@@ -103,6 +103,11 @@
                 controller: 'ReleaseDetailsController',
                 controllerAs: 'releaseCtrl'
             })
+            .when( '/releases/:id/downloads', {
+                templateUrl: 'views/releases/downloads.html',
+                controller: 'ReleaseLinkDownloadsController',
+                controllerAs: 'releaseCtrl'
+            })
             .when( '/releases/:id/edit', {
                 templateUrl: 'views/releases/add_edit.html',
                 controller: 'ReleaseEditController',

@@ -265,4 +265,19 @@ public class ReleaseDetails implements Serializable {
 
         setCoverLocation(newLocation);
     }
+    
+    public void moveTracks() throws Exception {
+        String baseLocation = calculatePath();
+        boolean artistPerTrack = false;
+        for (Track track : getTracks()) {
+            if (track.getArtists().size() > 0) {
+                artistPerTrack = true;
+                break;
+            }
+        }
+        
+        for (Track track : getTracks()) {
+            track.move(baseLocation, artistPerTrack);
+        }
+    }
 }

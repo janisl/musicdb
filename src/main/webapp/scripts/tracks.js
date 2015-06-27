@@ -51,4 +51,17 @@
         };
     }]);
 
+    app.controller( 'TrackTagsController', [ 'Track', '$routeParams', '$location', function( Track, $routeParams, $location ) {
+        var ctrl = this;
+        this.tags = Track.tags( { id: $routeParams.id } );
+
+        this.setTags = function() {
+            Track.setTags( { id: $routeParams.id }, function() {
+                ctrl.tags = Track.tags( { id: $routeParams.id } );
+            }, function( httpResponse ) {
+                alert( 'Error ' + httpResponse );
+            });
+        };
+    }]);
+
 })();

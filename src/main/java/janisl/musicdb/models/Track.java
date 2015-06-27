@@ -288,7 +288,7 @@ public class Track implements Serializable {
             return;
         }
 
-        String newLocation = baseLocation + "/" + calculateFileName(artistPerTrack) + FilenameUtils.getExtension(getLocation());
+        String newLocation = baseLocation + "/" + calculateFileName(artistPerTrack) + "." + FilenameUtils.getExtension(getLocation());
         if (getLocation().equals(newLocation)) {
             return;
         }
@@ -308,11 +308,19 @@ public class Track implements Serializable {
         if (artistPerTrack) {
             fileName += calculateFullArtistName() + " - ";
         }
-        fileName += getName();
-        if (getVersion() != null && !getVersion().isEmpty()) {
-            fileName += " (" + getVersion() + ")";
-        }
+        fileName += calculateFullTitle();
         return MyFileUtils.fixName(fileName);
+    }
+
+    public String calculateFullTitle() {
+        String fullTitle = "";
+        if (getName() != null) {
+            fullTitle = getName();
+        }
+        if (getVersion() != null && !getVersion().isEmpty()) {
+            fullTitle += " (" + getVersion() + ")";
+        }
+        return fullTitle;
     }
     
     public String calculateFullArtistName() {

@@ -9,9 +9,8 @@
         <td>{{ release.id }}</td>
         <td>{{ release.slug }}</td>
         <td>{{ release.releaseDate }}</td>
-        <td>{{ release.label }}</td>
+        <td>{{ release.label.name }}</td>
         <td>{{ release.catalogNumber }}</td>
-        <td>{{ release.description }}</td>
         <td>{{ release.isExclusive }}</td>
         <td>{{ release.imageUrl }}</td>
         <td><a ng-click="releases.reimport(release)" >Reimport</a></td>

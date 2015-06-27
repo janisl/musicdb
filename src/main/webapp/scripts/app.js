@@ -153,6 +153,11 @@
                 controller: 'TrackEditController',
                 controllerAs: 'trackCtrl'
             })
+            .when( '/tracks/:id/tags', {
+                templateUrl: 'views/tracks/tags.html',
+                controller: 'TrackTagsController',
+                controllerAs: 'trackCtrl'
+            })
             .when( '/pianos/', {
                 templateUrl: 'views/pianos.html'
             })

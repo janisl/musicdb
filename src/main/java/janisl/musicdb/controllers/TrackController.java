@@ -1,6 +1,7 @@
 package janisl.musicdb.controllers;
 
 import janisl.musicdb.models.Track;
+import janisl.musicdb.models.TrackTags;
 import janisl.musicdb.repositories.UnitOfWork;
 import janisl.musicdb.repositories.UnitOfWorkFactory;
 import java.net.URI;
@@ -83,6 +84,32 @@ public class TrackController {
             unitOfWork.getTrackRepository().delete(track);
             unitOfWork.commit();
             return ResponseEntity.ok().build();
+        }
+    }
+
+    @RequestMapping(value = "/{id}/tags", method = RequestMethod.GET)
+    public TrackTags getTags(@PathVariable("id") int id) throws Exception {
+        try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
+            Track track = unitOfWork.getTrackRepository().get(id);
+            if (track == null) {
+                throw new TrackNotFoundException();
+            }
+            TrackTags tags = new TrackTags(track);
+            tags.read();
+            return tags;
+        }
+    }
+
+    @RequestMapping(value = "/{id}/setTags", method = RequestMethod.GET)
+    public TrackTags setTags(@PathVariable("id") int id) throws Exception {
+        try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
+            Track track = unitOfWork.getTrackRepository().get(id);
+            if (track == null) {
+                throw new TrackNotFoundException();
+            }
+            TrackTags tags = new TrackTags(track);
+            tags.write();
+            return tags;
         }
     }
 

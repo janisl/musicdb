@@ -45,6 +45,7 @@
             <th>Duration</th>
             <th>Import status</th>
             <th>Location</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -68,6 +69,7 @@
             <td>{{ track.duration }}</td>
             <td>{{ track.importStatus.name }}</td>
             <td>{{ track.location }}</td>
+            <td><a href="#/tracks/{{ track.id }}/tags" class="btn btn-default">Tags</a></td>
         </tr>
     </tbody>
 </table>

@@ -49,7 +49,9 @@
 
     app.factory( 'Track', [ '$resource', function( $resource ) {
         return $resource( '/track/:id', { id: '@id' }, {
-            update: { method: 'PUT' }
+            update: { method: 'PUT' },
+            tags: { method: 'GET', url: '/track/:id/tags' },
+            setTags: { method: 'GET', url: '/track/:id/setTags' }
         });
     }]);
 

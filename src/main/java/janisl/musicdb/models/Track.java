@@ -300,6 +300,29 @@ public class Track implements Serializable {
         setLocation(newLocation);
     }
     
+    public void moveAndSetTags(String baseLocation, boolean artistPerTrack) throws Exception {
+        if (getLocation() == null || getLocation().isEmpty()) {
+            return;
+        }
+
+        String newLocation = baseLocation + "/" + calculateFileName(artistPerTrack) + "." + FilenameUtils.getExtension(getLocation());
+        TrackTags tags = new TrackTags(this);
+        if (getLocation().equals(newLocation)) {
+            tags.write();
+            return;
+        }
+
+        Files.createDirectories(Paths.get(newLocation).getParent());
+        if (tags.write(getLocation(), newLocation)) {
+            Files.delete(Paths.get(getLocation()));
+        } else {
+            FileUtils.moveFile(new File(getLocation()), new File(newLocation));
+        }
+        MyFileUtils.removeFileAndParentsIfEmpty(Paths.get(getLocation()).getParent());
+
+        setLocation(newLocation);
+    }
+    
     public String calculateFileName(boolean artistPerTrack) {
         String fileName = "";
         if (getPosition() != null) {

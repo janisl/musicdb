@@ -23,6 +23,7 @@
                     <a href="#/releases/{{ releaseCtrl.release.id }}/mixxx" class="btn btn-default">Mixxx</a>
                     <a href="#/releases/{{ releaseCtrl.release.id }}/downloads" class="btn btn-default">Downloads</a>
                     <a ng-click="releaseCtrl.moveTracks()" class="btn btn-default">Move tracks</a>
+                    <a ng-click="releaseCtrl.moveTracksAndSetTags()" class="btn btn-default">Move tracks and set tags</a>
                     <a href="#/releases/" ng-click="releaseCtrl.delete()" class="btn btn-danger">Delete</a>
                     <a ng-show="releaseCtrl.release.beatportId !== null" href="#/beatport/releases/{{ releaseCtrl.release.beatportId }}" class="btn btn-info">Beatport</a>
                     <a ng-show="releaseCtrl.release.discogsId !== null" href="#/discogs/releases/{{ releaseCtrl.release.discogsId }}" class="btn btn-info">Discogs</a>

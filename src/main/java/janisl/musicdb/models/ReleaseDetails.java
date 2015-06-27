@@ -268,6 +268,21 @@ public class ReleaseDetails implements Serializable {
     
     public void moveTracks() throws Exception {
         String baseLocation = calculatePath();
+        boolean artistPerTrack = calculateArtistPerTrack();
+        for (Track track : getTracks()) {
+            track.move(baseLocation, artistPerTrack);
+        }
+    }
+    
+    public void moveTracksAndSetTags() throws Exception {
+        String baseLocation = calculatePath();
+        boolean artistPerTrack = calculateArtistPerTrack();
+        for (Track track : getTracks()) {
+            track.moveAndSetTags(baseLocation, artistPerTrack);
+        }
+    }
+
+    public boolean calculateArtistPerTrack() {
         boolean artistPerTrack = false;
         for (Track track : getTracks()) {
             if (track.getArtists().size() > 0) {
@@ -275,9 +290,6 @@ public class ReleaseDetails implements Serializable {
                 break;
             }
         }
-        
-        for (Track track : getTracks()) {
-            track.move(baseLocation, artistPerTrack);
-        }
+        return artistPerTrack;
     }
 }

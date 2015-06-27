@@ -37,7 +37,8 @@
             createDir: { method: 'GET', url: '/release/:id/createDir' },
             setCover: { method: 'GET', url: '/release/:id/setCover' },
             moveCover: { method: 'GET', url: '/release/:id/moveCover' },
-            moveTracks: { method: 'GET', url: '/release/:id/moveTracks' }
+            moveTracks: { method: 'GET', url: '/release/:id/moveTracks' },
+            moveTracksAndSetTags: { method: 'GET', url: '/release/:id/moveTracksAndSetTags' }
         });
     }]);
 

@@ -197,4 +197,18 @@ public class ReleaseController {
             unitOfWork.commit();
         }
     }
+
+    @RequestMapping(value = "/{id}/moveTracksAndSetTags", method = RequestMethod.GET)
+    public void moveTracksAndSetTags(@PathVariable("id") int id) throws Exception {
+        try (UnitOfWork unitOfWork = UnitOfWorkFactory.create()) {
+            ReleaseDetails release = unitOfWork.getReleaseRepository().get(id);
+            if (release == null) {
+                throw new ReleaseNotFoundException();
+            }
+            
+            release.moveTracksAndSetTags();
+            unitOfWork.getReleaseRepository().update(release);
+            unitOfWork.commit();
+        }
+    }
 }

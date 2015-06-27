@@ -264,6 +264,14 @@
                 alert( 'Error ' + httpResponse );
             });
         };
+
+        this.moveTracksAndSetTags = function() {
+            ctrl.release.$moveTracksAndSetTags( {}, function() {
+                ctrl.release = Release.get( { id: ctrl.id } );
+            }, function( httpResponse ) {
+                alert( 'Error ' + httpResponse );
+            });
+        };
     }]);
 
     app.controller( 'ReleaseLinkWithMixxxController', [ 'Release', '$routeParams', '$location', function( Release, $routeParams, $location ) {
